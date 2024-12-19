@@ -17,10 +17,11 @@ def apply_schema(cursor: Cursor) -> None:
     # create the blogposts table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS blogposts (
-            Title TEXT NOT NULL UNIQUE,
-            Date TEXT NOT NULL,
-            Content TEXT NOT NULL,
-            Tags TEXT,
-            PRIMARY KEY (Title, Date)
+            title TEXT NOT NULL UNIQUE,
+            created TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            modified TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            content TEXT NOT NULL,
+            tags INT NOT NULL DEFAULT 0,
+            PRIMARY KEY (title, created)
         );
         ''')

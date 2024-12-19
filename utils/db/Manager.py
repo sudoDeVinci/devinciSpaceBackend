@@ -21,8 +21,6 @@ class Manager:
     -----------
         _connection (Connection):
             Connection object to the SQLite database.
-        _configfile (Path):
-            Path to the configuration file.
         _dbfile (Path):
             Path to the database file.
         _logfile (Path):
@@ -31,17 +29,16 @@ class Manager:
             Logger object for logging messages.
     """
     _connection: Optional[Connection] = None
-    _configfile: Path = Path(__file__).parent.parent / 'configs' / 'db.json'
-    _dbfile: Path = Path('database.db')
-    _logfile: Path = Path(__file__).parent.parent / 'logs' / 'db.log'
-    logger: Logger = None
+    _dbfile: Path = Path('utils') / 'db' / 'database.db'
+    _logfile: Path = Path('logs') / 'db.log'
+    logger: Optional[Logger] = None
 
     @classmethod
     def log(cls, message: str, level: int = INFO) -> None:
         """
         Log a message to the logger.
 
-        Parameters:
+        Args:
         -----------
             message (str):
                 Message to log.
@@ -55,19 +52,18 @@ class Manager:
 
     @classmethod
     def load(cls) -> None:
-        if not cls._configfile.exists():
-            cls._configfile.touch()
-        if not cls._dbfile.exists():
-            cls._dbfile.touch()
-        if not cls._logfile.exists():
-            cls._logfile.touch()
+        """
+        Load the configuration and logger objects.
+        """
 
+        # Create necessary directories
+        Path('logs').mkdir(exist_ok=True)
         cls.logger = basicConfig(
             level=INFO,
             format='%(asctime)s - %(levelname)s - %(message)s',
             handlers=[
                 StreamHandler(),
-                FileHandler('db.log'),
+                FileHandler(str(cls._logfile)),
             ],
         )
 
@@ -118,8 +114,8 @@ class Manager:
         cls.load()
 
         try:
-            cls._connection = sqlconnect(cls._dbfile)
-            cls._connection.row_factory = sqlconnect.Row
+            cls._connection = sqlconnect(str(cls._dbfile))
+            cls._connection.row_factory = lambda cursor, row: row
 
             if not cls._dbfile.exists():
                 cursor = cls._connection.cursor()
