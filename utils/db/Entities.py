@@ -249,3 +249,43 @@ class Post:
         self._tags = tags
         self._created = created
         self._modified = created
+
+    @property
+    def id(self) -> str:
+        return self._id
+
+    @property
+    def title(self) -> str:
+        return self._title
+
+    @title.setter
+    def title(self, value: str) -> None:
+        self._title = value
+
+    @property
+    def content(self) -> str:
+        return self._content
+
+    @content.setter
+    def content(self, value: str) -> None:
+        self._content = value
+
+    @property
+    def tags(self) -> bytes:
+        return self._tags
+
+    @tags.setter
+    def tags(self, value: bytes) -> None:
+        self._tags = value
+
+    @property
+    def created(self) -> str:
+        return self._created
+
+    @property
+    def modified(self) -> str:
+        return self._modified
+
+    @modified.setter
+    def modified(self, value: str) -> None:
+        self._modified = value

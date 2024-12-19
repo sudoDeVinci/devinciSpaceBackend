@@ -2,8 +2,9 @@ from sqlite3 import (connect as sqlconnect,
                      Connection,
                      Error as SQLError)
 from pathlib import Path
+import json
 from typing import Optional
-from utils.db.scehma import apply_schema
+from utils.db.schema import apply_schema
 from logging import (
     INFO,
     FileHandler,
@@ -29,6 +30,7 @@ class Manager:
             Logger object for logging messages.
     """
     _connection: Optional[Connection] = None
+    _configfile: Path = Path('configs') / 'config.json'
     _dbfile: Path = Path('utils') / 'db' / 'database.db'
     _logfile: Path = Path('logs') / 'db.log'
     logger: Optional[Logger] = None
@@ -58,6 +60,7 @@ class Manager:
 
         # Create necessary directories
         Path('logs').mkdir(exist_ok=True)
+        Path('configs').mkdir(exist_ok=True)
         cls.logger = basicConfig(
             level=INFO,
             format='%(asctime)s - %(levelname)s - %(message)s',
@@ -66,6 +69,24 @@ class Manager:
                 FileHandler(str(cls._logfile)),
             ],
         )
+
+        data = None
+
+        try:
+            with open(cls._configfile, 'r') as file:
+                data = json.load(file)
+                if not data:
+                    raise json.JSONDecodeError("Empty file",
+                                               cls._configfile,
+                                               0)
+        except FileNotFoundError as err:
+            cls.log(f"Error loading configuration: {err}")
+            return {}
+        except json.JSONDecodeError as err:
+            cls.log(f"Error parsing configuration: {err}")
+            return {}
+
+        return data
 
     @classmethod
     def connected(cls) -> bool:
