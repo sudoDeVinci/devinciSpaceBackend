@@ -7,6 +7,7 @@ def apply_schema(cursor: Cursor) -> None:
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY,
             email TEXT UNIQUE,
+            password TEXT,
             username TEXT,
             created TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
             last_online TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,

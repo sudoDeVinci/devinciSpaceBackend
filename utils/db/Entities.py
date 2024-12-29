@@ -10,8 +10,29 @@ def dt2str(dt: datetime) -> str:
 
 
 class User(UserMixin):
+    """
+    A class used to represent a User.
+
+    Attributes:
+        id : str
+            unique identifier for the user
+        email : str
+            email address of the user
+        password : str
+            password of the user
+        username : str
+            username of the user
+        created : str
+            creation timestamp of the user
+        last_online : str
+            last online timestamp of the user
+        role : User.Role
+            role of the user
+    """
+
     __slots__ = ('_id',
-                 '_email'
+                 '_email',
+                 '_password',
                  '_username',
                  '_created',
                  '_last_online',
@@ -46,7 +67,7 @@ class User(UserMixin):
     _username: str = None
     _created: str = None
     _role: Role = Role.VISITOR
-    _last_online: datetime = None
+    _last_online: str = None
 
     def __init__(self,
                  id: str = str(uuid4()),
@@ -55,7 +76,7 @@ class User(UserMixin):
                  password: str = None,
                  role: str = Role.VISITOR,
                  created: str = dt2str(datetime.now()),
-                 last_online: datetime = dt2str(datetime.now())):
+                 last_online: str = dt2str(datetime.now())):
         self._id = id
         self._email = email
         self._username = username
@@ -101,11 +122,11 @@ class User(UserMixin):
         return self._created
 
     @property
-    def last_online(self) -> datetime:
+    def last_online(self) -> str:
         return self._last_online
 
     @last_online.setter
-    def last_online(self, value: datetime) -> None:
+    def last_online(self, value: str) -> None:
         self._last_online = value
 
 
@@ -118,22 +139,20 @@ class TagManager:
 
     # Tag-to-bit mapping
     TAGS: dict[str, int] = {
-        "python": 0,
         "backend": 1,
         "frontend": 2,
         "database": 3,
-        "ai": 4,
-        "ml": 5,
-        "cloud": 6,
-        "security": 7,
-        "web3": 8,
-        "devops": 9,
-        "testing": 10,
-        "iot": 11,
-        "bigdata": 12,
-        "networking": 13,
-        "design": 14,
-        "dataops": 15,
+        "security": 4,
+        "python": 5,
+        "javascript": 6,
+        "java": 7,
+        "c/c++": 8,
+        "Arduino": 9,
+        "Raspberry Pi": 10,
+        "Linux": 11,
+        "Windows": 12,
+        "hardware": 13,
+        "software": 14
     }
 
     @classmethod
@@ -224,6 +243,23 @@ class TagManager:
 
 
 class Post:
+    """
+    A class used to represent a Post.
+
+    Attributes:
+        _id : str
+            unique identifier for the post
+        _title : str
+            title of the post
+        _created : str
+            creation timestamp of the post
+        _modified : str
+            last modified timestamp of the post
+        _content : str
+            content of the post
+        _tags : bytes
+            tags associated with the post
+    """
     __slots__ = ('_title',
                  '_created',
                  '_modified',
