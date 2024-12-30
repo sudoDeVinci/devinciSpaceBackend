@@ -1,9 +1,9 @@
 from sqlite3 import (connect as sqlconnect,
                      Connection,
+                     Cursor,
                      Error as SQLError)
 from pathlib import Path
 import json
-from typing import Optional
 from utils.db.schema import apply_schema
 from logging import (
     INFO,
@@ -29,11 +29,11 @@ class Manager:
         logger (Logger):
             Logger object for logging messages.
     """
-    _connection: Optional[Connection] = None
+    _connection: Connection | None = None
     _configfile: Path = Path('configs') / 'config.json'
     _dbfile: Path = Path('utils') / 'db' / 'database.db'
     _logfile: Path = Path('logs') / 'db.log'
-    logger: Optional[Logger] = None
+    logger: Logger | None = None
 
     @classmethod
     def log(cls, message: str, level: int = INFO) -> None:
@@ -101,7 +101,7 @@ class Manager:
         return cls._connection is not None
 
     @classmethod
-    def connection(cls) -> Connection:
+    def connection(cls) -> Connection | None:
         """
         Get the connection object to the database.
 
@@ -115,7 +115,7 @@ class Manager:
         return cls._connection
 
     @classmethod
-    def cursor(cls):
+    def cursor(cls) -> Cursor | None:
         """
         Get the cursor object to the database.
 
@@ -124,7 +124,7 @@ class Manager:
             Cursor:
                 Cursor object to the SQLite database.
         """
-        return cls.connection() if cls.connected() else None
+        return cls.connection().cursor if cls.connected() else None
 
     @classmethod
     def connect(cls) -> None:
@@ -136,7 +136,6 @@ class Manager:
 
         try:
             cls._connection = sqlconnect(str(cls._dbfile))
-            cls._connection.row_factory = lambda cursor, row: row
 
             if not cls._dbfile.exists():
                 cursor = cls._connection.cursor()

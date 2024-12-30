@@ -1,133 +1,33 @@
 from datetime import datetime
 from uuid import uuid4
-from flask_login import UserMixin
-from enum import Enum
-from functools import lru_cache
 
 
-def dt2str(dt: datetime) -> str:
-    return dt.strftime("%B %d, %Y %I:%M%p")
-
-
-class User(UserMixin):
+class Comment:
     """
-    A class used to represent a User.
-
-    Attributes:
-        id : str
-            unique identifier for the user
-        email : str
-            email address of the user
-        password : str
-            password of the user
-        username : str
-            username of the user
-        created : str
-            creation timestamp of the user
-        last_online : str
-            last online timestamp of the user
-        role : User.Role
-            role of the user
+    A class used to represent a timestamped Comment on a given Post.
     """
 
-    __slots__ = ('_id',
-                 '_email',
-                 '_password',
-                 '_username',
-                 '_created',
-                 '_last_online',
-                 '_role')
-
-    class Role(Enum):
-        ADMIN = "admin"
-        MEMBER = "member"
-        VISITOR = "visitor"
-
-        @classmethod
-        @lru_cache(maxsize=None)
-        def match(cls, role: str):
-            """
-            Match input string to user role.
-            """
-            role = role.lower()
-            return cls[role] if role in cls.__members__.items() \
-                else cls.VISITOR
-
-        @classmethod
-        @lru_cache(maxsize=None)
-        def __contains__(cls, role: str) -> bool:
-            """
-            Check if a role is present in the enum.
-            """
-            return role.lower() in cls.__members__.values()
-
-    _id: str = None
-    _email: str = None
-    _password: str = None
-    _username: str = None
-    _created: str = None
-    _role: Role = Role.VISITOR
-    _last_online: str = None
+    __slots__ = ('uid',
+                 'title',
+                 'content',
+                 'author',
+                 'created',
+                 'edited')
 
     def __init__(self,
-                 id: str = str(uuid4()),
-                 email: str = '',
-                 username: str = f'Anon-{uuid4()}',
-                 password: str = None,
-                 role: str = Role.VISITOR,
-                 created: str = dt2str(datetime.now()),
-                 last_online: str = dt2str(datetime.now())):
-        self._id = id
-        self._email = email
-        self._username = username
-        self._password = password
-        self._created = created
-        self._last_online = last_online
-        self._role = self.Role.match(role)
-
-    @property
-    def id(self) -> str:
-        return self._id
-
-    @property
-    def email(self) -> str:
-        return self._email
-
-    @email.setter
-    def email(self, value: str) -> None:
-        self._email = value
-
-    @property
-    def username(self) -> str:
-        return self._username
-
-    @username.setter
-    def username(self, value: str) -> None:
-        self._username = value
-
-    @property
-    def role(self) -> str:
-        return self._role
-
-    @property
-    def password(self) -> str:
-        return self._password
-
-    @password.setter
-    def password(self, value: str) -> None:
-        self._password = value
-
-    @property
-    def created(self) -> str:
-        return self._created
-
-    @property
-    def last_online(self) -> str:
-        return self._last_online
-
-    @last_online.setter
-    def last_online(self, value: str) -> None:
-        self._last_online = value
+                 uid: str = str(uuid4()),
+                 author: str = '',
+                 title: str = '',
+                 content: str = '',
+                 created: datetime = datetime.now(),
+                 edited: datetime = datetime.now()
+                 ) -> None:
+        self.uid = uid
+        self.content = content
+        self.title = title
+        self.author = author
+        self.created = created
+        self.edited = edited
 
 
 class TagManager:
@@ -136,6 +36,8 @@ class TagManager:
     This class provides class methods to encode and decode tags, as well as
     perform tag-based operations efficiently.
     """
+
+    __slots__ = ('TAGS')
 
     # Tag-to-bit mapping
     TAGS: dict[str, int] = {
@@ -247,7 +149,7 @@ class Post:
     A class used to represent a Post.
 
     Attributes:
-        _id : str
+        _uid : str
             unique identifier for the post
         _title : str
             title of the post
@@ -259,36 +161,52 @@ class Post:
             content of the post
         _tags : bytes
             tags associated with the post
+        _comments : list[Comments]
+            list of comments on the post
     """
     __slots__ = ('_title',
                  '_created',
                  '_modified',
                  '_content',
-                 '_tags')
+                 '_tags',
+                 '_uid',
+                 '_comments')
 
     _title: str = None
     _created: datetime = None
     _modified: datetime = None
     _content: str = None
     _tags: bytes = 0b0
+    _uid: str = None
+    _comments: list[Comment] = []
 
     def __init__(self,
-                 id: str = str(uuid4()),
+                 uid: str = str(uuid4()),
                  title: str = '',
                  content: str = '',
                  tags: bytes = 0b0,
-                 created: str = dt2str(datetime.now()),
-                 modified: str = dt2str(datetime.now())):
-        self._id = id
+                 created: str = datetime.now(),
+                 modified: str = datetime.now(),
+                 comments: list[Comment] = []
+                 ) -> None:
+        self._uid = uid
         self._title = title
         self._content = content
         self._tags = tags
         self._created = created
-        self._modified = created
+        self._modified = modified
+        self._comments = comments
 
     @property
-    def id(self) -> str:
-        return self._id
+    def comments(self) -> list[Comment]:
+        return self._comments
+
+    def add_comment(self, comment: Comment) -> None:
+        self._comments.append(comment)
+
+    @property
+    def uid(self) -> str:
+        return self._uid
 
     @property
     def title(self) -> str:
@@ -315,12 +233,18 @@ class Post:
         self._tags = value
 
     @property
-    def created(self) -> str:
+    def created(self) -> datetime:
         return self._created
 
+    def created_str(self) -> str:
+        return self._created.strftime("%Y-%m-%d %H:%M:%S")
+
     @property
-    def modified(self) -> str:
+    def modified(self) -> datetime:
         return self._modified
+
+    def modified_str(self) -> str:
+        return self._modified.strftime("%Y-%m-%d %H:%M:%S")
 
     @modified.setter
     def modified(self, value: str) -> None:

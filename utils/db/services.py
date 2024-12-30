@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
 from utils.db.manager import Manager
-from utils.db.entities import User
+from utils.db.entities import Post, Comment
 from sqlite3 import Error as SQLError
+from logging import ERROR
 
 
 class Service(ABC):
@@ -46,40 +47,35 @@ class Service(ABC):
         pass
 
 
-class UserService(Service):
+class CommentService(Service):
+    @staticmethod
+    def get(commentid: str) -> Comment | None:
+        """
+        Get a Comment entity from the database by its uid.
+        """
+        query = 'SELECT * FROM comments WHERE uid = ?;'
+        result: Comment | None = None
 
-    @classmethod
-    def get(cls, id: str):
-        """
-        Get a user from the database.
-        """
-        query = 'SELECT * FROM users WHERE id = ?'
-        cursor = None
         try:
-            cursor = Manager.get_cursor()
+            cursor = Manager.cursor()
             if not cursor:
-                Manager.logger.exception(
-                    'Failed to get cursor - check connection.'
-                )
+                Manager.log('Failed to get cursor.', level=ERROR)
                 return None
-            cursor.execute(query, (id,))
-            row = cursor.fetchone()
 
-            if row:
-                user = User(
-                    id=row['id'],
-                    email=row['email'],
-                    username=row['username'],
-                    password=row['password'],
-                    role=row['role'],
-                    created=row['created'],
-                    last_online=row['last_online']         
+            cursor.execute(query, (commentid,))
+            data = cursor.fetchone()
+            if data:
+                result = Comment(
+                    uid=data[0],
+                    author=data[2],
+                    title=data[3],
+                    content=data[4],
+                    created=data[5],
+                    edited=data[6]
                 )
         except SQLError as err:
-            Manager.logger.exception(f'Error getting user: {err}')
-            return None
+            Manager.log(f'Error getting comment: {err}', level=ERROR)
         finally:
             if cursor:
                 cursor.close()
-
-        return user
+            return result

@@ -2,19 +2,6 @@ from sqlite3 import Cursor
 
 
 def apply_schema(cursor: Cursor) -> None:
-    # Create the users table
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY,
-            email TEXT UNIQUE,
-            password TEXT,
-            username TEXT,
-            created TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            last_online TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            role TEXT NOT NULL DEFAULT 'VISITOR',
-            );
-            ''')
-
     # create the blogposts table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS blogposts (
@@ -26,3 +13,15 @@ def apply_schema(cursor: Cursor) -> None:
             PRIMARY KEY (title, created)
         );
         ''')
+
+    # create the comments table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS comments (
+            uid TEXT PRIMARY KEY,
+            post_uid TEXT NOT NULL,
+            author TEXT NOT NULL,
+            title TEXT NOT NULL,
+            content TEXT NOT NULL,
+            created TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            edited TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+                   ''')
