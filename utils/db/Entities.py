@@ -1,18 +1,75 @@
 from datetime import datetime
 from uuid import uuid4
+from abc import ABC
 
 
-class Comment:
+def dt2str(dt: datetime) -> str:
+    return dt.strftime("%Y-%m-%d %H:%M:%S.%f")
+
+
+def str2dt(s: str) -> datetime:
+    return datetime.strptime(s, "%Y-%m-%d %H:%M:%S.%f")
+
+
+class Entity(ABC):
+    """
+    A base class for all entities in the database.
+    """
+
+    __slots__ = ('_uid',
+                 '_created',
+                 '_edited')
+
+    _uid: str
+    _created: datetime
+    _edited: datetime
+
+    def __init__(self,
+                 uid: str = str(uuid4()),
+                 created: datetime = datetime.now(),
+                 edited: datetime = datetime.now()) -> None:
+        self._uid = uid
+        self._created = created
+        self._edited = edited
+
+    @property
+    def uid(self) -> str:
+        return self._uid
+
+    @property
+    def created(self) -> datetime:
+        return self._created
+
+    @property
+    def edited(self) -> datetime:
+        return self._edited
+
+    @edited.setter
+    def edited(self, value: datetime) -> None:
+        self._edited = value
+
+    def created_str(self) -> str:
+        return dt2str(self._created)
+
+    def edited_str(self) -> str:
+        return dt2str(self._edited)
+
+    def is_edited(self) -> bool:
+        return self._edited != self._created
+
+
+class Comment(Entity):
     """
     A class used to represent a timestamped Comment on a given Post.
     """
 
-    __slots__ = ('uid',
-                 'title',
+    __slots__ = ('title',
                  'content',
-                 'author',
-                 'created',
-                 'edited')
+                 'author')
+
+    author: str
+    title: str
+    content: str
 
     def __init__(self,
                  uid: str = str(uuid4()),
@@ -22,12 +79,10 @@ class Comment:
                  created: datetime = datetime.now(),
                  edited: datetime = datetime.now()
                  ) -> None:
-        self.uid = uid
+        super().__init__(uid, created, edited)
         self.content = content
         self.title = title
         self.author = author
-        self.created = created
-        self.edited = edited
 
 
 class TagManager:
@@ -144,19 +199,13 @@ class TagManager:
         return list(cls.TAGS.keys())
 
 
-class Post:
+class Post(Entity):
     """
     A class used to represent a Post.
 
     Attributes:
-        _uid : str
-            unique identifier for the post
         _title : str
             title of the post
-        _created : str
-            creation timestamp of the post
-        _modified : str
-            last modified timestamp of the post
         _content : str
             content of the post
         _tags : bytes
@@ -165,20 +214,14 @@ class Post:
             list of comments on the post
     """
     __slots__ = ('_title',
-                 '_created',
-                 '_modified',
                  '_content',
                  '_tags',
-                 '_uid',
-                 '_comments')
+                 'comments')
 
-    _title: str = None
-    _created: datetime = None
-    _modified: datetime = None
-    _content: str = None
-    _tags: bytes = 0b0
-    _uid: str = None
-    _comments: list[Comment] = []
+    _title: str
+    _content: str
+    _tags: bytes
+    comments: list[Comment]
 
     def __init__(self,
                  uid: str = str(uuid4()),
@@ -189,24 +232,11 @@ class Post:
                  modified: str = datetime.now(),
                  comments: list[Comment] = []
                  ) -> None:
-        self._uid = uid
+        super().__init__(uid, created, modified)
         self._title = title
         self._content = content
         self._tags = tags
-        self._created = created
-        self._modified = modified
-        self._comments = comments
-
-    @property
-    def comments(self) -> list[Comment]:
-        return self._comments
-
-    def add_comment(self, comment: Comment) -> None:
-        self._comments.append(comment)
-
-    @property
-    def uid(self) -> str:
-        return self._uid
+        self.comments = comments
 
     @property
     def title(self) -> str:
@@ -228,24 +258,9 @@ class Post:
     def tags(self) -> bytes:
         return self._tags
 
+    def tags_str(self) -> str:
+        return ''.join(format(byte, '08b') for byte in self._tags)
+
     @tags.setter
     def tags(self, value: bytes) -> None:
         self._tags = value
-
-    @property
-    def created(self) -> datetime:
-        return self._created
-
-    def created_str(self) -> str:
-        return self._created.strftime("%Y-%m-%d %H:%M:%S")
-
-    @property
-    def modified(self) -> datetime:
-        return self._modified
-
-    def modified_str(self) -> str:
-        return self._modified.strftime("%Y-%m-%d %H:%M:%S")
-
-    @modified.setter
-    def modified(self, value: str) -> None:
-        self._modified = value
