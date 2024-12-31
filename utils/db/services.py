@@ -362,6 +362,10 @@ class PostService(Service):
     def insert(**kwargs) -> None:
         """
         Insert a new Post entity into the database.
+
+        Args:
+            - post (Post):
+                Post entity to insert
         """
         post: Post | None = kwargs.get("post", None)
         if post is None:
