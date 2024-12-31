@@ -1,4 +1,5 @@
-![Linting](https://github.com/sudoDeVinci/devinci.cloud-backend/actions/workflows/python-app.yml/badge.svg?branch=main)
+![Linting](https://github.com/sudoDeVinci/devinci.cloud-backend/actions/workflows/linting.yml/badge.svg?branch=main)
+![Type Check](https://github.com/sudoDeVinci/devinci.cloud-backend/actions/workflows/typecheck.yml/badge.svg?branch=main)
 
 # Devinci.cloud Backend Application
 
