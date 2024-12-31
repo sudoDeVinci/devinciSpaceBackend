@@ -1,4 +1,7 @@
-from sqlite3 import connect as sqlconnect, Connection, Cursor, Error as SQLError
+from sqlite3 import (connect as sqlconnect,
+                     Connection,
+                     Cursor,
+                     Error as SQLError)
 from pathlib import Path
 import json
 from utils.db.schema import apply_schema
@@ -69,7 +72,9 @@ class Manager:
             with open(cls._configfile, "r") as file:
                 data = json.load(file)
                 if not data:
-                    raise json.JSONDecodeError("Empty file", str(cls._configfile), 0)
+                    raise json.JSONDecodeError(
+                        "Empty file", str(cls._configfile), 0
+                    )
         except FileNotFoundError as err:
             cls.log(f"Error loading configuration: {err}")
             return

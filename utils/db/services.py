@@ -116,7 +116,10 @@ class CommentService(Service):
         if not postid:
             Manager.log("No post id provided.", level=ERROR)
             return result
-        query = "SELECT * FROM comments WHERE post_uid = ? " "ORDER BY created DESC;"
+        query = (
+            "SELECT * FROM comments WHERE post_uid = ? "
+            "ORDER BY created DESC;"
+        )
 
         try:
             cursor = Manager.cursor()
@@ -322,7 +325,10 @@ class PostService(Service):
         page: int = kwargs.get("page", 0)
         offset = page * limit
 
-        query = "SELECT * FROM blogposts ORDER BY created DESC " "LIMIT ? OFFSET ?;"
+        query = (
+            "SELECT * FROM blogposts ORDER BY created DESC "
+            "LIMIT ? OFFSET ?;"
+        )
 
         try:
             cursor = Manager.cursor()
@@ -340,7 +346,8 @@ class PostService(Service):
             data = cursor.fetchall()
             for row in data:
                 binary = int(row[5], 2)
-                binbytes = binary.to_bytes((binary.bit_length() + 7) // 8, "big")
+                bit_length = (binary.bit_length() + 7) // 8
+                binbytes = binary.to_bytes(bit_length, "big")
                 post = Post(
                     uid=row[0],
                     title=row[1],
@@ -390,7 +397,9 @@ class PostService(Service):
                     post.tags_str(),
                 ),
             )
-            CommentService.insert_batch(postid=post.uid, comments=post.comments)
+            CommentService.insert_batch(
+                postid=post.uid, comments=post.comments
+            )
         except SQLError as err:
             Manager.log(f"Error inserting post: {err}", level=ERROR)
         finally:
@@ -430,7 +439,8 @@ class PostService(Service):
             data = cursor.fetchall()
             for row in data:
                 binary = int(row[5], 2)
-                binbytes = binary.to_bytes((binary.bit_length() + 7) // 8, "big")
+                bit_length = (binary.bit_length() + 7) // 8
+                binbytes = binary.to_bytes(bit_length, "big")
                 post = Post(
                     uid=row[0],
                     title=row[1],
@@ -466,7 +476,8 @@ class PostService(Service):
             return result
 
         query = (
-            "SELECT * FROM blogposts WHERE " "created BETWEEN ? AND ? LIMIT ? OFFSET ?;"
+            "SELECT * FROM blogposts WHERE created BETWEEN ? AND ? "
+            "LIMIT ? OFFSET ?;"
         )
 
         try:
@@ -487,7 +498,8 @@ class PostService(Service):
             data = cursor.fetchall()
             for row in data:
                 binary = int(row[5], 2)
-                binbytes = binary.to_bytes((binary.bit_length() + 7) // 8, "big")
+                bit_length = (binary.bit_length() + 7) // 8
+                binbytes = binary.to_bytes(bit_length, "big")
                 post = Post(
                     uid=row[0],
                     title=row[1],
