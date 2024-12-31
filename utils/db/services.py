@@ -4,44 +4,48 @@ from utils.db.entities import Entity, Post, Comment, str2dt, dt2str
 from sqlite3 import Error as SQLError
 from logging import ERROR
 from datetime import datetime
+from typing import TypeVar, Generic, List
 
 
-class Service(ABC):
+Ent = TypeVar('Ent', bound=Entity)
+
+
+class Service(ABC, Generic[Ent]):
     """
     Abstract class for database services.
     This is the minimum interface that a database
     service must implement.
     """
     @abstractmethod
-    def insert(cls, **kwargs) -> None:
+    def insert(**kwargs) -> None:
         """
         Insert a new entity into the database.
         """
         pass
 
     @abstractmethod
-    def get(cls, **kwargs) -> Entity | None:
+    def get(**kwargs) -> Ent | None:
         """
         Get an entity from the database.
         """
         pass
 
     @abstractmethod
-    def list(cls, **kwargs) -> list[Entity]:
+    def list(**kwargs) -> List[Ent]:
         """
         List all entities in the database.
         """
         pass
 
     @abstractmethod
-    def update(cls, **kwargs) -> None:
+    def update(**kwargs) -> None:
         """
         Update an entity in the database.
         """
         pass
 
     @abstractmethod
-    def delete(cls, **kwargs) -> None:
+    def delete(**kwargs) -> None:
         """
         Delete an entity from the database.
         """
@@ -50,7 +54,7 @@ class Service(ABC):
 
 class CommentService(Service):
     @staticmethod
-    def get(commentid: str) -> Comment | None:
+    def get(**kwargs) -> Comment | None:
         """
         Get a Comment entity from the database by its uid.
 
@@ -62,8 +66,12 @@ class CommentService(Service):
             - Comment | None:
                 Comment entity if found, None otherwise
         """
-        query = 'SELECT * FROM comments WHERE uid = ?;'
         result: Comment | None = None
+        commentid: str | None = kwargs.get('commentid', None)
+        if not commentid:
+            Manager.log('No comment id provided.', level=ERROR)
+            return result
+        query = 'SELECT * FROM comments WHERE uid = ?;'
 
         try:
             cursor = Manager.cursor()
@@ -90,7 +98,7 @@ class CommentService(Service):
             return result
 
     @staticmethod
-    def list(postid: str) -> list[Comment]:
+    def list(**kwargs) -> List[Comment]:
         """
         List all comments for a given post.
 
@@ -99,12 +107,16 @@ class CommentService(Service):
                 unique identifier for the post
 
         Returns:
-            - list[Comment]:
+            - List[Comment]:
                 list of comments for the post
         """
+        result: List[Comment] = []
+        postid: str | None = kwargs.get('postid', None)
+        if not postid:
+            Manager.log('No post id provided.', level=ERROR)
+            return result
         query = ('SELECT * FROM comments WHERE post_uid = ? '
                  'ORDER BY created DESC;')
-        result: list[Comment] = []
 
         try:
             cursor = Manager.cursor()
@@ -131,7 +143,7 @@ class CommentService(Service):
             return result
 
     @staticmethod
-    def insert(post_uid: str, comment: Comment) -> None:
+    def insert(**kwargs) -> None:
         """
         Insert a new Comment entity into the database.
 
@@ -139,6 +151,17 @@ class CommentService(Service):
             - comment (Comment):
                 Comment entity to insert
         """
+        comment: Comment | None = kwargs.get('comment', None)
+        post_uid: str | None = kwargs.get('post_uid', None)
+
+        if not comment:
+            Manager.log('No comment provided.', level=ERROR)
+            return
+
+        if not post_uid:
+            Manager.log('No post id provided.', level=ERROR)
+            return
+
         query = 'INSERT INTO comments VALUES (?, ?, ?, ?, ?, ?, ?);'
 
         try:
@@ -163,10 +186,24 @@ class CommentService(Service):
                 cursor.close()
 
     @staticmethod
-    def insert_batch(postid: str, comments: list[Comment]) -> None:
+    def insert_batch(**kwargs) -> None:
         """
         Insert a batch of Comment entities into the database.
+        
+        Args:
+            - comments (List[Comment]):
+                list of Comment entities to insert
+            - postid (str):
+                unique identifier for the post
         """
+        comments: List[Comment] | None = kwargs.get('comments', None)
+        postid: str | None = kwargs.get('postid', None)
+        if not comments:
+            Manager.log('No comments provided.', level=ERROR)
+            return
+        if not postid:
+            Manager.log('No post id provided.', level=ERROR)
+            return
         query = 'INSERT INTO comments VALUES (?, ?, ?, ?, ?, ?, ?);'
 
         try:
@@ -194,7 +231,7 @@ class CommentService(Service):
                 cursor.close()
 
     @staticmethod
-    def update(comment: Comment) -> None:
+    def update(**kwargs) -> None:
         """
         Update a Comment entity in the database.
 
@@ -202,6 +239,10 @@ class CommentService(Service):
             - comment (Comment):
                 Comment entity to update
         """
+        comment: Comment | None = kwargs.get('comment', None)
+        if not comment:
+            Manager.log('No comment provided.', level=ERROR)
+            return
         query = ('UPDATE comments SET author = ?, title = ?,'
                  ' content = ?, edited = ? WHERE uid = ?;')
 
@@ -225,7 +266,7 @@ class CommentService(Service):
                 cursor.close()
 
     @staticmethod
-    def delete(comment: Comment) -> None:
+    def delete(**kwargs) -> None:
         """
         Delete a Comment entity from the database.
 
@@ -233,6 +274,10 @@ class CommentService(Service):
             - comment (Comment):
                 Comment entity to delete
         """
+        comment: Comment | None = kwargs.get('comment', None)
+        if not comment:
+            Manager.log('No comment provided.', level=ERROR)
+            return
         query = 'DELETE FROM comments WHERE uid = ?;'
 
         try:
@@ -251,21 +296,24 @@ class CommentService(Service):
 
 class PostService(Service):
     @staticmethod
-    def list(limit: int = 20, page: int = 0) -> list[Post]:
+    def list(**kwargs) -> List[Post]:
         """
         List all posts in the database.
         Return them in order of creation.
 
         Returns:
-            - list[Post]:
+            - List[Post]:
                 list of all posts in the database
         """
+        result: List[Post] = []
+        limit: int = kwargs.get('limit', 20)
+        page: int = kwargs.get('page', 0)
+        offset = page * limit
+
         query = (
             'SELECT * FROM blogposts ORDER BY created DESC '
             'LIMIT ? OFFSET ?;'
         )
-        result: list[Post] = []
-        offset = page * limit
 
         try:
             cursor = Manager.cursor()
@@ -288,7 +336,7 @@ class PostService(Service):
                     modified=str2dt(row[4]),
                     tags=binbytes
                 )
-                post.comments.extend(CommentService.list(row[0]))
+                post.comments.extend(CommentService.list(postid=row[0]))
                 result.append(post)
         except SQLError as err:
             Manager.log(f'Error listing posts: {err}', level=ERROR)
@@ -298,10 +346,14 @@ class PostService(Service):
             return result
 
     @staticmethod
-    def insert(post: Post) -> None:
+    def insert(**kwargs) -> None:
         """
         Insert a new Post entity into the database.
         """
+        post: Post | None = kwargs.get('post', None)
+        if post is None:
+            Manager.log('No post provided.', level=ERROR)
+            return
         query = 'INSERT INTO blogposts VALUES (?, ?, ?, ?, ?, ?);'
 
         try:
@@ -315,10 +367,11 @@ class PostService(Service):
                 post.title,
                 post.content,
                 post.created_str(),
-                post.modified_str(),
+                post.edited_str(),
                 post.tags_str()
             ))
-            CommentService.insert_batch(post.uid, post.comments)
+            CommentService.insert_batch(postid=post.uid,
+                                        comments=post.comments)
         except SQLError as err:
             Manager.log(f'Error inserting post: {err}', level=ERROR)
         finally:
@@ -326,12 +379,24 @@ class PostService(Service):
                 cursor.close()
 
     @staticmethod
-    def get_by_date(dt: datetime) -> list[Post]:
+    def get_by_date(**kwargs) -> List[Post]:
         """
         Get a Post from the database by its creation date.
+
+        Args:
+            - date (datetime):
+                date of creation
+
+        Returns:
+            - List[Post]:
+                list of posts created on the given date
         """
+        result: List[Post] = []
+        dt: datetime | None = kwargs.get('date', None)
+        if not dt:
+            Manager.log('No date provided.', level=ERROR)
+            return result
         query = 'SELECT * FROM blogposts WHERE created = ?;'
-        result: list[Post] = []
 
         try:
             cursor = Manager.cursor()
@@ -354,7 +419,7 @@ class PostService(Service):
                     modified=str2dt(row[4]),
                     tags=binbytes
                 )
-                post.comments.extend(CommentService.list(row[0]))
+                post.comments.extend(CommentService.list(postid=row[0]))
                 result.append(post)
         except SQLError as err:
             Manager.log(f'Error getting post by date: {err}', level=ERROR)
@@ -364,18 +429,24 @@ class PostService(Service):
             return result
 
     @staticmethod
-    def get_by_daterange(dt1: datetime,
-                         dt2: datetime,
-                         limit: int = 20,
-                         page: int = 0) -> list[Post]:
+    def get_by_daterange(**kwargs) -> List[Post]:
         """
         Get a list of Posts from the database by a date range.
         We can also specify a limit and offset for pagination.
         """
-        query = ('SELECT * FROM blogposts WHERE '
-                 'created BETWEEN ? AND ? LIMIT ? OFFSET ?;')
+        dt1: datetime | None = kwargs.get('date1', None)
+        dt2: datetime | None = kwargs.get('date2', None)
+        limit: int = kwargs.get('limit', 20)
+        page: int = kwargs.get('page', 0)
         result: list[Post] = []
         offset = page * limit
+
+        if not dt1 or not dt2:
+            Manager.log('Invalid date range provided.', level=ERROR)
+            return result
+
+        query = ('SELECT * FROM blogposts WHERE '
+                 'created BETWEEN ? AND ? LIMIT ? OFFSET ?;')
 
         try:
             cursor = Manager.cursor()
@@ -398,10 +469,10 @@ class PostService(Service):
                     modified=str2dt(row[4]),
                     tags=binbytes
                 )
-                post.comments.extend(CommentService.list(row[0]))
+                post.comments.extend(CommentService.list(postid=row[0]))
                 result.append(post)
         except SQLError as err:
-            Manager.log(f'Error getting post by date range: {err}', level=ERROR)
+            Manager.log(f'Error getting post: {err}', level=ERROR)
         finally:
             if cursor:
                 cursor.close()

@@ -92,8 +92,6 @@ class TagManager:
     perform tag-based operations efficiently.
     """
 
-    __slots__ = ('TAGS')
-
     # Tag-to-bit mapping
     TAGS: dict[str, int] = {
         "backend": 1,
@@ -227,9 +225,9 @@ class Post(Entity):
                  uid: str = str(uuid4()),
                  title: str = '',
                  content: str = '',
-                 tags: bytes = 0b0,
-                 created: str = datetime.now(),
-                 modified: str = datetime.now(),
+                 tags: bytes = bytes(0),
+                 created: datetime = datetime.now(),
+                 modified: datetime = datetime.now(),
                  comments: list[Comment] = []
                  ) -> None:
         super().__init__(uid, created, modified)
@@ -258,9 +256,9 @@ class Post(Entity):
     def tags(self) -> bytes:
         return self._tags
 
-    def tags_str(self) -> str:
-        return ''.join(format(byte, '08b') for byte in self._tags)
-
     @tags.setter
     def tags(self, value: bytes) -> None:
         self._tags = value
+
+    def tags_str(self) -> str:
+        return ''.join(format(byte, '08b') for byte in self._tags)

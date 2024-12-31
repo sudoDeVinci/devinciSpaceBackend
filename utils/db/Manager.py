@@ -33,7 +33,7 @@ class Manager:
     _configfile: Path = Path('configs') / 'config.json'
     _dbfile: Path = Path('utils') / 'db' / 'database.db'
     _logfile: Path = Path('logs') / 'db.log'
-    logger: Logger | None = None
+    logger: Logger
 
     @classmethod
     def log(cls, message: str, level: int = INFO) -> None:
@@ -61,7 +61,7 @@ class Manager:
         # Create necessary directories
         Path('logs').mkdir(exist_ok=True)
         Path('configs').mkdir(exist_ok=True)
-        cls.logger = basicConfig(
+        basicConfig(
             level=INFO,
             format='%(asctime)s - %(levelname)s - %(message)s',
             handlers=[
@@ -69,6 +69,7 @@ class Manager:
                 FileHandler(str(cls._logfile)),
             ],
         )
+        cls.logger = Logger('db_logger')
 
         data = None
 
@@ -77,16 +78,14 @@ class Manager:
                 data = json.load(file)
                 if not data:
                     raise json.JSONDecodeError("Empty file",
-                                               cls._configfile,
+                                               str(cls._configfile),
                                                0)
         except FileNotFoundError as err:
             cls.log(f"Error loading configuration: {err}")
-            return {}
+            return
         except json.JSONDecodeError as err:
             cls.log(f"Error parsing configuration: {err}")
-            return {}
-
-        return data
+            return
 
     @classmethod
     def connected(cls) -> bool:
@@ -124,7 +123,10 @@ class Manager:
             Cursor:
                 Cursor object to the SQLite database.
         """
-        return cls.connection().cursor if cls.connected() else None
+        conn = cls.connection()
+        if conn:
+            return conn.cursor()
+        return None
 
     @classmethod
     def connect(cls) -> None:
