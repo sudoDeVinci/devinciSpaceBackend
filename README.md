@@ -1,3 +1,5 @@
+![Linting](https://github.com/sudoDeVinci/devinci.cloud-backend/blob/main/.github/workflows/python-app.yml/badge.svg)
+
 # Devinci.cloud Backend Application
 
 A web application built with Flask and SQLite providing database and routing functionality for the website `devinci.cloud`.
