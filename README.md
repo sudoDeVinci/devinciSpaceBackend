@@ -6,7 +6,7 @@ A web application built with Flask and SQLite providing database and routing fun
 
 ## Project Structure
 
-```json
+```
 .
 ├── main.py
 ├── README.md
@@ -20,7 +20,9 @@ A web application built with Flask and SQLite providing database and routing fun
     ├── routes.py
     └── db/
         │ 
-        ├── Entities.py 
-        ├── Manager.py
+        ├── entities.py 
+        ├── manager.py
+        ├── services.py
         └── schema.py
+
 ```
