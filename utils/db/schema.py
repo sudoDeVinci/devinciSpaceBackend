@@ -3,7 +3,8 @@ from sqlite3 import Cursor
 
 def apply_schema(cursor: Cursor) -> None:
     # create the blogposts table
-    cursor.execute('''
+    cursor.execute(
+        """
         CREATE TABLE IF NOT EXISTS blogposts (
             uid TEXT PRIMARY KEY,
             title TEXT NOT NULL UNIQUE,
@@ -12,10 +13,12 @@ def apply_schema(cursor: Cursor) -> None:
             modified TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
             tags TEXT NOT NULL DEFAULT 0,
         );
-        ''')
+        """
+    )
 
     # create the comments table
-    cursor.execute('''
+    cursor.execute(
+        """
         CREATE TABLE IF NOT EXISTS comments (
             uid TEXT PRIMARY KEY,
             post_uid TEXT NOT NULL REFERENCES blogposts(uid),
@@ -25,4 +28,5 @@ def apply_schema(cursor: Cursor) -> None:
             created TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
             edited TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
         );
-                   ''')
+                   """
+    )

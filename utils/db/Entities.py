@@ -16,18 +16,18 @@ class Entity(ABC):
     A base class for all entities in the database.
     """
 
-    __slots__ = ('_uid',
-                 '_created',
-                 '_edited')
+    __slots__ = ("_uid", "_created", "_edited")
 
     _uid: str
     _created: datetime
     _edited: datetime
 
-    def __init__(self,
-                 uid: str = str(uuid4()),
-                 created: datetime = datetime.now(),
-                 edited: datetime = datetime.now()) -> None:
+    def __init__(
+        self,
+        uid: str = str(uuid4()),
+        created: datetime = datetime.now(),
+        edited: datetime = datetime.now(),
+    ) -> None:
         self._uid = uid
         self._created = created
         self._edited = edited
@@ -63,22 +63,21 @@ class Comment(Entity):
     A class used to represent a timestamped Comment on a given Post.
     """
 
-    __slots__ = ('title',
-                 'content',
-                 'author')
+    __slots__ = ("title", "content", "author")
 
     author: str
     title: str
     content: str
 
-    def __init__(self,
-                 uid: str = str(uuid4()),
-                 author: str = '',
-                 title: str = '',
-                 content: str = '',
-                 created: datetime = datetime.now(),
-                 edited: datetime = datetime.now()
-                 ) -> None:
+    def __init__(
+        self,
+        uid: str = str(uuid4()),
+        author: str = "",
+        title: str = "",
+        content: str = "",
+        created: datetime = datetime.now(),
+        edited: datetime = datetime.now(),
+    ) -> None:
         super().__init__(uid, created, edited)
         self.content = content
         self.title = title
@@ -107,7 +106,7 @@ class TagManager:
         "Linux": 11,
         "Windows": 12,
         "hardware": 13,
-        "software": 14
+        "software": 14,
     }
 
     @classmethod
@@ -121,7 +120,7 @@ class TagManager:
         tag_int = 0
         for tag in tag_list:
             if tag in cls.TAGS:
-                tag_int |= (1 << cls.TAGS[tag])
+                tag_int |= 1 << cls.TAGS[tag]
             else:
                 raise ValueError(f"Tag '{tag}' is not recognized.")
         # Calculate the number of bytes required to store the bits
@@ -137,9 +136,7 @@ class TagManager:
         :return: List of decoded tag names.
         """
         tag_int = int.from_bytes(tag_bytes, byteorder="big")
-        return [
-            tag for tag, bit in cls.TAGS.items() if tag_int & (1 << bit)
-        ]
+        return [tag for tag, bit in cls.TAGS.items() if tag_int & (1 << bit)]
 
     @classmethod
     def has_tag(cls, tag_bytes: bytes, tag: str) -> bool:
@@ -167,7 +164,7 @@ class TagManager:
         if tag not in cls.TAGS:
             raise ValueError(f"Tag '{tag}' is not recognized.")
         tag_int = int.from_bytes(tag_bytes, byteorder="big")
-        tag_int |= (1 << cls.TAGS[tag])
+        tag_int |= 1 << cls.TAGS[tag]
         num_bytes = len(tag_bytes)
         return tag_int.to_bytes(num_bytes, byteorder="big")
 
@@ -211,25 +208,24 @@ class Post(Entity):
         _comments : list[Comments]
             list of comments on the post
     """
-    __slots__ = ('_title',
-                 '_content',
-                 '_tags',
-                 'comments')
+
+    __slots__ = ("_title", "_content", "_tags", "comments")
 
     _title: str
     _content: str
     _tags: bytes
     comments: list[Comment]
 
-    def __init__(self,
-                 uid: str = str(uuid4()),
-                 title: str = '',
-                 content: str = '',
-                 tags: bytes = bytes(0),
-                 created: datetime = datetime.now(),
-                 modified: datetime = datetime.now(),
-                 comments: list[Comment] = []
-                 ) -> None:
+    def __init__(
+        self,
+        uid: str = str(uuid4()),
+        title: str = "",
+        content: str = "",
+        tags: bytes = bytes(0),
+        created: datetime = datetime.now(),
+        modified: datetime = datetime.now(),
+        comments: list[Comment] = [],
+    ) -> None:
         super().__init__(uid, created, modified)
         self._title = title
         self._content = content
@@ -261,4 +257,4 @@ class Post(Entity):
         self._tags = value
 
     def tags_str(self) -> str:
-        return ''.join(format(byte, '08b') for byte in self._tags)
+        return "".join(format(byte, "08b") for byte in self._tags)

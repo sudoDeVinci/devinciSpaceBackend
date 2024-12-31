@@ -3,3 +3,6 @@ logs
 *.log
 *.pyc
 *.db
+.mypy_cache
+.ruff_cache
+__pycache__

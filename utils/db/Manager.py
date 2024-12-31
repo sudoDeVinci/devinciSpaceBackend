@@ -1,17 +1,8 @@
-from sqlite3 import (connect as sqlconnect,
-                     Connection,
-                     Cursor,
-                     Error as SQLError)
+from sqlite3 import connect as sqlconnect, Connection, Cursor, Error as SQLError
 from pathlib import Path
 import json
 from utils.db.schema import apply_schema
-from logging import (
-    INFO,
-    FileHandler,
-    Logger,
-    StreamHandler,
-    basicConfig
-)
+from logging import INFO, FileHandler, Logger, StreamHandler, basicConfig
 
 
 class Manager:
@@ -29,10 +20,11 @@ class Manager:
         logger (Logger):
             Logger object for logging messages.
     """
+
     _connection: Connection | None = None
-    _configfile: Path = Path('configs') / 'config.json'
-    _dbfile: Path = Path('utils') / 'db' / 'database.db'
-    _logfile: Path = Path('logs') / 'db.log'
+    _configfile: Path = Path("configs") / "config.json"
+    _dbfile: Path = Path("utils") / "db" / "database.db"
+    _logfile: Path = Path("logs") / "db.log"
     logger: Logger
 
     @classmethod
@@ -59,27 +51,25 @@ class Manager:
         """
 
         # Create necessary directories
-        Path('logs').mkdir(exist_ok=True)
-        Path('configs').mkdir(exist_ok=True)
+        Path("logs").mkdir(exist_ok=True)
+        Path("configs").mkdir(exist_ok=True)
         basicConfig(
             level=INFO,
-            format='%(asctime)s - %(levelname)s - %(message)s',
+            format="%(asctime)s - %(levelname)s - %(message)s",
             handlers=[
                 StreamHandler(),
                 FileHandler(str(cls._logfile)),
             ],
         )
-        cls.logger = Logger('db_logger')
+        cls.logger = Logger("db_logger")
 
         data = None
 
         try:
-            with open(cls._configfile, 'r') as file:
+            with open(cls._configfile, "r") as file:
                 data = json.load(file)
                 if not data:
-                    raise json.JSONDecodeError("Empty file",
-                                               str(cls._configfile),
-                                               0)
+                    raise json.JSONDecodeError("Empty file", str(cls._configfile), 0)
         except FileNotFoundError as err:
             cls.log(f"Error loading configuration: {err}")
             return
