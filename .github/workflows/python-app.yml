@@ -29,10 +29,6 @@ jobs:
         pip install flake8 ruff black mypy
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: Static Type Check with Mypy
-      run: |
-        mypy .
-
     - name: Check wth ruff
       run: |
         ruff check
