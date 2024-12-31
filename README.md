@@ -1,4 +1,4 @@
-![Linting](https://github.com/sudoDeVinci/devinci.cloud-backend/blob/main/.github/workflows/python-app.yml/badge.svg)
+![Linting](https://github.com/sudoDeVinci/devinci.cloud-backend/actions/workflows/python-app.yml/badge.svg?branch=main)
 
 # Devinci.cloud Backend Application
 
