@@ -4,7 +4,7 @@ from sqlite3 import (connect as sqlconnect,
                      Error as SQLError)
 from pathlib import Path
 import json
-from utils.db.schema import apply_schema
+from server.db.schema import apply_schema
 from logging import INFO, FileHandler, Logger, StreamHandler, basicConfig
 
 

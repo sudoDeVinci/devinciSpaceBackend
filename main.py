@@ -1,4 +1,4 @@
-from utils.db.manager import Manager
+from server.db import Manager
 
 Manager.load()
 Manager.connect()

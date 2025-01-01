@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from utils.db.manager import Manager
-from utils.db.entities import Entity, Post, Comment, str2dt, dt2str
+from server.db.manager import Manager
+from server.db.entities import Entity, Post, Comment, str2dt, dt2str
 from sqlite3 import Error as SQLError
 from logging import ERROR
 from datetime import datetime
