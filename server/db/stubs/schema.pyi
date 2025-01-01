@@ -1,0 +1,3 @@
+from sqlite3 import Cursor
+
+def apply_schema(cursor: Cursor) -> None: ...
