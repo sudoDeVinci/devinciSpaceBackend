@@ -1,4 +1,10 @@
-from server import Manager
+from server import Manager, create_app
 
-Manager.load()
-Manager.connect()
+app = create_app()
+
+if __name__ == "__main__":
+    try:
+        Manager.load()
+        Manager.connect()
+    except Exception as err:
+        print(err)

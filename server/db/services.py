@@ -308,10 +308,65 @@ class CommentService(Service):
 
 class PostService(Service):
     @staticmethod
+    def get(**kwargs) -> Post | None:
+        """
+        Get a Post entity from the database by its uid.
+
+        Args:
+            - postid (str):
+                unique identifier for the post
+
+        Returns:
+            - Post | None:
+                Post entity if found, None otherwise
+        """
+        result: Post | None = None
+        postid: str | None = kwargs.get("postid", None)
+        if not postid:
+            Manager.log("No post id provided.", level=ERROR)
+            return result
+        query = "SELECT * FROM blogposts WHERE uid = ?;"
+
+        try:
+            cursor = Manager.cursor()
+            if not cursor:
+                Manager.log("Failed to get cursor.", level=ERROR)
+                return result
+
+            cursor.execute(query, (postid,))
+            data = cursor.fetchone()
+            if data:
+                binary = int(data[5], 2)
+                bit_length = (binary.bit_length() + 7) // 8
+                binbytes = binary.to_bytes(bit_length, "big")
+                result = Post(
+                    uid=data[0],
+                    title=data[1],
+                    content=data[2],
+                    created=str2dt(data[3]),
+                    modified=str2dt(data[4]),
+                    tags=binbytes,
+                )
+                result.comments.extend(CommentService.list(postid=postid))
+        except SQLError as err:
+            Manager.log(f"Error getting post: {err}", level=ERROR)
+        finally:
+            if cursor:
+                cursor.close()
+
+        return result
+
+    @staticmethod
     def list(**kwargs) -> List[Post]:
         """
         List all posts in the database.
         Return them in order of creation.
+
+        Args:
+            - limit (int):
+                number of posts to return
+            - page (int):
+                page number for pagination
 
         Returns:
             - List[Post]:
