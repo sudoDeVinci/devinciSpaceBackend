@@ -152,8 +152,9 @@ export default class Environment {
     this.notificationContainer.style.marginLeft = 'auto'
     this.notificationContainer.style.alignItems = 'center'
 
+    this.datetime = new Date()
     const time = document.createElement('div')
-    time.textContent = new Date().toLocaleTimeString()
+    time.textContent = this.datetime.toLocaleTimeString()
     time.style.fontSize = '14px'
     time.style.color = 'rgb(0, 0, 0)'
     time.style.fontFamily = '"Pixelated MS Sans Serif", Arial'
@@ -162,7 +163,10 @@ export default class Environment {
     time.style.textOverflow = 'ellipsis'
     this.notificationContainer.appendChild(time)
     this.taskbar.appendChild(this.notificationContainer)
-
+    setInterval(() => {
+      this.datetime.setSeconds(this.datetime.getSeconds() + 1)
+      time.textContent = this.datetime.toLocaleTimeString()
+    }, 1000)
     // Bind methods
     this.onMouseMove = this.onMouseMove.bind(this)
     this.onMouseUp = this.onMouseUp.bind(this)
