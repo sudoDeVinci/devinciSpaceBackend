@@ -83,6 +83,16 @@ class Comment(Entity):
         self.title = title
         self.author = author
 
+    def json(self) -> dict:
+        return {
+            "uid": self._uid,
+            "author": self.author,
+            "title": self.title,
+            "content": self.content,
+            "created": dt2str(self._created),
+            "edited": dt2str(self._edited),
+        }
+
 
 class TagManager:
     """
@@ -258,3 +268,14 @@ class Post(Entity):
 
     def tags_str(self) -> str:
         return "".join(format(byte, "08b") for byte in self._tags)
+
+    def json(self) -> dict:
+        return {
+            "uid": self._uid,
+            "title": self._title,
+            "content": self._content,
+            "tags": TagManager.decode_tags(self._tags),
+            "created": dt2str(self._created),
+            "edited": dt2str(self._edited),
+            "comments": [comment.json() for comment in self.comments],
+        }

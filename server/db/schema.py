@@ -11,7 +11,7 @@ def apply_schema(cursor: Cursor) -> None:
             content TEXT NOT NULL,
             created TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
             modified TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            tags TEXT NOT NULL DEFAULT 0,
+            tags TEXT NOT NULL DEFAULT 0
         );
         """
     )

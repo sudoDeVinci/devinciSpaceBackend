@@ -1,10 +1,13 @@
 from server import Manager, create_app
-
-app = create_app()
+from server import PostService, Post, TagManager
 
 if __name__ == "__main__":
-    try:
-        Manager.load()
-        Manager.connect()
-    except Exception as err:
-        print(err)
+    Manager.connect()
+    PostService.insert(post=Post(uid="1",
+                            title="Hello",
+                            content="World",
+                            tags=TagManager.encode_tags(['python', 'software']),
+                            comments=[])
+                        )
+    app = create_app()
+    app.run(debug=True)
