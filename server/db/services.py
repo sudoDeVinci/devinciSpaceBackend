@@ -328,7 +328,9 @@ class PostService(Service):
         query = "SELECT * FROM blogposts WHERE uid = ?;"
         try:
             with Manager.cursor() as cursor:
-
+                if not cursor:
+                    Manager.log("Failed to get cursor.", level=ERROR)
+                    return result
                 cursor.execute(query, (postid,))
                 data = cursor.fetchone()
                 if data:

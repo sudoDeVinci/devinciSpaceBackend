@@ -32,7 +32,7 @@ class SQLiteConnectionPool:
             conn = connect(
                 database=self.database,
                 timeout=self.timeout,
-                check_same_thread=False  # Required for multi-threaded access
+                check_same_thread=False,  # Required for multi-threaded access
             )
             # Enable foreign keys
             conn.execute("PRAGMA foreign_keys = ON")
@@ -65,6 +65,7 @@ class Manager:
     """
     Static Management class for Database configuration.
     """
+
     _pool: Optional[SQLiteConnectionPool] = None
     _configfile: Path = Path("configs") / "config.json"
     _dbfile: Path = Path("server") / "db" / "database.db"
@@ -74,7 +75,7 @@ class Manager:
     @classmethod
     def log(cls, message: str, level: int = INFO) -> None:
         """Log a message to the logger."""
-        if not hasattr(cls, 'logger'):
+        if not hasattr(cls, "logger"):
             cls.load()
         cls.logger.log(level, message)
 
@@ -118,7 +119,7 @@ class Manager:
             cls._pool = SQLiteConnectionPool(
                 database=str(cls._dbfile),
                 size=5,  # Adjust pool size as needed
-                timeout=30.0
+                timeout=30.0,
             )
         except SQLError as err:
             cls._pool = None
@@ -152,7 +153,7 @@ class Manager:
         """
         if not cls.connected():
             cls.connect()
-        
+
         conn = cls._pool.get_connection() if cls._pool else None
         try:
             yield conn
@@ -165,18 +166,18 @@ class Manager:
     def cursor(cls) -> Generator[Optional[Cursor], None, None]:
         """
         Get a cursor from a pooled connection. Can be used as a context manager.
-        
+
         Returns:
         --------
             Cursor: Cursor object from the SQLite database connection.
-            
+
         Usage:
         ------
             # As a context manager:
             with Manager.cursor() as cursor:
                 cursor.execute("SELECT * FROM table")
                 results = cursor.fetchall()
-                
+
             # Or traditional way:
             cursor = Manager.cursor()
             try:
