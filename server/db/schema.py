@@ -1,13 +1,15 @@
 from sqlite3 import Cursor
 
 
-def apply_schema(cursor: Cursor) -> None:
+def apply_schema(cursor: Cursor | None) -> None:
+    if cursor is None:
+        raise ValueError("Cursor is required")
     # create the blogposts table
     cursor.execute(
         """
         CREATE TABLE IF NOT EXISTS blogposts (
             uid TEXT PRIMARY KEY,
-            title TEXT NOT NULL UNIQUE,
+            title TEXT NOT NULL,
             content TEXT NOT NULL,
             created TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
             modified TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -230,7 +230,7 @@ class CommentService(Service):
                     for c in comments
                 )
 
-            cursor.executemany(query, comment_data)
+                cursor.executemany(query, comment_data)
         except SQLError as err:
             Manager.log(f"Error inserting comments: {err}", level=ERROR)
         finally:
@@ -273,9 +273,6 @@ class CommentService(Service):
                 )
         except SQLError as err:
             Manager.log(f"Error updating comment: {err}", level=ERROR)
-        finally:
-            if cursor:
-                cursor.close()
 
     @staticmethod
     def delete(**kwargs) -> None:
@@ -301,9 +298,6 @@ class CommentService(Service):
                 cursor.execute(query, (comment.uid,))
         except SQLError as err:
             Manager.log(f"Error deleting comment: {err}", level=ERROR)
-        finally:
-            if cursor:
-                cursor.close()
 
 
 class PostService(Service):
@@ -441,7 +435,26 @@ class PostService(Service):
                         post.tags_str(),
                     ),
                 )
-                CommentService.insert_batch(postid=post.uid, comments=post.comments)
+                # CommentService.insert_batch(postid=post.uid, comments=post.comments)
+                if post.comments:
+                    comment_data = tuple(
+                        (
+                            c.uid,
+                            post.uid,
+                            c.author,
+                            c.title,
+                            c.content,
+                            c.created_str(),
+                            c.edited_str(),
+                        )
+                        for c in post.comments
+                    )
+                    for comment in comment_data:
+                        print(comment)
+                    cursor.executemany(
+                        "INSERT INTO comments VALUES (?, ?, ?, ?, ?, ?, ?);",
+                        comment_data,
+                    )
         except SQLError as err:
             Manager.log(f"Error inserting post: {err}", level=ERROR)
 

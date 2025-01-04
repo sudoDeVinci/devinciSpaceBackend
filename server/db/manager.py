@@ -4,8 +4,9 @@ from threading import Lock
 from typing import Optional, Generator
 from pathlib import Path
 import json
-from logging import INFO, FileHandler, Logger, StreamHandler, basicConfig
+from logging import INFO, FileHandler, Logger, StreamHandler, basicConfig, getLogger
 from contextlib import contextmanager
+from server.db.schema import apply_schema
 
 
 class SQLiteConnectionPool:
@@ -36,6 +37,7 @@ class SQLiteConnectionPool:
             )
             # Enable foreign keys
             conn.execute("PRAGMA foreign_keys = ON")
+            conn.execute("PRAGMA busy_timeout = 30000")
             self._pool.put(conn)
 
     def get_connection(self) -> Optional[Connection]:
@@ -94,11 +96,12 @@ class Manager:
                 FileHandler(str(cls._logfile)),
             ],
         )
-        cls.logger = Logger("db_logger")
+        cls.logger = getLogger(__name__)
 
         try:
             with open(cls._configfile, "r") as file:
                 data = json.load(file)
+                # TODO: Load configuration data
                 if not data:
                     raise json.JSONDecodeError("Empty file", str(cls._configfile), 0)
         except FileNotFoundError as err:
@@ -119,8 +122,14 @@ class Manager:
             cls._pool = SQLiteConnectionPool(
                 database=str(cls._dbfile),
                 size=5,  # Adjust pool size as needed
-                timeout=30.0,
+                timeout=10.0,
             )
+
+            with cls.cursor() as cursor:
+                if cursor is None:
+                    raise ValueError("Cursor is required")
+                apply_schema(cursor)
+                cursor.connection.commit()
         except SQLError as err:
             cls._pool = None
             cls.log(f"Error connecting to the database: {err}")

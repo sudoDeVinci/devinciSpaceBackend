@@ -4,6 +4,7 @@ from flask import (  # type: ignore
     render_template,
     send_from_directory,
     jsonify,
+    request,
 )
 
 from server.db import (
@@ -37,11 +38,27 @@ def contact() -> str:
     return render_template("contact.html")
 
 
-@routes.route("/blogposts", methods=["GET"], defaults={"post_id": 1})
-@routes.route("/blogposts/<int:post_id>")
+@routes.route("/blogpost", methods=["GET"], defaults={"post_id": 1})
+@routes.route("/blogpost/<int:post_id>")
 def post(post_id: int) -> tuple[Response, int]:
     print(f"Post ID: {post_id}")
     post = PostService.get(postid=str(post_id))
     if post is None:
         return jsonify({"error": "Not found"}), 404
-    return jsonify(post.json()), 200
+    return jsonify({"post": post.json()}), 200
+
+
+@routes.route("/blogposts", methods=["GET"])
+def posts() -> tuple[Response, int]:
+    page = int(request.args.get("page", 0))
+    limit = int(request.args.get("limit", 10))
+    posts = PostService.list(page=page, limit=limit)
+    return (
+        jsonify(
+            {
+                "posts": [post.json() for post in posts],
+                "count": len(posts),
+            }
+        ),
+        200,
+    )

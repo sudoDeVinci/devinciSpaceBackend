@@ -279,7 +279,7 @@ export default class Environment {
     this.taskbar.appendChild(icon1)
     const icon2 = this.createTaskbarIcon('Projects', Window, null)
     this.taskbar.appendChild(icon2)
-    const icon3 = this.createTaskbarIcon('About Me', Window, null)
+    const icon3 = this.createTaskbarIcon('Posts', Window, null)
     this.taskbar.appendChild(icon3)
     const icon4 = this.createTaskbarIcon('Contact', Window, null)
     this.taskbar.appendChild(icon4)
@@ -313,8 +313,8 @@ export default class Environment {
         x: 20,
         y: 50,
         type: Window,
-        height: 400,
-        width: 550,
+        height: 250,
+        width: 350,
         content: "<img src = 'images/clippy.gif'/>"
       },
       {
