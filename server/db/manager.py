@@ -6,7 +6,7 @@ from pathlib import Path
 import json
 from logging import INFO, FileHandler, Logger, StreamHandler, basicConfig, getLogger
 from contextlib import contextmanager
-from db.schema import apply_schema
+from server.db.schema import apply_schema
 
 
 class SQLiteConnectionPool:
@@ -71,7 +71,7 @@ class Manager:
     _pool: Optional[SQLiteConnectionPool] = None
     _configfile: Path = Path("configs") / "config.json"
     _dbfile: Path = Path("server") / "db" / "database.db"
-    _logfile: Path = Path("logs") / "db.log"
+    _logfile: Path = Path("logs") / "server.db.log"
     logger: Logger
 
     @classmethod

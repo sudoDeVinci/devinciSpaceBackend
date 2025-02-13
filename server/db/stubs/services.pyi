@@ -1,6 +1,6 @@
 import abc
 from abc import ABC, abstractmethod
-from db.entities import Comment, Entity, Post
+from server.db.entities import Comment, Entity, Post
 from typing import Generic, TypeVar, List
 
 Ent = TypeVar("Ent", bound=Entity)

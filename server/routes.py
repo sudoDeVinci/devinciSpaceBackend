@@ -7,7 +7,7 @@ from flask import (  # type: ignore
     request,
 )
 
-from db import (
+from server.db import (
     PostService,
 )
 
