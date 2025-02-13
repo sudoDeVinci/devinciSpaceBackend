@@ -8,8 +8,7 @@ This is my personal portfolio website, devinci.cloud. The site is modeled after 
 
 Styling for the windows components is done using the [98.css](https://jdan.github.io/98.css/) package for consistency. 
 
-The site is self hosted, and is served using a Flask server.
-
+The site is self hosted, and is served using a Flask server
 
 ## Flask Server
 
