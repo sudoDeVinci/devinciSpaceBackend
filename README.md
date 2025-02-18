@@ -40,9 +40,3 @@ A minimal Flask and SQLite  app providing database and routing functionality.
         ├── services.py
         └── schema.py
 ```
-
-## Window Components
-
-Windows are vanilla ES6 modules, and are bundled using Vite. The components are styled using 98.css for consistency. The framework I created for this is designed to be easily extensible, and can be used to create new windows with minimal effort. 
-
-The desktop environment and window are served first, with each window calling the server for its content independently. 
