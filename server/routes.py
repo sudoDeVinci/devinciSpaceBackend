@@ -8,10 +8,11 @@ from flask import (  # type: ignore
 )
 from os.path import join
 from typing import Final
+from os import getcwd
 
 from .gh.repositories import get_repositories
 
-STATIC: Final[str] = join("..", "dist")
+STATIC: Final[str] = join(getcwd(), "dist")
 CSS: Final[str] = join(STATIC, "css")
 IMAGES: Final[str] = join(STATIC, "images")
 ICONS: Final[str] = join(STATIC, "icons")

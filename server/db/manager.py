@@ -6,7 +6,7 @@ from pathlib import Path
 import json
 from logging import INFO, FileHandler, Logger, StreamHandler, basicConfig, getLogger
 from contextlib import contextmanager
-from server.db.schema import apply_schema
+from .schema import apply_schema
 
 
 class SQLiteConnectionPool:

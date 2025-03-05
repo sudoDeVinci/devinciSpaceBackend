@@ -1,6 +1,6 @@
-from server.db.manager import Manager
-from server.db.entities import Post, Comment, TagManager
-from server.db.services import PostService, CommentService
+from .manager import Manager
+from .entities import Post, Comment, TagManager
+from .services import PostService, CommentService
 
 __version__ = "0.0.1"
 

@@ -1,7 +1,11 @@
 from typing import Any, Dict, List, TypedDict, Final
 from github import Github, Auth, Repository, ContentFile
-from os import environ
+from os import environ, getcwd
+from os.path import join
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
+
+load_dotenv(join(getcwd(), ".env"))
 
 class RepositoryDict(TypedDict):
     title: str
@@ -38,8 +42,10 @@ def get_project_thumbnail(repo: Repository.Repository, paths: List[str] = ["thum
     return ""
 
 def get_repositories() -> List[RepositoryDict]:
-    global REPOSITORIES
+    global REPOSITORIES, TOKEN
     repos: List[RepositoryDict] = []
+
+    print(f">>>> TOKEN is {TOKEN}")
 
 
     if REPOSITORIES is not None:
