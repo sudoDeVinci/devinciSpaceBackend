@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/98.css@0.1.4/build/98.css" />
+  <link rel="stylesheet" href="/css/welcome.css" />
+  <link rel="stylesheet" href="/css/projects.css" />
+  <title>Projects</title>
+</head>
+<body class="win98-body">
+  <div class="projects-container">
+    
+    <p class="projects-intro">Here are some of the projects I've been working on. Feel free to click on any of them for more details!</p>
+    
+    <div class="projects-grid">
+      {% for project in projects %}
+        {% include 'project_card.jinja' %}
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>

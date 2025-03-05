@@ -1,0 +1,32 @@
+<div class="window project-card" tabindex="0">
+  <div class="title-bar">
+    <div class="title-bar-text">
+      <img src="/icons/win_controls/directory_open.png" alt="Project" class="title-icon">
+      {{ project.title }}
+    </div>
+  </div>
+  <div class="window-body project-window-body">
+    <div class="project-thumbnail">
+      <img src="{{ project.thumbnail }}" alt="{{ project.title }}" />
+    </div>
+    
+    <div class="project-content">
+      <p class="project-description">{{ project.description }}</p>
+      
+      <div class="project-tags">
+        {% for tag in project.tags %}
+          <span class="project-tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
+      
+      <div class="project-actions">
+        {% if project.repo_url %}
+          <button onclick="window.location.href='{{ project.repo_url }}'">
+          <img src="/icons/win_controls/globe.png" alt="Globe" class="button-icon">
+            Source
+          </button>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
