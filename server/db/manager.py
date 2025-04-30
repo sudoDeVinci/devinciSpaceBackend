@@ -70,7 +70,7 @@ class Manager:
 
     _pool: Optional[SQLiteConnectionPool] = None
     _configfile: Path = Path("configs") / "config.json"
-    _dbfile: Path = Path("server") / "db" / "database.db"
+    _dbfile: Path = Path(__file__) / "database.db"
     _logfile: Path = Path("logs") / "server.db.log"
     logger: Logger
 

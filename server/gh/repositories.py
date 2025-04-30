@@ -22,7 +22,7 @@ class RepositorySlice(TypedDict):
     updated: datetime
 
 REPOSITORIES: RepositorySlice | None = None
-TOKEN: Final[str] = environ.get("GITHUB_TOKEN")
+TOKEN: Final[str] = environ.get("GITHUB_TOKEN", "")
 
 
 def get_project_thumbnail(repo: Repository.Repository, paths: List[str] = ["thumbnail.png", ".github/thumbnail.png", "logo.png"]) -> str:

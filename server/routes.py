@@ -28,7 +28,6 @@ def catch_all(path: str = "") -> Response:
         return send_from_directory(STATIC, "index.html")
 
 # Media routes.
-
 @routes.route("/css", defaults={"filepath": ""}, methods=["GET"])
 @routes.route("/css/<path:filepath>", methods=["GET"])
 def css(filepath: str="") -> str:
@@ -59,7 +58,6 @@ def assets(assetpath: str="") -> str:
 
 
 # API routes
-
 @routes.route("/about", methods=["GET"])
 def about() -> str:
     return render_template("about.html")
