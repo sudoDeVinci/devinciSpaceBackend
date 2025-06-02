@@ -3,9 +3,11 @@ from flask import (  # type: ignore
     Response,
     render_template,
     send_from_directory,
+    session,
     jsonify,
     request,
 )
+
 from os.path import join
 from typing import Final
 from os import getcwd
@@ -57,7 +59,9 @@ def assets(assetpath: str="") -> str:
     return send_from_directory(ASSETS, assetpath, mimetype=mime)
 
 
-# API routes
+"""
+Page routes - Each is rendered within separate windows
+"""
 @routes.route("/about", methods=["GET"])
 def about() -> str:
     return render_template("about.html")
@@ -65,6 +69,10 @@ def about() -> str:
 @routes.route("/welcome", methods=["GET"])
 def welcome() -> str:
     return render_template("welcome.html")
+
+@routes.route("/contact", methods=["GET"])
+def contact() -> str:
+    return render_template("contact.html")
 
 @routes.route("/projects", methods=["GET"])
 def projects() -> str:

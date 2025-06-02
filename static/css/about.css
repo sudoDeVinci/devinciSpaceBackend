@@ -1,6 +1,6 @@
 @import url("/css/utility.css");
 
-.content-body{
+.content-body {
   background-color: var(--off-white);
   font-family: 'MS Sans Serif', Arial, sans-serif;
   padding: 20px;
@@ -10,70 +10,62 @@
   margin: 0 auto;
 }
 
-.welcome-container {
+.about-container {
   display: flex;
   align-items: flex-start;
   gap: 20px;
 }
 
-.welcome-container p {
+.about-container p {
   font-size: 1.25rem;
 }
 
-.welcome-text {
+.about-text {
   flex: 1;
 }
 
-.clippy-container {
+.profile-container {
   flex-shrink: 0;
   text-align: center;
 }
 
-.welcome-header {
+.about-header {
   color: #000080;
   margin-bottom: 16px;
   font-size: 24px;
   font-weight: bold;
 }
 
-.welcome-message {
+.about-message {
   line-height: 1.6;
   margin-bottom: 20px;
-  font-size: 1.2rem !important;
+  font-size: 1.25rem;
 }
 
-.quick-links {
+.skills-section {
   background-color: white;
   border: 2px solid #808080;
   margin-top: 20px;
-  justify-content: center;
   padding: 10px;
 }
 
-.quick-links-title {
+.skills-title {
   color: #000080;
   margin-bottom: 10px;
   font-size: 1.15rem;
   font-weight: bold;
 }
 
-.link-button {
-  display: block;
-  margin: 0.25rem auto;
-  width: 95%;
-  max-width: 95%;
-  max-height: 40px;
-  font-size: 1.25rem !important;
-  font-weight:500;
+.skill-item {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
   padding: 5px;
 }
 
-.link-button img {
+.skill-item img {
   max-width: 1.5rem;
   height: 1.3rem;
-  margin: 0.1rem 0.25rem;
-}
-
-.link-button:hover {
-  background-color: #d0d0d0;
+  margin-right: 0.5rem;
 }

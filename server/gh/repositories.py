@@ -45,8 +45,6 @@ def get_repositories() -> List[RepositoryDict]:
     global REPOSITORIES, TOKEN
     repos: List[RepositoryDict] = []
 
-    print(f">>>> TOKEN is {TOKEN}")
-
 
     if REPOSITORIES is not None:
         diff: timedelta = datetime.now() - REPOSITORIES["updated"]
