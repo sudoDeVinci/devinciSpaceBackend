@@ -66,6 +66,7 @@
   font-size: 1.25rem !important;
   font-weight:500;
   padding: 5px;
+  transition: transform 0.25s ease;
 }
 
 .link-button img {
@@ -75,5 +76,7 @@
 }
 
 .link-button:hover {
-  background-color: #d0d0d0;
+  transform: translateY(-0.1rem) translateX(-0.2rem) scale(1.015);
+  transition: transform 0.25s ease;
+  cursor: pointer;
 }

@@ -7,15 +7,13 @@
   <title>Projects</title>
 </head>
 <body class="win98-body">
-  <div class="projects-container">
-    
-    <p class="projects-intro">Here are some of the projects I've been working on. Feel free to click on any of them for more details!</p>
-    
-    <div class="projects-grid">
-      {% for project in projects %}
-        {% include 'project_card.jinja' %}
-      {% endfor %}
-    </div>
+  
+  <p class="projects-intro">Here are some of the projects I've been working on. Feel free to click on any of them for more details!</p>
+  
+  <div class="projects-grid">
+    {% for project in projects %}
+      {% include 'project_card.jinja' %}
+    {% endfor %}
   </div>
 </body>
 </html>

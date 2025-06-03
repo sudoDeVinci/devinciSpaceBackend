@@ -1,7 +1,7 @@
 <div class="window project-card" tabindex="0">
   <div class="title-bar">
     <div class="title-bar-text">
-      <img src="/icons/win_controls/directory_open.png" alt="Project" class="title-icon">
+      <img src="/icons/console.png" alt="Project" class="title-icon">
       {{ project.title }}
     </div>
   </div>
@@ -18,11 +18,11 @@
           <span class="project-tag">{{ tag }}</span>
         {% endfor %}
       </div>
-      
+
       <div class="project-actions">
         {% if project.repo_url %}
-          <button onclick="window.location.href='{{ project.repo_url }}'">
-          <img src="/icons/win_controls/globe.png" alt="Globe" class="button-icon">
+          <button onclick="window.open('{{ project.repo_url }}')">
+          <img src="/icons/directory_open.png" alt="Globe" class="button-icon">
             Source
           </button>
         {% endif %}

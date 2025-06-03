@@ -8,11 +8,13 @@ from flask import (  # type: ignore
     request,
 )
 
+from functools import lru_cache
+
 from os.path import join
 from typing import Final
 from os import getcwd
 
-from .gh.repositories import get_repositories
+from .gh.repositories import fetch_repositories
 
 STATIC: Final[str] = join(getcwd(), "dist")
 CSS: Final[str] = join(STATIC, "css")
@@ -30,26 +32,31 @@ def catch_all(path: str = "") -> Response:
         return send_from_directory(STATIC, "index.html")
 
 # Media routes.
+@lru_cache()
 @routes.route("/css", defaults={"filepath": ""}, methods=["GET"])
 @routes.route("/css/<path:filepath>", methods=["GET"])
 def css(filepath: str="") -> str:
     return send_from_directory(CSS, filepath)
 
+@lru_cache()
 @routes.route("/icons", defaults={"iconpath": ""}, methods=["GET"])
 @routes.route("/icons/<path:iconpath>", methods=["GET"])
 def icons(iconpath: str="") -> str:
     return send_from_directory(ICONS, iconpath)
 
+@lru_cache()
 @routes.route("/images", methods=["GET"])
 @routes.route("/images/<path:imagepath>", methods=["GET"])
 def images(imagepath: str="") -> str:
     return send_from_directory(IMAGES, imagepath)
 
+@lru_cache()
 @routes.route("/audio", methods=["GET"])
 @routes.route("/audio/<path:audiopath>", methods=["GET"])
 def audio(audiopath: str="") -> str:
     return send_from_directory(AUDIO, audiopath)
 
+@lru_cache()
 @routes.route("/assets/", defaults={"assetpath": ""}, methods=["GET"])
 @routes.route("/assets/<path:assetpath>", methods=["GET"])
 def assets(assetpath: str="") -> str:
@@ -62,18 +69,21 @@ def assets(assetpath: str="") -> str:
 """
 Page routes - Each is rendered within separate windows
 """
+@lru_cache()    
 @routes.route("/about", methods=["GET"])
 def about() -> str:
     return render_template("about.html")
 
+@lru_cache()
 @routes.route("/welcome", methods=["GET"])
 def welcome() -> str:
     return render_template("welcome.html")
 
+@lru_cache()
 @routes.route("/contact", methods=["GET"])
 def contact() -> str:
     return render_template("contact.html")
 
 @routes.route("/projects", methods=["GET"])
 def projects() -> str:
-    return render_template("projects.jinja", projects = get_repositories()) 
+    return render_template("projects.jinja", projects = fetch_repositories()) 

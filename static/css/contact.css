@@ -47,10 +47,13 @@
   padding: 8px;
   cursor: pointer;
   text-align: left;
+  transition: transform 0.15s ease;
 }
 
 .contact-method:hover {
-  background-color: #d4d0c8;
+  transform: translateY(-0.1rem) translateX(-0.2rem) scale(1.015);
+  transition: transform 0.15s ease;
+  cursor: pointer;
 }
 
 .contact-method:active {
