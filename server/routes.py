@@ -14,7 +14,18 @@ from os.path import join
 from typing import Final
 from os import getcwd
 
-from .gh.repositories import fetch_repositories
+from .gh.repositories import (
+    fetch_repositories,
+    schedule_repository_refresh,
+    read_repositories
+)
+from threading import Thread
+
+# Load most recent cache.
+read_repositories()
+# Start the background thread to refresh repositories.
+Thread(target=schedule_repository_refresh, daemon=True).start() 
+
 
 STATIC: Final[str] = join(getcwd(), "dist")
 CSS: Final[str] = join(STATIC, "css")
