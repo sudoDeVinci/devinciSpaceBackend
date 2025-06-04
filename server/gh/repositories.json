@@ -1,41 +1,27 @@
 {
     "repos": [
         {
-            "title": "devincicloud-backend",
-            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devincicloud-backend/main/thumbnail.png",
-            "description": "The backend functionality of the devinci.cloud site. Vanila JS frontend built with VIte, Flask backend.",
+            "title": "LocalCoCaptain",
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/LocalCoCaptain/main/thumbnail.png",
+            "description": "Locally run AI server extension, tailored for assistance inside wearables. Includes wearable device for voice relay to interface with server OTA.",
             "tags": [
-                "Python",
-                "CSS",
-                "HTML",
-                "Jinja"
+                "Python"
             ],
             "demo_url": "",
-            "repo_url": "https://github.com/sudoDeVinci/devincicloud-backend",
-            "updated": "2025-06-03 00:29:56+00:00"
+            "repo_url": "https://github.com/sudoDeVinci/LocalCoCaptain",
+            "updated": "2025-06-04 05:54:14+00:00"
         },
         {
             "title": "devincicloud-monolith",
             "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devincicloud-monolith/default/thumbnail.png",
             "description": "The combination of devinci.cloud frontend and backend.",
             "tags": [
-                "JavaScript",
-                "Python"
+                "Python",
+                "JavaScript"
             ],
             "demo_url": "",
             "repo_url": "https://github.com/sudoDeVinci/devincicloud-monolith",
-            "updated": "2025-06-02 02:27:47+00:00"
-        },
-        {
-            "title": "LocalCoCaptain",
-            "thumbnail": "",
-            "description": null,
-            "tags": [
-                "Python"
-            ],
-            "demo_url": "",
-            "repo_url": "https://github.com/sudoDeVinci/LocalCoCaptain",
-            "updated": "2025-06-01 16:01:21+00:00"
+            "updated": "2025-06-04 05:29:33+00:00"
         },
         {
             "title": "devinci.cloud-frontend",
@@ -48,7 +34,21 @@
             ],
             "demo_url": "",
             "repo_url": "https://github.com/sudoDeVinci/devinci.cloud-frontend",
-            "updated": "2025-05-06 22:42:12+00:00"
+            "updated": "2025-06-04 05:27:43+00:00"
+        },
+        {
+            "title": "devincicloud-backend",
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devincicloud-backend/main/thumbnail.png",
+            "description": "The backend functionality of the devinci.cloud site. Vanila JS frontend built with VIte, Flask backend.",
+            "tags": [
+                "Python",
+                "CSS",
+                "HTML",
+                "Jinja"
+            ],
+            "demo_url": "",
+            "repo_url": "https://github.com/sudoDeVinci/devincicloud-backend",
+            "updated": "2025-06-04 05:25:38+00:00"
         },
         {
             "title": "TV-head",
@@ -125,5 +125,5 @@
         }
     ],
     "count": 10,
-    "updated": 1749014492
+    "updated": 1749017725
 }

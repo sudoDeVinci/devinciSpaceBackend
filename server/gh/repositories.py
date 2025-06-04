@@ -74,6 +74,8 @@ def refresh_repositories() -> None:
         repositories:List[Repository.Repository ] = list(user.get_repos())
         repositories.sort(key = lambda repo: repo.updated_at, reverse = True)
         repositories = repositories[:10]
+
+
         repos = [{
                 "title": repo.name,
                 "thumbnail": get_project_thumbnail(repo),
@@ -83,7 +85,7 @@ def refresh_repositories() -> None:
                 "repo_url": repo.html_url,
                 "updated": repo.updated_at
             } for repo in repositories if not repo.private]
-        
+
         # Cache the repositories
         with CACHE_LOCK:
             print(f"REFRESH REPOSITORIES ::: Found {len(repos)} public repositories.")
