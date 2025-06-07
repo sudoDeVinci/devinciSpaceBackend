@@ -1,0 +1,49 @@
+<link rel="stylesheet" href="/css/doom.css" />
+<title>Welcome!</title>
+<body>
+    <p id="focushint"></p>
+    <p>
+        Use <button tabindex="-1" aria-label="enter" role="presentation">&#x23CE;</button> to start the game, arrow
+        keys <button tabindex="-1" aria-label="left" role="presentation">&#x2190;</button>
+        <button tabindex="-1" aria-label="up" role="presentation">&#x2191;</button>
+        <button tabindex="-1" aria-label="down" role="presentation">&#x2193;</button>
+        <button tabindex="-1" aria-label="right" role="presentation">&#x2192;</button> to move,
+        <button tabindex="-1" aria-label="ctrl" role="presentation">ctrl</button> to shoot, spacebar
+        <button tabindex="-1" aria-label="space" role="presentation">&nbsp;&nbsp;&nbsp;&nbsp;</button> to open gates,
+        <button tabindex="-1" aria-label="alt" role="presentation">alt</button> and arrow keys to strafe (if your
+        browser does not handle these key otherwise). On mobile (and mobile only)
+        touch the buttons below the game.
+    </p>
+    <p><strong>If you see grey lines across the game window, please adjust the window width </strong></p>
+    <div class="container">
+        <div class="big-holder">
+            <div id="gradientScreen"></div>
+            <canvas id="screen" tabindex="0"
+            >This is where the DooM screen should render.</canvas
+            >
+        </div>
+        <span>&nbsp;</span>
+    </div>
+    <h3>Mobile Controls</h3>
+    <div class="controls">
+        <div class="left-controls">
+            <button id="enterButton" aria-label="Enter">&#x23CE;</button>
+            <button id="ctrlButton">Ctrl</button>
+            <button id="spaceButton">Space</button>
+            <button id="altButton">Alt</button>
+        </div>
+
+        <div class="arrow-controls">
+            <div class="arrow-row top">
+            <span class="arrow-spacer"></span>
+            <button id="upButton" aria-label="up">&#x2191;</button>
+            <span class="arrow-spacer"></span>
+        </div>
+        <div class="arrow-row bottom">
+            <button id="leftButton" aria-label="left">&#x2190;</button>
+            <button id="downButton" aria-label="down">&#x2193;</button>
+            <button id="rightButton" aria-label="right">&#x2192;</button>
+        </div>
+    </div>
+</body>
+<script type="module" src="/js/doom.js"></script>

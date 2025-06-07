@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="/css/welcome.css" />
-<link rel="stylesheet" href="https://unpkg.com/98.css@0.1.4/build/98.css" />
 <title>Welcome!</title>
 <body class="content-body">
   <div class="welcome-container">
@@ -21,21 +20,17 @@
         and find what you're looking for.
       <div class="quick-links">
         <div class="quick-links-title">Quick Links:</div>
-        <button href="#" class="link-button">
-          <img src="/icons/directory_open.png" alt="Folder icon" />
-          Blog
-        </button>
-        <button href="#" class="link-button">
+        <button href="#" class="link-button" onclick="window.environment.newWindow(window.musicPlayerType, window.musicWindowConfig)">
           <img src="/icons/music.png" alt="Internet Explorer icon" />
           Music
         </button>
-        <button href="#" class="link-button">
+        <button href="#" class="link-button" onclick="window.environment.newWindow(window.windowType, window.welcomeWindowConfig)">
           <img src="/icons/console.png" alt="Internet Explorer icon" />
           Projects
         </button>
-        <button href="#" class="link-button">
+        <button href="#" class="link-button" onclick="window.environment.newWindow(window.windowType, window.contactWindowConfig)">
           <img src="/icons/support.png" alt="Internet Explorer icon" />
-          Help & Support
+          Contact
         </button>
       </div>
     </div>

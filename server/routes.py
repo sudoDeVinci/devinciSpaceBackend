@@ -29,6 +29,7 @@ Thread(target=schedule_repository_refresh, daemon=True).start()
 
 STATIC: Final[str] = join(getcwd(), "dist")
 CSS: Final[str] = join(STATIC, "css")
+JS: Final[str] = join(STATIC, "js")
 IMAGES: Final[str] = join(STATIC, "images")
 ICONS: Final[str] = join(STATIC, "icons")
 AUDIO: Final[str] = join(STATIC, "audio")
@@ -48,6 +49,12 @@ def catch_all(path: str = "") -> Response:
 @routes.route("/css/<path:filepath>", methods=["GET"])
 def css(filepath: str="") -> str:
     return send_from_directory(CSS, filepath)
+
+@lru_cache()
+@routes.route("/js", defaults={"filepath": ""}, methods=["GET"])
+@routes.route("/js/<path:filepath>", methods=["GET"])
+def js(filepath: str="") -> str:
+    return send_from_directory(JS, filepath)
 
 @lru_cache()
 @routes.route("/icons", defaults={"iconpath": ""}, methods=["GET"])
@@ -94,6 +101,11 @@ def welcome() -> str:
 @routes.route("/contact", methods=["GET"])
 def contact() -> str:
     return render_template("contact.html")
+
+@lru_cache()
+@routes.route("/doom", methods=["GET"])
+def doom() -> str:
+    return render_template("doom.html")
 
 @routes.route("/projects", methods=["GET"])
 def projects() -> str:
