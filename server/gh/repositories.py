@@ -2,7 +2,6 @@ from typing import Any, Dict, List, TypedDict, Final
 from github import Github, Auth, Repository, ContentFile
 from os import environ, getcwd
 from os.path import join, exists
-from datetime import datetime, timedelta
 from dotenv import load_dotenv
 from json import dump, load, JSONDecodeError
 import pathlib
@@ -20,7 +19,7 @@ class RepositoryDict(TypedDict):
     description: str
     demo_url: str
     repo_url: str
-    updated: str
+    updated: int
     tags: List[str]
 
 class RepositorySlice(TypedDict):
@@ -31,6 +30,7 @@ class RepositorySlice(TypedDict):
 CACHE_LOCK: Lock = Lock()
 REPOSITORIES: RepositorySlice | None = None
 REFRESH_TIMER: Timer | None = None
+
 currentdir = pathlib.Path(__file__).parent.resolve()
 REPOSITORY_JSON: str = join(currentdir, "repositories.json")
 TOKEN: Final[str] = environ.get("GITHUB_TOKEN", "")
@@ -76,14 +76,14 @@ def refresh_repositories() -> None:
         repositories = repositories[:10]
 
 
-        repos = [{
+        repos:list[RepositoryDict] = [{
                 "title": repo.name,
                 "thumbnail": get_project_thumbnail(repo),
                 "description": repo.description,
                 "tags": [lang for lang in repo.get_languages()],
                 "demo_url": "",
                 "repo_url": repo.html_url,
-                "updated": repo.updated_at
+                "updated": int(repo.updated_at.timestamp()),
             } for repo in repositories if not repo.private]
 
         # Cache the repositories
@@ -189,7 +189,7 @@ def fetch_repositories() -> List[RepositoryDict]:
     if repocopy is not None and "updated" in repocopy:
         # Check if the cache is still valid (less than 2 hours old)
         print("FETCH REPOSITORIES ::: Cache read, checking validity ...")
-        diff: int = int(time()) - repocopy["updated"]
+        diff = int(time()) - repocopy["updated"]
         if diff < 7200:
             print("FETCH REPOSITORIES ::: Cache is valid, returning cached repositories.")
             return repocopy.get("repos", [])

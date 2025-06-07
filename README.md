@@ -1,4 +1,3 @@
-![Linting](https://github.com/sudoDeVinci/devinci.cloud/actions/workflows/linting.yml/badge.svg?branch=main)
 ![Type Check](https://github.com/sudoDeVinci/devinci.cloud/actions/workflows/typecheck.yml/badge.svg?branch=main)
 
 # Devinci.cloud

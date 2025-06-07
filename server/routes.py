@@ -2,10 +2,7 @@ from flask import (  # type: ignore
     Blueprint,
     Response,
     render_template,
-    send_from_directory,
-    session,
-    jsonify,
-    request,
+    send_from_directory
 )
 
 from functools import lru_cache
@@ -14,7 +11,7 @@ from os.path import join
 from typing import Final
 from os import getcwd
 
-from .gh.repositories import (
+from .gh import (
     fetch_repositories,
     schedule_repository_refresh,
     read_repositories
@@ -47,37 +44,37 @@ def catch_all(path: str = "") -> Response:
 @lru_cache()
 @routes.route("/css", defaults={"filepath": ""}, methods=["GET"])
 @routes.route("/css/<path:filepath>", methods=["GET"])
-def css(filepath: str="") -> str:
+def css(filepath: str="") -> Response:
     return send_from_directory(CSS, filepath)
 
 @lru_cache()
 @routes.route("/js", defaults={"filepath": ""}, methods=["GET"])
 @routes.route("/js/<path:filepath>", methods=["GET"])
-def js(filepath: str="") -> str:
+def js(filepath: str="") -> Response:
     return send_from_directory(JS, filepath)
 
 @lru_cache()
 @routes.route("/icons", defaults={"iconpath": ""}, methods=["GET"])
 @routes.route("/icons/<path:iconpath>", methods=["GET"])
-def icons(iconpath: str="") -> str:
+def icons(iconpath: str="") -> Response:
     return send_from_directory(ICONS, iconpath)
 
 @lru_cache()
 @routes.route("/images", methods=["GET"])
 @routes.route("/images/<path:imagepath>", methods=["GET"])
-def images(imagepath: str="") -> str:
+def images(imagepath: str="") -> Response:
     return send_from_directory(IMAGES, imagepath)
 
 @lru_cache()
 @routes.route("/audio", methods=["GET"])
 @routes.route("/audio/<path:audiopath>", methods=["GET"])
-def audio(audiopath: str="") -> str:
+def audio(audiopath: str="") -> Response:
     return send_from_directory(AUDIO, audiopath)
 
 @lru_cache()
 @routes.route("/assets/", defaults={"assetpath": ""}, methods=["GET"])
 @routes.route("/assets/<path:assetpath>", methods=["GET"])
-def assets(assetpath: str="") -> str:
+def assets(assetpath: str="") -> Response:
     print(f'>>> ASSET: {assetpath}')
     ext = assetpath.split(".")[-1] if "." in assetpath else ""
     mime = "text/css" if ext == "css" else "application/javascript"
