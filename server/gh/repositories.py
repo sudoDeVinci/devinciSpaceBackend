@@ -1,8 +1,8 @@
 from typing import Any, Dict, List, TypedDict, Final
-from github import Github, Auth, Repository, ContentFile
+from github import Github, Auth, Repository  # type: ignore
 from os import environ, getcwd
 from os.path import join, exists
-from dotenv import load_dotenv
+from dotenv import load_dotenv  # type: ignore
 from json import dump, load, JSONDecodeError
 import pathlib
 from time import time
