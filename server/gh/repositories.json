@@ -1,129 +1,140 @@
 {
     "repos": [
         {
-            "title": "LocalCoCaptain",
-            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/LocalCoCaptain/main/thumbnail.png",
-            "description": "Locally run AI server extension, tailored for assistance inside wearables. Includes wearable device for voice relay to interface with server OTA.",
-            "tags": [
-                "Python"
-            ],
-            "demo_url": "",
-            "repo_url": "https://github.com/sudoDeVinci/LocalCoCaptain",
-            "updated": "2025-06-04 05:54:14+00:00"
-        },
-        {
             "title": "devincicloud-monolith",
-            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devincicloud-monolith/default/thumbnail.png",
+            "thumbnail": "",
             "description": "The combination of devinci.cloud frontend and backend.",
-            "tags": [
+            "languages": [
                 "Python",
                 "JavaScript"
             ],
+            "tags": [],
             "demo_url": "",
             "repo_url": "https://github.com/sudoDeVinci/devincicloud-monolith",
-            "updated": "2025-06-04 05:29:33+00:00"
+            "updated": 1749332778
+        },
+        {
+            "title": "devincicloudBackend",
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devincicloudBackend/main/thumbnail.png",
+            "description": "The backend functionality of the devinci.cloud site. Vanila JS frontend built with VIte, Flask backend.",
+            "languages": [
+                "Python",
+                "CSS",
+                "HTML",
+                "JavaScript",
+                "Jinja"
+            ],
+            "tags": [],
+            "demo_url": "",
+            "repo_url": "https://github.com/sudoDeVinci/devincicloudBackend",
+            "updated": 1749332421
         },
         {
             "title": "devinci.cloud-frontend",
             "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devinci.cloud-frontend/main/thumbnail.png",
             "description": "devinci.cloud - Windows 98 themed Single-page personal portfolio website for Tadj Cazaubon",
-            "tags": [
+            "languages": [
                 "JavaScript",
                 "CSS",
                 "HTML"
             ],
+            "tags": [],
             "demo_url": "",
             "repo_url": "https://github.com/sudoDeVinci/devinci.cloud-frontend",
-            "updated": "2025-06-04 05:27:43+00:00"
+            "updated": 1749331500
         },
         {
-            "title": "devincicloud-backend",
-            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devincicloud-backend/main/thumbnail.png",
-            "description": "The backend functionality of the devinci.cloud site. Vanila JS frontend built with VIte, Flask backend.",
-            "tags": [
-                "Python",
-                "CSS",
-                "HTML",
-                "Jinja"
+            "title": "LocalCoCaptain",
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/LocalCoCaptain/main/thumbnail.png",
+            "description": "Locally run AI server extension, tailored for assistance inside wearables. Includes wearable device for voice relay to interface with server OTA.",
+            "languages": [
+                "Python"
             ],
+            "tags": [],
             "demo_url": "",
-            "repo_url": "https://github.com/sudoDeVinci/devincicloud-backend",
-            "updated": "2025-06-04 05:25:38+00:00"
+            "repo_url": "https://github.com/sudoDeVinci/LocalCoCaptain",
+            "updated": 1749016454
         },
         {
             "title": "TV-head",
             "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/TV-head/main/thumbnail.png",
             "description": "Pipeline for images onto WS2812B LED strips via Raspberry Pi Pico, ESP32, or Arduino UNO, to use as a dot-matrix display.",
-            "tags": [
+            "languages": [
                 "Python",
                 "C++",
                 "C"
             ],
+            "tags": [],
             "demo_url": "",
             "repo_url": "https://github.com/sudoDeVinci/TV-head",
-            "updated": "2025-03-21 19:07:01+00:00"
+            "updated": 1742584021
         },
         {
             "title": "ESP-Sky-Imager",
             "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/ESP-Sky-Imager/main/thumbnail.png",
             "description": "ESP32-S3 sky Imager/Weather Station equipped w/ SHT31-D, BMP390 and OV5640.",
-            "tags": [
+            "languages": [
                 "C++",
                 "C"
             ],
+            "tags": [],
             "demo_url": "",
             "repo_url": "https://github.com/sudoDeVinci/ESP-Sky-Imager",
-            "updated": "2025-03-13 22:55:07+00:00"
+            "updated": 1741906507
         },
         {
             "title": "cryptojacker-writeup",
             "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/cryptojacker-writeup/main/thumbnail.png",
             "description": "Simple writeup of cryptojacker malware obfuscation",
-            "tags": [
+            "languages": [
                 "Python"
             ],
+            "tags": [],
             "demo_url": "",
             "repo_url": "https://github.com/sudoDeVinci/cryptojacker-writeup",
-            "updated": "2025-03-04 16:58:16+00:00"
+            "updated": 1741107496
         },
         {
             "title": "ScreenSynth",
             "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/ScreenSynth/main/thumbnail.png",
             "description": "VGA LCD version of the CRTelecaster from Electronicos Fantasticos",
-            "tags": [
+            "languages": [
                 "C++",
                 "Python",
                 "C"
             ],
+            "tags": [],
             "demo_url": "",
             "repo_url": "https://github.com/sudoDeVinci/ScreenSynth",
-            "updated": "2025-03-04 16:46:36+00:00"
+            "updated": 1741106796
         },
         {
             "title": "SkyImager-obfuscated",
             "thumbnail": "",
             "description": "Public facing version of the devinci.cloud website functionality, with appropriate obfuscation and censorship.",
-            "tags": [
+            "languages": [
                 "CSS"
             ],
+            "tags": [],
             "demo_url": "",
             "repo_url": "https://github.com/sudoDeVinci/SkyImager-obfuscated",
-            "updated": "2025-02-13 01:41:05+00:00"
+            "updated": 1739410865
         },
         {
             "title": "YoutubePlaylistDownloader",
             "thumbnail": "",
             "description": "A tool to download whole playlists, channels or single videos from youtube and also optionally convert them to almost any format you would like",
-            "tags": [
+            "languages": [
                 "C#",
                 "Inno Setup",
                 "Smalltalk"
             ],
+            "tags": [],
             "demo_url": "",
             "repo_url": "https://github.com/sudoDeVinci/YoutubePlaylistDownloader",
-            "updated": "2024-12-24 02:48:04+00:00"
+            "updated": 1735008484
         }
     ],
     "count": 10,
-    "updated": 1749017725
+    "updated": 1749353030
 }

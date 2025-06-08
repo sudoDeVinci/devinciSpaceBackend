@@ -14,6 +14,10 @@ LOG = getLogger(__name__)
 load_dotenv(join(getcwd(), ".env"))
 
 class RepositoryDict(TypedDict):
+    """
+    TypedDict for representing a GitHub repository.
+    The Gist of what is needed to be displayed.
+    """
     title: str
     thumbnail: str
     description: str
@@ -21,8 +25,14 @@ class RepositoryDict(TypedDict):
     repo_url: str
     updated: int
     tags: List[str]
+    languages: List[str] | None
 
 class RepositorySlice(TypedDict):
+    """
+    TypedDict for a slice of repositories.
+    Contains metadata and a list of repositories.
+    This is used also used to cache frequently fetched repos.
+    """
     count: int
     updated: int
     repos: List[RepositoryDict]
@@ -80,7 +90,8 @@ def refresh_repositories() -> None:
                 "title": repo.name,
                 "thumbnail": get_project_thumbnail(repo),
                 "description": repo.description,
-                "tags": [lang for lang in repo.get_languages()],
+                "languages": [lang for lang in repo.get_languages()],
+                "tags": [tag.name for tag in list(repo.get_tags())],
                 "demo_url": "",
                 "repo_url": repo.html_url,
                 "updated": int(repo.updated_at.timestamp()),
@@ -95,7 +106,6 @@ def refresh_repositories() -> None:
                 "updated": int(time())
             }
 
-            print(REPOSITORIES['updated'])
         
     except Exception as e:
         print(f"Error retrieving repositories: {e}")
