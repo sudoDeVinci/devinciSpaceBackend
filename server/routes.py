@@ -25,15 +25,43 @@ ICONS: Final[str] = join(STATIC, "icons")
 AUDIO: Final[str] = join(STATIC, "audio")
 VIEWS: Final[str] = join(STATIC, "views")
 ASSETS: Final[str] = join(STATIC, "assets")
+FONTS: Final[str] = join(STATIC, "fonts")
 
 routes = Blueprint("views", __name__, template_folder=VIEWS, static_folder=STATIC)
 from threading import Thread
 # Start the thread to fetch repositories.
 Thread(target=schedule_refresh, daemon=True).start()
 
-@routes.route("/", defaults={"path": ""})
-def catch_all(path: str = "") -> Response:
+@routes.route("/", methods=["GET"])
+def catch_all() -> Response:
         return send_from_directory(STATIC, "index.html")
+
+@routes.route("/favicon.ico", methods=["GET"])
+def favicon() -> Response:
+    """
+    Serve the favicon.ico file.
+    """
+    return send_from_directory(ICONS, "favicon.ico", mimetype='image/vnd.microsoft.icon')
+
+@lru_cache()
+@routes.route("/ms_sans_serif.woff2", methods=["GET"])
+def ms_sans_serif() -> Response:
+    """
+    Serve the MS Sans Serif font file.
+    This is used for the pixelated font style in the application.
+    """
+    return send_from_directory(FONTS, "ms_sans_serif.woff2", mimetype='font/woff2')
+
+
+@lru_cache()
+@routes.route("/ms_sans_serif_bold.woff2", methods=["GET"])
+def ms_sans_serif_bold() -> Response:
+    """
+    Serve the bold version of the MS Sans Serif font file.
+    This is used for the pixelated font style in the application.
+    """
+    return send_from_directory(FONTS, "ms_sans_serif_bold.woff2", mimetype='font/woff2')
+
 
 # Media routes.
 @lru_cache()
@@ -74,6 +102,23 @@ def assets(assetpath: str="") -> Response:
     ext = assetpath.split(".")[-1] if "." in assetpath else ""
     mime = "text/css" if ext == "css" else "application/javascript"
     return send_from_directory(ASSETS, assetpath, mimetype=mime)
+
+@lru_cache()
+@routes.route("/fonts", defaults={"fontpath": ""}, methods=["GET"])
+@routes.route("/fonts/<path:fontpath>", methods=["GET"])
+def fonts(fontpath: str="") -> Response:
+    return send_from_directory(FONTS, fontpath)
+
+@lru_cache()
+@routes.route("/css/fonts", methods=["GET"])
+@routes.route("/css/fonts/<path:fontfile>", methods=["GET"])
+def fonts_css(fontfile: str = "") -> Response:
+    """
+    Serve font files from the fonts directory.
+    This is used for CSS font-face declarations.
+    """
+    return send_from_directory(FONTS, fontfile)
+
 
 
 """

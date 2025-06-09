@@ -2,7 +2,6 @@
 
 .content-body{
   background-color: var(--off-white);
-  font-family: 'MS Sans Serif', Arial, sans-serif;
   padding: 20px;
   max-width: 95%;
   min-height: 10px;
@@ -37,9 +36,9 @@
 }
 
 .welcome-message {
-  line-height: 1.6;
+  line-height: 1.5;
   margin-bottom: 20px;
-  font-size: 1.2rem !important;
+  font-size: 1rem !important;
 }
 
 .quick-links {

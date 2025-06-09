@@ -114,6 +114,23 @@
   flex-grow: 1;
 }
 
+.project-stars {
+  display: flex;
+  align-items: center;
+  margin: 6px 0;
+}
+
+.project-star {
+  font-size: 1rem;
+  margin-right: 4px;
+}
+
+.project-stars img {
+  width: auto;
+  max-height: 1.2rem;
+  vertical-align: middle;
+}
+
 .project-tags {
   display: flex;
   flex-wrap: wrap;

@@ -10,8 +10,8 @@
 .big-holder {
     all:unset !important;
     position: relative;
-    width: 50vw; /* Allow it to resize based on parent/container */
-    height: calc(50vw * 10 / 16); /* Maintain 16:10 aspect ratio */
+    width: 75%; /* Allow it to resize based on parent/container */
+    height: calc(75% * 10 / 16); /* Maintain 16:10 aspect ratio */
 }
 
 #screen {

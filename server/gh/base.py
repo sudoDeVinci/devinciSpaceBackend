@@ -150,23 +150,23 @@ async def refresh() -> None:
                 }
             )
 
-            for repo in repos:
-                print(f"REFRESH ::: Fetching details for {repo['name']}")
-                # Get the languages associated
-                stat, languages = await get_repo_languages(repo['name'])
-                if stat != 200:
-                    LOGGER.warning(f"Failed to fetch languages for {repo['name']}: {stat}")
-                    continue
-                #LOGGER.info(f"Languages for {repo['name']} fetched successfully: {languages}")
-                repo['languages'] = list(languages.keys())
+        for repo in repos:
+            print(f"REFRESH ::: Fetching details for {repo['name']}")
+            # Get the languages associated
+            stat, languages = await get_repo_languages(repo['name'])
+            if stat != 200:
+                LOGGER.warning(f"Failed to fetch languages for {repo['name']}: {stat}")
+                continue
+            #LOGGER.info(f"Languages for {repo['name']} fetched successfully: {languages}")
+            repo['languages'] = list(languages.keys())
 
-                # get the thumbnail url associated
-                stat, thumbnail = await get_repo_thumbnail(repo['name'])
-                if stat != 200:
-                    LOGGER.warning(f"Failed to fetch thumbnail for {repo['name']}: {stat}")
-                    continue
-                #LOGGER.info(f"Thumbnail for {repo['name']} fetched successfully: {thumbnail}")
-                repo['thumbnail'] = thumbnail.get('download_url', '')
+            # get the thumbnail url associated
+            stat, thumbnail = await get_repo_thumbnail(repo['name'])
+            if stat != 200:
+                LOGGER.warning(f"Failed to fetch thumbnail for {repo['name']}: {stat}")
+                continue
+            #LOGGER.info(f"Thumbnail for {repo['name']} fetched successfully: {thumbnail}")
+            repo['thumbnail'] = thumbnail.get('download_url', '')
 
     except Exception as e:
         LOGGER.error(f"An error occurred: {e}")
