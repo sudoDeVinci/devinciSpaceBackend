@@ -2,12 +2,12 @@
   <div class="title-bar">
     <div class="title-bar-text">
       <img src="/icons/console.png" alt="Project" class="title-icon">
-      {{ project.title }}
+      {{ project.name }}
     </div>
   </div>
   <div class="window-body project-window-body">
     <div class="project-thumbnail">
-      <img src="{{ project.thumbnail }}" alt="{{ project.title }}" />
+      <img src="{{ project.thumbnail }}" alt="{{ project.name }}" />
     </div>
     
     <div class="project-content">
@@ -19,9 +19,15 @@
         {% endfor %}
       </div>
 
+      <div class="project-languages">
+        {% for language in project.languages %}
+          <span class="project-language">{{ language }}</span>
+        {% endfor %}
+      </div>
+
       <div class="project-actions">
-        {% if project.repo_url %}
-          <button onclick="window.open('{{ project.repo_url }}')">
+        {% if project.html_url %}
+          <button onclick="window.open('{{ project.html_url }}')">
           <img src="/icons/directory_open.png" alt="Globe" class="button-icon">
             Source
           </button>

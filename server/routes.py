@@ -13,15 +13,8 @@ from os import getcwd
 
 from .gh import (
     fetch_repositories,
-    schedule_repository_refresh,
-    read_repositories
+    schedule_refresh
 )
-from threading import Thread
-
-# Load most recent cache.
-read_repositories()
-# Start the background thread to refresh repositories.
-Thread(target=schedule_repository_refresh, daemon=True).start() 
 
 
 STATIC: Final[str] = join(getcwd(), "dist")
@@ -34,7 +27,9 @@ VIEWS: Final[str] = join(STATIC, "views")
 ASSETS: Final[str] = join(STATIC, "assets")
 
 routes = Blueprint("views", __name__, template_folder=VIEWS, static_folder=STATIC)
-
+from threading import Thread
+# Start the thread to fetch repositories.
+Thread(target=schedule_refresh, daemon=True).start()
 
 @routes.route("/", defaults={"path": ""})
 def catch_all(path: str = "") -> Response:
@@ -105,5 +100,5 @@ def doom() -> str:
     return render_template("doom.html")
 
 @routes.route("/projects", methods=["GET"])
-def projects() -> str:
-    return render_template("projects.jinja", projects = fetch_repositories()) 
+async def projects() -> str:
+    return render_template("projects.jinja", projects = await fetch_repositories()) 

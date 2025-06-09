@@ -129,6 +129,21 @@
   color: #333;
 }
 
+.project-languages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 6px 0;
+}
+
+.project-language {
+  background: #ececec;
+  border: 1px solid #d1d1d1;
+  font-size: 0.75rem;
+  padding: 1px 5px;
+  color: #333;
+}
+
 .project-actions {
   display: flex;
   flex-wrap: wrap;

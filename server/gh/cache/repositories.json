@@ -1,0 +1,207 @@
+{
+    "count": 10,
+    "repos": [
+        {
+            "name": "devincicloud-monolith",
+            "description": "The combination of devinci.cloud frontend and backend.",
+            "html_url": "https://github.com/sudoDeVinci/devincicloud-monolith",
+            "stars": 0,
+            "topics": [
+                "flask",
+                "javascript",
+                "python",
+                "sqlite3",
+                "submodules",
+                "vite"
+            ],
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devincicloud-monolith/default/thumbnail.png",
+            "languages": [
+                "Python",
+                "JavaScript"
+            ]
+        },
+        {
+            "name": "devincicloudBackend",
+            "description": "The backend functionality of the devinci.cloud site. Vanila JS frontend built with VIte, Flask backend.",
+            "html_url": "https://github.com/sudoDeVinci/devincicloudBackend",
+            "stars": 0,
+            "topics": [
+                "database",
+                "flask",
+                "sqlite"
+            ],
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devincicloudBackend/main/thumbnail.png",
+            "languages": [
+                "Python",
+                "CSS",
+                "HTML",
+                "JavaScript",
+                "Jinja"
+            ]
+        },
+        {
+            "name": "devinci.cloud-frontend",
+            "description": "devinci.cloud - Windows 98 themed Single-page personal portfolio website for Tadj Cazaubon",
+            "html_url": "https://github.com/sudoDeVinci/devinci.cloud-frontend",
+            "stars": 0,
+            "topics": [
+                "es6",
+                "frontend",
+                "javascript",
+                "single-page-applications",
+                "vite",
+                "windows-98"
+            ],
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devinci.cloud-frontend/main/thumbnail.png",
+            "languages": [
+                "JavaScript",
+                "CSS",
+                "HTML"
+            ]
+        },
+        {
+            "name": "LocalCoCaptain",
+            "description": "Locally run AI server extension, tailored for assistance inside wearables. Includes wearable device for voice relay to interface with server OTA.",
+            "html_url": "https://github.com/sudoDeVinci/LocalCoCaptain",
+            "stars": 0,
+            "topics": [
+                "iot",
+                "linux",
+                "llm",
+                "numpy",
+                "ollama",
+                "pyaudio",
+                "python",
+                "raspberry-pi",
+                "scipy",
+                "voice-commands",
+                "wearable"
+            ],
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/LocalCoCaptain/main/thumbnail.png",
+            "languages": [
+                "Python"
+            ]
+        },
+        {
+            "name": "TV-head",
+            "description": "Pipeline for images onto WS2812B LED strips via Raspberry Pi Pico, ESP32, or Arduino UNO, to use as a dot-matrix display.",
+            "html_url": "https://github.com/sudoDeVinci/TV-head",
+            "stars": 8,
+            "topics": [
+                "arduino",
+                "cpp",
+                "esp32-arduino",
+                "esp32-s3",
+                "micropython",
+                "micropython-rpi-pico",
+                "neopixel",
+                "neopixel-strip",
+                "opencv",
+                "raspberry-pi",
+                "raspberry-pi-pico",
+                "tv-head",
+                "tvhead"
+            ],
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/TV-head/main/thumbnail.png",
+            "languages": [
+                "Python",
+                "C++",
+                "C"
+            ]
+        },
+        {
+            "name": "ESP-Sky-Imager",
+            "description": "ESP32-S3 sky Imager/Weather Station equipped w/ SHT31-D, BMP390 and OV5640.",
+            "html_url": "https://github.com/sudoDeVinci/ESP-Sky-Imager",
+            "stars": 0,
+            "topics": [
+                "arduino",
+                "cpp",
+                "esp32",
+                "esp32-s3",
+                "iot",
+                "sky",
+                "weather-station"
+            ],
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/ESP-Sky-Imager/main/thumbnail.png",
+            "languages": [
+                "C++",
+                "C"
+            ]
+        },
+        {
+            "name": "cryptojacker-writeup",
+            "description": "Simple writeup of cryptojacker malware obfuscation",
+            "html_url": "https://github.com/sudoDeVinci/cryptojacker-writeup",
+            "stars": 0,
+            "topics": [
+                "malware-analysis"
+            ],
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/cryptojacker-writeup/main/thumbnail.png",
+            "languages": [
+                "Python"
+            ]
+        },
+        {
+            "name": "ScreenSynth",
+            "description": "VGA LCD version of the CRTelecaster from Electronicos Fantasticos",
+            "html_url": "https://github.com/sudoDeVinci/ScreenSynth",
+            "stars": 0,
+            "topics": [
+                "arduino-mega",
+                "audio-processing",
+                "c",
+                "cpp",
+                "esp32",
+                "esp32-arduino",
+                "hardware-design",
+                "multiprocessing",
+                "music-theory",
+                "real-time-rendering",
+                "video-processing"
+            ],
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/ScreenSynth/main/thumbnail.png",
+            "languages": [
+                "C++",
+                "Python",
+                "C"
+            ]
+        },
+        {
+            "name": "SkyImager-obfuscated",
+            "description": "Public facing version of the devinci.cloud website functionality, with appropriate obfuscation and censorship.",
+            "html_url": "https://github.com/sudoDeVinci/SkyImager-obfuscated",
+            "stars": 1,
+            "topics": [
+                "arduino",
+                "cpp",
+                "data-science",
+                "esp32",
+                "esp32-arduino",
+                "flask",
+                "image-processing",
+                "mysql",
+                "object-detection",
+                "ota-update"
+            ],
+            "thumbnail": "",
+            "languages": [
+                "CSS"
+            ]
+        },
+        {
+            "name": "YoutubePlaylistDownloader",
+            "description": "A tool to download whole playlists, channels or single videos from youtube and also optionally convert them to almost any format you would like",
+            "html_url": "https://github.com/sudoDeVinci/YoutubePlaylistDownloader",
+            "stars": 0,
+            "topics": [],
+            "thumbnail": "",
+            "languages": [
+                "C#",
+                "Inno Setup",
+                "Smalltalk"
+            ]
+        }
+    ],
+    "updated": 1749433829
+}
