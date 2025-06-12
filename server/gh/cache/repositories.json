@@ -2,6 +2,18 @@
     "count": 10,
     "repos": [
         {
+            "name": "ESP32SerialAnimator",
+            "description": null,
+            "html_url": "https://github.com/sudoDeVinci/ESP32SerialAnimator",
+            "stars": 0,
+            "topics": [],
+            "thumbnail": "",
+            "languages": [
+                "C++",
+                "C"
+            ]
+        },
+        {
             "name": "devincicloud-monolith",
             "description": "The combination of devinci.cloud frontend and backend.",
             "html_url": "https://github.com/sudoDeVinci/devincicloud-monolith",
@@ -55,8 +67,8 @@
             "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devinci.cloud-frontend/main/thumbnail.png",
             "languages": [
                 "JavaScript",
-                "CSS",
-                "HTML"
+                "HTML",
+                "CSS"
             ]
         },
         {
@@ -188,20 +200,7 @@
             "languages": [
                 "CSS"
             ]
-        },
-        {
-            "name": "YoutubePlaylistDownloader",
-            "description": "A tool to download whole playlists, channels or single videos from youtube and also optionally convert them to almost any format you would like",
-            "html_url": "https://github.com/sudoDeVinci/YoutubePlaylistDownloader",
-            "stars": 0,
-            "topics": [],
-            "thumbnail": "",
-            "languages": [
-                "C#",
-                "Inno Setup",
-                "Smalltalk"
-            ]
         }
     ],
-    "updated": 1749501859
+    "updated": 1749688655
 }
