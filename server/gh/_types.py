@@ -1,6 +1,6 @@
 from typing import TypedDict
 
-class User(TypedDict):
+class User(TypedDict, total=False):
     """
     A GitHub authenticated User.
 
@@ -87,7 +87,7 @@ class User(TypedDict):
 
 
 
-class Repository(TypedDict):
+class Repository(TypedDict, total=False):
     """
     A GitHub repository with essential details.
 
@@ -255,7 +255,7 @@ class Repository(TypedDict):
     permissions: dict[str, bool] | None
     
 
-class ContentFile(TypedDict):
+class ContentFile(TypedDict, total=False):
     """
     Represents a file in a GitHub repository with essential details.
 
@@ -284,7 +284,7 @@ class ContentFile(TypedDict):
     download_url: str | None
     _links: dict[str, str]
 
-class RepoGist(TypedDict):
+class RepoGist(TypedDict, total=False):
     """
     Represents a GitHub repository gist with essential details.
     This is used to display repository information in a simplified format.
@@ -306,7 +306,7 @@ class RepoGist(TypedDict):
     languages: list[str]
     thumbnail: str | None
 
-class RepoSlice(TypedDict):
+class RepoSlice(TypedDict, total=False):
     """
     Represents a slice of GitHub repositories with metadata.
     

@@ -1,4 +1,4 @@
-from typing import Final, Callable, Coroutine, Any
+from typing import Final, Callable, cast
 from os import environ, makedirs
 from os.path import join
 from dotenv import load_dotenv  # type: ignore
@@ -54,7 +54,7 @@ def read_json(file_path: str) -> dict:
     return {}
 
 
-async def req(fn: Callable, url: str, **kwargs) -> Coroutine[Any, Any, Response]:
+async def req(fn: Callable, url: str, **kwargs) -> Response:
     kwargs['timeout'] = 30
     kwargs.setdefault('headers', {}).update(
         {
@@ -96,7 +96,7 @@ async def get_repo_languages(repo: str) -> tuple[int, dict[str, int]]:
 
 async def get_repo_thumbnail(repo:str,
                      owner:str = "sudoDeVinci"
-                    ) -> tuple[int, list[dict]]:
+                    ) -> tuple[int, dict]:
     res = await req(
         fn=get,
         url=f'/repos/{owner}/{repo}/contents/thumbnail.png',
@@ -114,7 +114,7 @@ async def refresh() -> None:
         with CACHE_LOCK:
             if not USER_CACHE:
                 print("REFRESH ::: No in-memory user cache found, fetching disk cache ...")
-                USER_CACHE = read_json(USER_JSON)
+                USER_CACHE = cast(User, read_json(USER_JSON))
 
             if not USER_CACHE:
                 print("REFRESH ::: No user cache found, fetching user data from GitHub ...")
@@ -132,14 +132,14 @@ async def refresh() -> None:
             raise ValueError(f"Failed to fetch repositories: {stat} :: {fullrepos}")
         
         # Format repos into a list of RepoGist
-        repos: list[RepoGist] = [{
-            'name': repo['name'],
-            'description': repo.get('description', ''),
-            'html_url': repo['html_url'],
-            'stars': repo.get('stargazers_count', 0),
-            'topics': repo.get('topics', []),
-            'thumbnail': '',
-        } for repo in fullrepos]
+        repos: list[RepoGist] = [RepoGist(
+            name=repo['name'],
+            description=cast(str, repo.get('description', '')),
+            html_url=repo['html_url'],
+            stars=cast(int, repo.get('stargazers_count', 0)),
+            topics=cast(list[str], repo.get('topics', [])),
+            thumbnail=''
+        ) for repo in fullrepos]
     
         with CACHE_LOCK:
             REPO_CACHE.update(
@@ -182,7 +182,7 @@ async def fetch_repositories() -> list[RepoGist]:
     with CACHE_LOCK:
         if not REPO_CACHE:
             print("FETCH REPOSITORIES ::: No in-memory cache found, fetching disk cache ...")
-            REPO_CACHE = read_json(REPOSITORY_JSON)
+            REPO_CACHE = cast(RepoSlice, read_json(REPOSITORY_JSON))
 
         repocopy = REPO_CACHE.copy() if REPO_CACHE else None
 
@@ -199,8 +199,8 @@ async def fetch_repositories() -> list[RepoGist]:
     await refresh()
 
     with CACHE_LOCK:
-        write_json(REPOSITORY_JSON, REPO_CACHE)
-        write_json(USER_JSON, USER_CACHE)
+        write_json(REPOSITORY_JSON, REPO_CACHE)  # type: ignore
+        write_json(USER_JSON, USER_CACHE)        # type: ignore
         return REPO_CACHE.get("repos", []) if REPO_CACHE else []
     
 
@@ -216,8 +216,8 @@ def schedule_refresh() -> None:
         while True:
             loop.run_until_complete(refresh())
             with CACHE_LOCK:
-                write_json(REPOSITORY_JSON, REPO_CACHE)
-                write_json(USER_JSON, USER_CACHE)
+                write_json(REPOSITORY_JSON, REPO_CACHE)  # type: ignore
+                write_json(USER_JSON, USER_CACHE)        # type: ignore
             sleep(ttl)
     except Exception as e:
         LOGGER.error(f"Background refresh error: {e}")

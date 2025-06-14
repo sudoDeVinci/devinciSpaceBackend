@@ -2,21 +2,9 @@
     "count": 10,
     "repos": [
         {
-            "name": "ESP32SerialAnimator",
-            "description": null,
-            "html_url": "https://github.com/sudoDeVinci/ESP32SerialAnimator",
-            "stars": 0,
-            "topics": [],
-            "thumbnail": "",
-            "languages": [
-                "C++",
-                "C"
-            ]
-        },
-        {
-            "name": "devincicloud-monolith",
+            "name": "devinciSpaceMonolith",
             "description": "The combination of devinci.cloud frontend and backend.",
-            "html_url": "https://github.com/sudoDeVinci/devincicloud-monolith",
+            "html_url": "https://github.com/sudoDeVinci/devinciSpaceMonolith",
             "stars": 0,
             "topics": [
                 "flask",
@@ -26,35 +14,16 @@
                 "submodules",
                 "vite"
             ],
-            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devincicloud-monolith/default/thumbnail.png",
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devinciSpaceMonolith/default/thumbnail.png",
             "languages": [
                 "Python",
                 "JavaScript"
             ]
         },
         {
-            "name": "devincicloudBackend",
-            "description": "The backend functionality of the devinci.cloud site. Vanila JS frontend built with VIte, Flask backend.",
-            "html_url": "https://github.com/sudoDeVinci/devincicloudBackend",
-            "stars": 0,
-            "topics": [
-                "database",
-                "flask",
-                "sqlite"
-            ],
-            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devincicloudBackend/main/thumbnail.png",
-            "languages": [
-                "Python",
-                "CSS",
-                "HTML",
-                "JavaScript",
-                "Jinja"
-            ]
-        },
-        {
-            "name": "devinci.cloud-frontend",
+            "name": "devinciSpaceFrontend",
             "description": "devinci.cloud - Windows 98 themed Single-page personal portfolio website for Tadj Cazaubon",
-            "html_url": "https://github.com/sudoDeVinci/devinci.cloud-frontend",
+            "html_url": "https://github.com/sudoDeVinci/devinciSpaceFrontend",
             "stars": 0,
             "topics": [
                 "es6",
@@ -64,11 +33,49 @@
                 "vite",
                 "windows-98"
             ],
-            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devinci.cloud-frontend/main/thumbnail.png",
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devinciSpaceFrontend/main/thumbnail.png",
             "languages": [
                 "JavaScript",
                 "HTML",
                 "CSS"
+            ]
+        },
+        {
+            "name": "devinciSpaceBackend",
+            "description": "The backend functionality of the devinci.space site. Flask backend w/ async Github API integration. Kept behind Nginx reverse proxy",
+            "html_url": "https://github.com/sudoDeVinci/devinciSpaceBackend",
+            "stars": 0,
+            "topics": [
+                "async",
+                "database",
+                "flask",
+                "github-api",
+                "sqlite",
+                "vite"
+            ],
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devinciSpaceBackend/main/thumbnail.png",
+            "languages": [
+                "Python",
+                "CSS",
+                "HTML",
+                "JavaScript",
+                "Jinja"
+            ]
+        },
+        {
+            "name": "ESP32Animator",
+            "description": "A small multicore render system for the ESP32.",
+            "html_url": "https://github.com/sudoDeVinci/ESP32Animator",
+            "stars": 0,
+            "topics": [
+                "c",
+                "esp32",
+                "neopixel"
+            ],
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/ESP32Animator/main/thumbnail.png",
+            "languages": [
+                "C",
+                "C++"
             ]
         },
         {
@@ -202,5 +209,5 @@
             ]
         }
     ],
-    "updated": 1749688655
+    "updated": 1749866408
 }
