@@ -2,6 +2,28 @@
     "count": 10,
     "repos": [
         {
+            "name": "devinciSpaceBackend",
+            "description": "The backend functionality of the devinci.space site. Flask backend w/ async Github API integration. Kept behind Nginx reverse proxy",
+            "html_url": "https://github.com/sudoDeVinci/devinciSpaceBackend",
+            "stars": 0,
+            "topics": [
+                "async",
+                "database",
+                "flask",
+                "github-api",
+                "sqlite",
+                "vite"
+            ],
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devinciSpaceBackend/main/thumbnail.png",
+            "languages": [
+                "Python",
+                "CSS",
+                "HTML",
+                "JavaScript",
+                "Jinja"
+            ]
+        },
+        {
             "name": "devinciSpaceMonolith",
             "description": "The combination of devinci.cloud frontend and backend.",
             "html_url": "https://github.com/sudoDeVinci/devinciSpaceMonolith",
@@ -38,28 +60,6 @@
                 "JavaScript",
                 "HTML",
                 "CSS"
-            ]
-        },
-        {
-            "name": "devinciSpaceBackend",
-            "description": "The backend functionality of the devinci.space site. Flask backend w/ async Github API integration. Kept behind Nginx reverse proxy",
-            "html_url": "https://github.com/sudoDeVinci/devinciSpaceBackend",
-            "stars": 0,
-            "topics": [
-                "async",
-                "database",
-                "flask",
-                "github-api",
-                "sqlite",
-                "vite"
-            ],
-            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devinciSpaceBackend/main/thumbnail.png",
-            "languages": [
-                "Python",
-                "CSS",
-                "HTML",
-                "JavaScript",
-                "Jinja"
             ]
         },
         {
@@ -209,5 +209,5 @@
             ]
         }
     ],
-    "updated": 1749866408
+    "updated": 1749870021
 }
