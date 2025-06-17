@@ -249,13 +249,13 @@ class Post(Entity):
         tags: bytes = bytes(0),
         created: datetime = datetime.now(),
         modified: datetime = datetime.now(),
-        comments: list[Comment] = [],
+        comments: list[Comment] | None = None,
     ) -> None:
         super().__init__(uid, created, modified)
         self._title = title
         self._content = content
         self._tags = tags
-        self.comments = comments
+        self.comments = comments if comments else []
 
     @property
     def title(self) -> str:

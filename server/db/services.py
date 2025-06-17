@@ -9,6 +9,7 @@ from typing import TypeVar, Generic, List
 
 Ent = TypeVar("Ent", bound=Entity)
 
+logcursorfailure = lambda: Manager.log("Failed to get cursor.", level=ERROR)
 
 class Service(ABC, Generic[Ent]):
     """
@@ -77,7 +78,7 @@ class CommentService(Service):
         try:
             with Manager.cursor() as cursor:
                 if not cursor:
-                    Manager.log("Failed to get cursor.", level=ERROR)
+                    logcursorfailure()
                     return result
 
                 cursor.execute(query, (commentid,))
@@ -96,7 +97,7 @@ class CommentService(Service):
         finally:
             if cursor:
                 cursor.close()
-            return result
+        return result
 
     @staticmethod
     def list(**kwargs) -> List[Comment]:
@@ -121,7 +122,7 @@ class CommentService(Service):
         try:
             with Manager.cursor() as cursor:
                 if not cursor:
-                    Manager.log("Failed to get cursor.", level=ERROR)
+                    logcursorfailure()
                     return result
 
                 cursor.execute(query, (postid,))
@@ -142,7 +143,7 @@ class CommentService(Service):
         finally:
             if cursor:
                 cursor.close()
-            return result
+        return result
 
     @staticmethod
     def insert(**kwargs) -> None:
@@ -169,7 +170,7 @@ class CommentService(Service):
         try:
             with Manager.cursor() as cursor:
                 if not cursor:
-                    Manager.log("Failed to get cursor.", level=ERROR)
+                    logcursorfailure()
                     return
 
                 cursor.execute(
@@ -214,7 +215,7 @@ class CommentService(Service):
         try:
             with Manager.cursor() as cursor:
                 if not cursor:
-                    Manager.log("Failed to get cursor.", level=ERROR)
+                    logcursorfailure()
                     return
 
                 comment_data = tuple(
@@ -258,7 +259,7 @@ class CommentService(Service):
         try:
             with Manager.cursor() as cursor:
                 if not cursor:
-                    Manager.log("Failed to get cursor.", level=ERROR)
+                    logcursorfailure()
                     return
 
                 cursor.execute(
@@ -292,7 +293,7 @@ class CommentService(Service):
         try:
             with Manager.cursor() as cursor:
                 if not cursor:
-                    Manager.log("Failed to get cursor.", level=ERROR)
+                    logcursorfailure()
                     return
 
                 cursor.execute(query, (comment.uid,))
@@ -323,7 +324,7 @@ class PostService(Service):
         try:
             with Manager.cursor() as cursor:
                 if not cursor:
-                    Manager.log("Failed to get cursor.", level=ERROR)
+                    logcursorfailure()
                     return result
                 cursor.execute(query, (postid,))
                 data = cursor.fetchone()
@@ -342,8 +343,8 @@ class PostService(Service):
                     result.comments.extend(CommentService.list(postid=postid))
         except SQLError as err:
             Manager.log(f"Error getting post: {err}", level=ERROR)
-        finally:
-            return result
+
+        return result
 
     @staticmethod
     def list(**kwargs) -> List[Post]:
@@ -371,7 +372,7 @@ class PostService(Service):
         try:
             with Manager.cursor() as cursor:
                 if not cursor:
-                    Manager.log("Failed to get cursor.", level=ERROR)
+                    logcursorfailure()
                     return result
 
                 cursor.execute(
@@ -401,7 +402,7 @@ class PostService(Service):
         finally:
             if cursor:
                 cursor.close()
-            return result
+        return result
 
     @staticmethod
     def insert(**kwargs) -> None:
@@ -421,7 +422,7 @@ class PostService(Service):
         try:
             with Manager.cursor() as cursor:
                 if not cursor:
-                    Manager.log("Failed to get cursor.", level=ERROR)
+                    logcursorfailure()
                     return
 
                 cursor.execute(
@@ -481,7 +482,7 @@ class PostService(Service):
         try:
             with Manager.cursor() as cursor:
                 if not cursor:
-                    Manager.log("Failed to get cursor.", level=ERROR)
+                    logcursorfailure()
                     return result
 
                 cursor.execute(
@@ -508,7 +509,7 @@ class PostService(Service):
         finally:
             if cursor:
                 cursor.close()
-            return result
+        return result
 
     @staticmethod
     def get_by_daterange(**kwargs) -> List[Post]:
@@ -534,7 +535,7 @@ class PostService(Service):
         try:
             with Manager.cursor() as cursor:
                 if not cursor:
-                    Manager.log("Failed to get cursor.", level=ERROR)
+                    logcursorfailure()
                     return result
 
                 cursor.execute(
@@ -566,4 +567,4 @@ class PostService(Service):
         finally:
             if cursor:
                 cursor.close()
-            return result
+        return result
