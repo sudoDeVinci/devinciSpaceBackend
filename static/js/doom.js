@@ -1,5 +1,5 @@
 "use strict"
-var memory = new WebAssembly.Memory({ initial: 108 })
+const memory = new WebAssembly.Memory({ initial: 108 })
 
 /*stdout and stderr goes here*/
 const output = document.getElementById("output")
@@ -22,32 +22,50 @@ function getMilliseconds() {
   return performance.now()
 }
 
-/*doom is rendered here*/
+/**@type {HTMLCanvasElement} The "screen" we render to*/
 const canvas = document.getElementById("screen")
+
+/**@type {CanvasRenderingContext2D} the context within the canvas so we can manipulate the image buffer more directly*/
+const ctx = canvas.getContext("2d", { alpha: false })
+
 const doom_screen_width = 320 * 2
 const doom_screen_height = 200 * 2
+/**@type {Map<string, Uint8Array>} pixel cache for hex values-memoisation during rendering*/
+const colorCache = new Map()
 
-function rgbaToHex(r, g, b) {
-  return (
-    "#" +
-    [r, g, b].map((x) => Math.round(x).toString(16).padStart(2, "0")).join("")
-  )
-}
+/**@type {ImageData || null} The underlying image Data for our canvas object context.*/
+let imageData = null
 
-function averageBlockColour(data, startX, startY, width, blockSize) {
-  let r = 0, g = 0, b = 0;
+function getAverageBlockColour(data, startX, startY, width, blockSize) {
+  let r_sum = 0, g_sum = 0, b_sum = 0
 
   for (let y = startY; y < startY + blockSize; y++) {
     for (let x = startX; x < startX + blockSize; x++) {
       const i = (y * width + x) * 4;
-      r += data[i];
-      g += data[i + 1];
-      b += data[i + 2];
+      r_sum += data[i];
+      g_sum += data[i + 1];
+      b_sum += data[i + 2];
     }
   }
 
-  const size = blockSize * blockSize;
-  return rgbaToHex(r / size, g / size, b / size);
+  // We try this here so we can skip all the pixel calculations
+  const key = `${r_sum},${g_sum},${b_sum}${blockSize}`;
+  if (colorCache.has(key)) return colorCache.get(key)
+
+  const size = blockSize * blockSize
+  const r = Math.round(r_sum / size)
+  const g = Math.round(g_sum / size)
+  const b = Math.round(b_sum / size)
+
+  // Create a new Uint8Array for the color and store it in the cache
+  // Looks silly but we dont wanna make a temp array for initializing the Uint8Array
+  const color = new Uint8Array(3)
+  color[0] = r
+  color[1] = g
+  color[2] = b
+  colorCache.set(key, color);
+
+  return color;
 }
 
 function drawCanvas(ptr) {
@@ -57,64 +75,42 @@ function drawCanvas(ptr) {
     doom_screen_width * doom_screen_height * 4
   )
 
-  const gradientDiv = document.getElementById("gradientScreen")
-
-  const blockSize = 2 // downsample 2x2 pixels 320x200
+  const blockSize = 2
   const scaledWidth = doom_screen_width / blockSize
   const scaledHeight = doom_screen_height / blockSize
 
-  const layers = []
-  const positions = []
-  const sizes = []
+  // Set the canvas internal resolution and create ImageData object once.
+  if (canvas.width !== scaledWidth || canvas.height !== scaledHeight) {
+    canvas.width = scaledWidth;
+    canvas.height = scaledHeight;
+    imageData = ctx.createImageData(scaledWidth, scaledHeight);
+  }
 
-  const vwu = 100 / scaledWidth
-  const vhu = 100 / scaledHeight
+  const imageDataBuffer = imageData.data;
 
-  for (let y = 0; y < doom_screen_height; y += blockSize) {
-    let stops = []
-    let prevColor = null
-    let segmentStart = 0
-
-    for (let x = 0; x < doom_screen_width; x += blockSize) {
-      const avgColor = averageBlockColour(
+  for (let y = 0; y < scaledHeight; y++) {
+    for (let x = 0; x < scaledWidth; x++) {
+      const color = getAverageBlockColour(
         doom_screen,
-        x,
-        y,
+        x * blockSize,
+        y * blockSize,
         doom_screen_width,
         blockSize
       )
 
-      if (prevColor === null) {
-        prevColor = avgColor
-        segmentStart = x / blockSize
-      } else if (avgColor !== prevColor) {
-        stops.push(
-          `${prevColor} ${segmentStart * vwu}%, ${prevColor} ${
-            (x * vwu) / blockSize
-          }%`
-        )
-        segmentStart = x / blockSize
-        prevColor = avgColor
-      }
+      const i = (y * scaledWidth + x) * 4
+      imageDataBuffer[i] = color[0]
+      imageDataBuffer[i + 1] = color[1]
+      imageDataBuffer[i + 2] = color[2]
+      imageDataBuffer[i + 3] = 255; // Alpha
     }
-    stops.push(
-      `${prevColor} ${segmentStart * vwu}%, ${prevColor} ${scaledWidth * vwu}%`
-    )
-
-    layers.push(`linear-gradient(to right, ${stops.join(", ")})`)
-    positions.push(`0px ${(y * vhu * 0.99) / blockSize}%`)
-    sizes.push(`${scaledWidth * vwu}% ${vhu}%`)
   }
 
-  // Apply layers as CSS background
-  gradientDiv.style.backgroundImage = layers.join(", ")
-  gradientDiv.style.backgroundPosition = positions.join(", ")
-  gradientDiv.style.backgroundSize = sizes.join(", ")
-  gradientDiv.style.backgroundRepeat = "no-repeat"
+  ctx.putImageData(imageData, 0, 0)
 }
 
 /*These functions will be available in WebAssembly. We also share the memory to share larger amounts of data with javascript, e.g. strings of the video output.*/
-var importObject = {
+const importObject = {
   js: {
     js_console_log: appendOutput("log"),
     js_stdout: appendOutput("stdout"),
@@ -240,4 +236,4 @@ WebAssembly.instantiateStreaming(fetch("https://grahamthe.dev/demos/doom/doom.wa
   }
 ).catch(err => {
   console.error("Failed to load WebAssembly:", err);
-});
+})

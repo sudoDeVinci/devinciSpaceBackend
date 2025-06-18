@@ -2,6 +2,26 @@
     "count": 10,
     "repos": [
         {
+            "name": "devinciSpaceFrontend",
+            "description": "devinci.cloud - Windows 98 themed Single-page personal portfolio website",
+            "html_url": "https://github.com/sudoDeVinci/devinciSpaceFrontend",
+            "stars": 0,
+            "topics": [
+                "es6",
+                "frontend",
+                "javascript",
+                "single-page-applications",
+                "vite",
+                "windows-98"
+            ],
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devinciSpaceFrontend/main/thumbnail.png",
+            "languages": [
+                "JavaScript",
+                "HTML",
+                "CSS"
+            ]
+        },
+        {
             "name": "devinciSpaceBackend",
             "description": "The backend functionality of the devinci.space site. Flask backend w/ async Github API integration. Kept behind Nginx reverse proxy",
             "html_url": "https://github.com/sudoDeVinci/devinciSpaceBackend",
@@ -43,42 +63,6 @@
             ]
         },
         {
-            "name": "devinciSpaceFrontend",
-            "description": "devinci.cloud - Windows 98 themed Single-page personal portfolio website for Tadj Cazaubon",
-            "html_url": "https://github.com/sudoDeVinci/devinciSpaceFrontend",
-            "stars": 0,
-            "topics": [
-                "es6",
-                "frontend",
-                "javascript",
-                "single-page-applications",
-                "vite",
-                "windows-98"
-            ],
-            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devinciSpaceFrontend/main/thumbnail.png",
-            "languages": [
-                "JavaScript",
-                "HTML",
-                "CSS"
-            ]
-        },
-        {
-            "name": "ESP32Animator",
-            "description": "A small multicore render system for the ESP32.",
-            "html_url": "https://github.com/sudoDeVinci/ESP32Animator",
-            "stars": 0,
-            "topics": [
-                "c",
-                "esp32",
-                "neopixel"
-            ],
-            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/ESP32Animator/main/thumbnail.png",
-            "languages": [
-                "C",
-                "C++"
-            ]
-        },
-        {
             "name": "LocalCoCaptain",
             "description": "Locally run AI server extension, tailored for assistance inside wearables. Includes wearable device for voice relay to interface with server OTA.",
             "html_url": "https://github.com/sudoDeVinci/LocalCoCaptain",
@@ -99,6 +83,22 @@
             "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/LocalCoCaptain/main/thumbnail.png",
             "languages": [
                 "Python"
+            ]
+        },
+        {
+            "name": "ESP32Animator",
+            "description": "A small multicore render system for the ESP32.",
+            "html_url": "https://github.com/sudoDeVinci/ESP32Animator",
+            "stars": 0,
+            "topics": [
+                "c",
+                "esp32",
+                "neopixel"
+            ],
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/ESP32Animator/main/thumbnail.png",
+            "languages": [
+                "C",
+                "C++"
             ]
         },
         {
@@ -209,5 +209,5 @@
             ]
         }
     ],
-    "updated": 1749870021
+    "updated": 1750227187
 }
