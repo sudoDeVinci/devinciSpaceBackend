@@ -2,23 +2,22 @@
     "count": 10,
     "repos": [
         {
-            "name": "devinciSpaceFrontend",
-            "description": "devinci.cloud - Windows 98 themed Single-page personal portfolio website",
-            "html_url": "https://github.com/sudoDeVinci/devinciSpaceFrontend",
+            "name": "devinciSpaceMonolith",
+            "description": "The combination of devinci.cloud frontend and backend.",
+            "html_url": "https://github.com/sudoDeVinci/devinciSpaceMonolith",
             "stars": 0,
             "topics": [
-                "es6",
-                "frontend",
+                "flask",
                 "javascript",
-                "single-page-applications",
-                "vite",
-                "windows-98"
+                "python",
+                "sqlite3",
+                "submodules",
+                "vite"
             ],
-            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devinciSpaceFrontend/main/thumbnail.png",
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devinciSpaceMonolith/default/thumbnail.png",
             "languages": [
-                "JavaScript",
-                "HTML",
-                "CSS"
+                "Python",
+                "JavaScript"
             ]
         },
         {
@@ -44,22 +43,23 @@
             ]
         },
         {
-            "name": "devinciSpaceMonolith",
-            "description": "The combination of devinci.cloud frontend and backend.",
-            "html_url": "https://github.com/sudoDeVinci/devinciSpaceMonolith",
+            "name": "devinciSpaceFrontend",
+            "description": "devinci.cloud - Windows 98 themed Single-page personal portfolio website",
+            "html_url": "https://github.com/sudoDeVinci/devinciSpaceFrontend",
             "stars": 0,
             "topics": [
-                "flask",
+                "es6",
+                "frontend",
                 "javascript",
-                "python",
-                "sqlite3",
-                "submodules",
-                "vite"
+                "single-page-applications",
+                "vite",
+                "windows-98"
             ],
-            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devinciSpaceMonolith/default/thumbnail.png",
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devinciSpaceFrontend/main/thumbnail.png",
             "languages": [
-                "Python",
-                "JavaScript"
+                "JavaScript",
+                "HTML",
+                "CSS"
             ]
         },
         {
@@ -209,5 +209,5 @@
             ]
         }
     ],
-    "updated": 1750229037
+    "updated": 1750309718
 }
