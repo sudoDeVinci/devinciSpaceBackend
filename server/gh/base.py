@@ -64,7 +64,7 @@ async def req(fn: Callable, url: str, **kwargs) -> Response:
             'Accept': 'application/vnd.github.v3+json',
         })
     r = await asyncio.to_thread(fn, f'{API_ENDPOINT}{url}', **kwargs)
-    await asyncio.sleep(0.25)
+    await asyncio.sleep(0.1)
     return r
 
 
@@ -150,6 +150,8 @@ async def refresh() -> None:
                 }
             )
 
+        # TODO: make the image fetching into a async function - make async for loop and use .gather().
+
         for repo in repos:
             print(f"REFRESH ::: Fetching details for {repo['name']}")
             # Get the languages associated
@@ -157,6 +159,7 @@ async def refresh() -> None:
             if stat != 200:
                 LOGGER.warning(f"Failed to fetch languages for {repo['name']}: {stat}")
                 continue
+
             #LOGGER.info(f"Languages for {repo['name']} fetched successfully: {languages}")
             repo['languages'] = list(languages.keys())
 

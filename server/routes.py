@@ -33,11 +33,11 @@ from threading import Thread
 Thread(target=schedule_refresh, daemon=True).start()
 
 @routes.route("/", methods=["GET"])
-def catch_all() -> Response:
+async def catch_all() -> Response:
         return send_from_directory(STATIC, "index.html")
 
 @routes.route("/favicon.ico", methods=["GET"])
-def favicon() -> Response:
+async def favicon() -> Response:
     """
     Serve the favicon.ico file.
     """
@@ -45,7 +45,7 @@ def favicon() -> Response:
 
 @lru_cache()
 @routes.route("/ms_sans_serif.woff2", methods=["GET"])
-def ms_sans_serif() -> Response:
+async def ms_sans_serif() -> Response:
     """
     Serve the MS Sans Serif font file.
     This is used for the pixelated font style in the application.
@@ -55,7 +55,7 @@ def ms_sans_serif() -> Response:
 
 @lru_cache()
 @routes.route("/ms_sans_serif_bold.woff2", methods=["GET"])
-def ms_sans_serif_bold() -> Response:
+async def ms_sans_serif_bold() -> Response:
     """
     Serve the bold version of the MS Sans Serif font file.
     This is used for the pixelated font style in the application.
@@ -67,37 +67,37 @@ def ms_sans_serif_bold() -> Response:
 @lru_cache()
 @routes.route("/css", defaults={"filepath": ""}, methods=["GET"])
 @routes.route("/css/<path:filepath>", methods=["GET"])
-def css(filepath: str="") -> Response:
+async def css(filepath: str="") -> Response:
     return send_from_directory(CSS, filepath)
 
 @lru_cache()
 @routes.route("/js", defaults={"filepath": ""}, methods=["GET"])
 @routes.route("/js/<path:filepath>", methods=["GET"])
-def js(filepath: str="") -> Response:
+async def js(filepath: str="") -> Response:
     return send_from_directory(JS, filepath)
 
 @lru_cache()
 @routes.route("/icons", defaults={"iconpath": ""}, methods=["GET"])
 @routes.route("/icons/<path:iconpath>", methods=["GET"])
-def icons(iconpath: str="") -> Response:
+async def icons(iconpath: str="") -> Response:
     return send_from_directory(ICONS, iconpath)
 
 @lru_cache()
 @routes.route("/images", methods=["GET"])
 @routes.route("/images/<path:imagepath>", methods=["GET"])
-def images(imagepath: str="") -> Response:
+async def images(imagepath: str="") -> Response:
     return send_from_directory(IMAGES, imagepath)
 
 @lru_cache()
 @routes.route("/audio", methods=["GET"])
 @routes.route("/audio/<path:audiopath>", methods=["GET"])
-def audio(audiopath: str="") -> Response:
+async def audio(audiopath: str="") -> Response:
     return send_from_directory(AUDIO, audiopath)
 
 @lru_cache()
 @routes.route("/assets/", defaults={"assetpath": ""}, methods=["GET"])
 @routes.route("/assets/<path:assetpath>", methods=["GET"])
-def assets(assetpath: str="") -> Response:
+async def assets(assetpath: str="") -> Response:
     print(f'>>> ASSET: {assetpath}')
     ext = assetpath.split(".")[-1] if "." in assetpath else ""
     mime = "text/css" if ext == "css" else "application/javascript"
@@ -106,13 +106,13 @@ def assets(assetpath: str="") -> Response:
 @lru_cache()
 @routes.route("/fonts", defaults={"fontpath": ""}, methods=["GET"])
 @routes.route("/fonts/<path:fontpath>", methods=["GET"])
-def fonts(fontpath: str="") -> Response:
+async def fonts(fontpath: str="") -> Response:
     return send_from_directory(FONTS, fontpath)
 
 @lru_cache()
 @routes.route("/css/fonts", methods=["GET"])
 @routes.route("/css/fonts/<path:fontfile>", methods=["GET"])
-def fonts_css(fontfile: str = "") -> Response:
+async def fonts_css(fontfile: str = "") -> Response:
     """
     Serve font files from the fonts directory.
     This is used for CSS font-face declarations.
@@ -126,22 +126,22 @@ Page routes - Each is rendered within separate windows
 """
 @lru_cache()    
 @routes.route("/about", methods=["GET"])
-def about() -> str:
+async def about() -> str:
     return render_template("about.html")
 
 @lru_cache()
 @routes.route("/welcome", methods=["GET"])
-def welcome() -> str:
+async def welcome() -> str:
     return render_template("welcome.html")
 
 @lru_cache()
 @routes.route("/contact", methods=["GET"])
-def contact() -> str:
+async def contact() -> str:
     return render_template("contact.html")
 
 @lru_cache()
 @routes.route("/doom", methods=["GET"])
-def doom() -> str:
+async def doom() -> str:
     return render_template("doom.html")
 
 @routes.route("/projects", methods=["GET"])

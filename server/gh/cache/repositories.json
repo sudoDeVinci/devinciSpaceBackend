@@ -18,8 +18,8 @@
             "languages": [
                 "Python",
                 "CSS",
-                "JavaScript",
                 "HTML",
+                "JavaScript",
                 "Jinja"
             ]
         },
@@ -209,5 +209,5 @@
             ]
         }
     ],
-    "updated": 1750312796
+    "updated": 1750732547
 }

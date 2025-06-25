@@ -30,18 +30,27 @@ const ctx = canvas.getContext("2d", { alpha: false })
 
 const doom_screen_width = 320 * 2
 const doom_screen_height = 200 * 2
-/**@type {Map<string, Uint8Array>} pixel cache for hex values-memoisation during rendering*/
+/**@type {Map<string, number[]>} pixel cache for hex values-memoisation during rendering*/
 const colorCache = new Map()
 
 /**@type {ImageData || null} The underlying image Data for our canvas object context.*/
 let imageData = null
 
-function getAverageBlockColour(data, startX, startY, width, blockSize) {
+/**
+ * @param {Uint8ClampedArray} data 
+ * @param {number} startX 
+ * @param {number} startY 
+ * @param {number} width 
+ * @param {number} blockSize 
+ * @param {Uint8ClampedArray} pixelBuffer - Buffer for pixel values, passed by reference and mutated
+ */
+function getAverageBlockColour(data, startX, startY, width, blockSize, pixelBuffer) {
   let r_sum = 0, g_sum = 0, b_sum = 0
+  let i = 0
 
   for (let y = startY; y < startY + blockSize; y++) {
     for (let x = startX; x < startX + blockSize; x++) {
-      const i = (y * width + x) * 4;
+      i = (y * width + x) * 4;
       r_sum += data[i];
       g_sum += data[i + 1];
       b_sum += data[i + 2];
@@ -49,23 +58,21 @@ function getAverageBlockColour(data, startX, startY, width, blockSize) {
   }
 
   // We try this here so we can skip all the pixel calculations
-  const key = `${r_sum},${g_sum},${b_sum}${blockSize}`;
-  if (colorCache.has(key)) return colorCache.get(key)
+  const key = `${r_sum},${g_sum},${b_sum}${blockSize}`
+  /**@type {number[]} */
+  let outarr = []
 
-  const size = blockSize * blockSize
-  const r = Math.round(r_sum / size)
-  const g = Math.round(g_sum / size)
-  const b = Math.round(b_sum / size)
+  if (colorCache.has(key)) {
+    outarr = colorCache.get(key)
+  } else {
+    const size = blockSize * blockSize
+    outarr[0] = Math.round(r_sum / size)
+    outarr[1] = Math.round(g_sum / size)
+    outarr[2] = Math.round(b_sum / size)
+  }
 
-  // Create a new Uint8Array for the color and store it in the cache
-  // Looks silly but we dont wanna make a temp array for initializing the Uint8Array
-  const color = new Uint8Array(3)
-  color[0] = r
-  color[1] = g
-  color[2] = b
-  colorCache.set(key, color);
-
-  return color;
+  pixelBuffer.set(outarr, 0)
+  colorCache.set(key, outarr);
 }
 
 function drawCanvas(ptr) {
@@ -81,27 +88,29 @@ function drawCanvas(ptr) {
 
   // Set the canvas internal resolution and create ImageData object once.
   if (canvas.width !== scaledWidth || canvas.height !== scaledHeight) {
-    canvas.width = scaledWidth;
-    canvas.height = scaledHeight;
-    imageData = ctx.createImageData(scaledWidth, scaledHeight);
+    canvas.width = scaledWidth
+    canvas.height = scaledHeight
+    imageData = ctx.createImageData(scaledWidth, scaledHeight)
   }
 
-  const imageDataBuffer = imageData.data;
+  const imageDataBuffer = imageData.data
+  const pixelBuffer = new Uint8Array(3)
 
   for (let y = 0; y < scaledHeight; y++) {
     for (let x = 0; x < scaledWidth; x++) {
-      const color = getAverageBlockColour(
+      getAverageBlockColour(
         doom_screen,
         x * blockSize,
         y * blockSize,
         doom_screen_width,
-        blockSize
+        blockSize,
+        pixelBuffer
       )
 
       const i = (y * scaledWidth + x) * 4
-      imageDataBuffer[i] = color[0]
-      imageDataBuffer[i + 1] = color[1]
-      imageDataBuffer[i + 2] = color[2]
+      imageDataBuffer[i] = pixelBuffer[0]
+      imageDataBuffer[i + 1] = pixelBuffer[1]
+      imageDataBuffer[i + 2] = pixelBuffer[2]
       imageDataBuffer[i + 3] = 255; // Alpha
     }
   }
