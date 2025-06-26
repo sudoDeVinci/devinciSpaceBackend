@@ -150,26 +150,19 @@ async def refresh() -> None:
                 }
             )
 
-        # TODO: make the image fetching into a async function - make async for loop and use .gather().
+            langcoroutines = [get_repo_languages(repo['name']) for repo in repos]
+            thumbnailcoroutines = [get_repo_thumbnail(repo['name']) for repo in repos]
 
-        for repo in repos:
-            print(f"REFRESH ::: Fetching details for {repo['name']}")
-            # Get the languages associated
-            stat, languages = await get_repo_languages(repo['name'])
-            if stat != 200:
-                LOGGER.warning(f"Failed to fetch languages for {repo['name']}: {stat}")
-                continue
+            awaitables = [asyncio.gather(*langcoroutines), asyncio.gather(*thumbnailcoroutines)]
+            langresponses, thumbnailresponses  = await asyncio.gather(*awaitables)
 
-            #LOGGER.info(f"Languages for {repo['name']} fetched successfully: {languages}")
-            repo['languages'] = list(languages.keys())
+            languages = [list(langs.keys()) for _, langs in langresponses]
+            thumbnails = [thumbnail.get('download_url', None) for _, thumbnail in thumbnailresponses]
 
-            # get the thumbnail url associated
-            stat, thumbnail = await get_repo_thumbnail(repo['name'])
-            if stat != 200:
-                LOGGER.warning(f"Failed to fetch thumbnail for {repo['name']}: {stat}")
-                continue
-            #LOGGER.info(f"Thumbnail for {repo['name']} fetched successfully: {thumbnail}")
-            repo['thumbnail'] = thumbnail.get('download_url', '')
+            for index, repo in enumerate(repos):
+                repo['languages'] = languages[index]
+                repo['thumbnail'] = thumbnails[index]
+        
 
     except Exception as e:
         LOGGER.error(f"An error occurred: {e}")
