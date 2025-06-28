@@ -1,3 +1,4 @@
+from typing import TypedDict
 from datetime import datetime
 from uuid import uuid4
 from abc import ABC
@@ -6,92 +7,8 @@ from abc import ABC
 def dt2str(dt: datetime) -> str:
     return dt.strftime("%Y-%m-%d %H:%M:%S.%f")
 
-
 def str2dt(s: str) -> datetime:
     return datetime.strptime(s, "%Y-%m-%d %H:%M:%S.%f")
-
-
-class Entity(ABC):
-    """
-    A base class for all entities in the database.
-    """
-
-    __slots__ = ("_uid", "_created", "_edited")
-
-    _uid: str
-    _created: datetime
-    _edited: datetime
-
-    def __init__(
-        self,
-        uid: str = str(uuid4()),
-        created: datetime = datetime.now(),
-        edited: datetime = datetime.now(),
-    ) -> None:
-        self._uid = uid
-        self._created = created
-        self._edited = edited
-
-    @property
-    def uid(self) -> str:
-        return self._uid
-
-    @property
-    def created(self) -> datetime:
-        return self._created
-
-    @property
-    def edited(self) -> datetime:
-        return self._edited
-
-    @edited.setter
-    def edited(self, value: datetime) -> None:
-        self._edited = value
-
-    def created_str(self) -> str:
-        return dt2str(self._created)
-
-    def edited_str(self) -> str:
-        return dt2str(self._edited)
-
-    def is_edited(self) -> bool:
-        return self._edited != self._created
-
-
-class Comment(Entity):
-    """
-    A class used to represent a timestamped Comment on a given Post.
-    """
-
-    __slots__ = ("title", "content", "author")
-
-    author: str
-    title: str
-    content: str
-
-    def __init__(
-        self,
-        uid: str = str(uuid4()),
-        author: str = "",
-        title: str = "",
-        content: str = "",
-        created: datetime = datetime.now(),
-        edited: datetime = datetime.now(),
-    ) -> None:
-        super().__init__(uid, created, edited)
-        self.content = content
-        self.title = title
-        self.author = author
-
-    def json(self) -> dict:
-        return {
-            "uid": self._uid,
-            "author": self.author,
-            "title": self.title,
-            "content": self.content,
-            "created": dt2str(self._created),
-            "edited": dt2str(self._edited),
-        }
 
 
 class TagManager:
@@ -219,9 +136,126 @@ class TagManager:
         return list(cls.TAGS.keys())
 
 
+class EntityJSON(TypedDict, total=False):
+    uid: str
+    created: str
+    edited: str
+
+class Entity(ABC):
+    """
+    A base class for all entities in the database.
+    """
+
+    __slots__ = ("_uid", "_created", "_edited")
+
+    _uid: str
+    _created: datetime
+    _edited: datetime
+
+    def __init__(
+        self,
+        uid: str = str(uuid4()),
+        created: datetime = datetime.now(),
+        edited: datetime = datetime.now(),
+    ) -> None:
+        self._uid = uid
+        self._created = created
+        self._edited = edited
+
+    @property
+    def uid(self) -> str:
+        return self._uid
+
+    @property
+    def created(self) -> datetime:
+        return self._created
+
+    @property
+    def edited(self) -> datetime:
+        return self._edited
+
+    @edited.setter
+    def edited(self, value: datetime) -> None:
+        self._edited = value
+
+    def created_str(self) -> str:
+        return dt2str(self._created)
+
+    def edited_str(self) -> str:
+        return dt2str(self._edited)
+
+    def is_edited(self) -> bool:
+        return self._edited != self._created
+    
+    def json(self) -> EntityJSON:
+        {
+            "uid": self._uid,
+            "created": dt2str(self._created),
+            "edited": dt2str(self._edited),
+        }
+
+
+class CommentJSON(EntityJSON):
+    author: str
+    title: str
+    content: str
+
+class Comment(Entity):
+    """
+    A class used to represent a timestamped Comment on a given Post.
+    """
+
+    __slots__ = (
+        "_author",
+        "_title",
+        "_content"
+    )
+
+    def __init__(
+        self,
+        uid: str = str(uuid4()),
+        author: str = "",
+        title: str = "",
+        content: str = "",
+        created: datetime = datetime.now(),
+        edited: datetime = datetime.now(),
+    ) -> None:
+        super().__init__(uid, created, edited)
+        self._content = content
+        self._title = title
+        self._author = author
+
+    @property
+    def author(self) -> str:
+        return self._author
+    
+    @property
+    def title(self) -> str:
+        return self._title
+    
+    @property
+    def content(self) -> str:
+        return self._content
+
+    def json(self) -> CommentJSON:
+        out = super().json()
+        out.update({
+            "author": self._author,
+            "title": self._title,
+            "content": self._content
+        })
+        return out
+
+
+class PostJSON(EntityJSON):
+    title: str
+    content: str
+    tags: str
+    comments: list[CommentJSON]
+
 class Post(Entity):
     """
-    A class used to represent a Post.
+    A singular post within the website's blog.
 
     Attributes:
         _title : str
@@ -234,12 +268,12 @@ class Post(Entity):
             list of comments on the post
     """
 
-    __slots__ = ("_title", "_content", "_tags", "comments")
-
-    _title: str
-    _content: str
-    _tags: bytes
-    comments: list[Comment]
+    __slots__ = (
+        "_title",
+        "_content",
+        "_tags",
+        "comments"
+    )
 
     def __init__(
         self,
@@ -284,13 +318,43 @@ class Post(Entity):
     def tags_str(self) -> str:
         return "".join(format(byte, "08b") for byte in self._tags)
 
-    def json(self) -> dict:
-        return {
-            "uid": self._uid,
+    def json(self) -> PostJSON:
+        out = super().json()
+        out.update({
             "title": self._title,
             "content": self._content,
             "tags": TagManager.decode_tags(self._tags),
-            "created": dt2str(self._created),
-            "edited": dt2str(self._edited),
             "comments": [comment.json() for comment in self.comments],
-        }
+        })
+        return out
+
+
+class GuestMessageJSON(EntityJSON, total=False):
+    author: str
+    content: str
+
+class GuestMessage(Entity):
+
+    __slots__ = (
+        "_author",
+        "_content"
+    )
+
+    def __init__(
+        self,
+        uid: str = str(uuid4()),
+        created: datetime = datetime.now(),
+        edited: datetime = datetime.now(),
+        author: str = "",
+        content: str = ""
+    ) -> None:
+        super.__init__(uid, created, edited)
+        self._author = author
+        self._content = content
+
+    def json(self) -> GuestMessageJSON:
+        out = super().json()
+        out.update({
+            "author": self._author,
+            "content": self._content
+        })

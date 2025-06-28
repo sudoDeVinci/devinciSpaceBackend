@@ -30,5 +30,18 @@ def apply_schema(cursor: Cursor | None) -> None:
             created TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
             edited TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
         );
-                   """
+        """
     )
+
+    cursor.execute(
+        """
+        CREATE TABLE IF NOT EXISTS guestbook (
+            uid TEXT PRIMARY KEY,
+            author TEXT NOT NULL,
+            content TEXT NOT NULL,
+            created TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+            edited TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        );
+        """
+    )
+
