@@ -1,6 +1,6 @@
 ![Type Check](https://github.com/sudoDeVinci/devinci.cloud/actions/workflows/typecheck.yml/badge.svg?branch=main)
 
-# Devinci.cloud
+# Devinci.Space
 ![Current Visual](./static/images/screenshot.png)
 
 This is the server and database and API components of my personal portfolio website, [devinci.space](https://devinci.space). This site is kept behind an Nginx reverse proxy and hosted locally.
@@ -12,8 +12,5 @@ The frontend component of the site is a custom window manager bundled using Vite
 
 ## Flask Server
 
-A minimal Flask app using SQLite for providing database and routing functionality. There is also support for async integration with Github for
-updates and interactions with relevant repos. To enable async support for flask routes, it must be installed with `pip install flask[async]`.
-This is all in attempt to make the most of the lackluster server hardware on which this is all hosted.
-
-### 
+A minimal Flask app using SQLite.
+There is also support for async integration with Github for updates and interactions with relevant repos. To make the most of the lackluster server hardware on which this is all hosted.
