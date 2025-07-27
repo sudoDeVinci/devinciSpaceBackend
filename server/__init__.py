@@ -16,10 +16,14 @@ def create_app() -> Flask:
     Create a Flask app with the routes registered.
     Inject builtins like `enumerate` into the Jinja context.
     """
-    from .routes import routes
+    from .pages import PageRouter
+    from .assets import AssetRouter
 
+    
     app = Flask(__name__)
-    app.register_blueprint(routes)
+    app.register_blueprint(PageRouter)
+    app.register_blueprint(AssetRouter)
+
 
     @app.context_processor
     def inject_builtins() -> dict[str, Callable]:
