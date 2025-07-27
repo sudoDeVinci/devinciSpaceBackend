@@ -7,7 +7,7 @@ from flask import (  # type: ignore
     render_template,
     send_from_directory
 )
-
+from functools import lru_cache  # type: ignore
 from os.path import join
 from typing import Final
 from os import getcwd
@@ -76,10 +76,10 @@ from threading import Thread
 Thread(target=schedule_refresh, daemon=True).start()
 
 
-
+@lru_cache(maxsize=128)
 def is_mobile(user_agent: str) -> bool:
     """Detect if user agent is from a mobile device"""
-    mobile_patterns = tuple(
+    mobile_patterns = (
         r'Android', r'webOS', r'iPhone', r'iPad', r'iPod', r'BlackBerry', 
         r'Windows Phone', r'Mobile', r'Opera Mini'
     )
@@ -90,7 +90,7 @@ def is_mobile(user_agent: str) -> bool:
 def detect_device() -> Response:
     """
     Detect the device type based on the User-Agent header.
-    If the device is mobile, render the device selection page.
+    If the device is mobile, render the mobile version.
     Otherwise, redirect to the main page.
     """
     user_agent = request.headers.get('User-Agent', '')
@@ -103,20 +103,25 @@ def detect_device() -> Response:
 @PageRouter.route('/mobile')
 def mobile_site() -> Response:
     """
-    Render the mobile site alternative.
+    Render the mobile site alternative - a long scrolling page with sections.
     """
     projects = fetch_repositories()
     return render_template('mobile.html', projects=projects, tracks=TRACKS)
 
 
 @PageRouter.route("/", methods=["GET"])
-def catch_all() -> Response:
+async def catch_all() -> Response:
         """
         Catch-all route to serve the main page.
         This will render the main page with the appropriate content based on the device type.
+        Mobile users are automatically redirected to the mobile version.
         """
         user_agent = request.headers.get('User-Agent', '')
         prefer_mobile = request.cookies.get('preferMobile')
+        
+        # Auto-redirect mobile users to mobile version
+        if is_mobile(user_agent) and prefer_mobile != 'false':
+            return render_template('mobile.html', tracks=TRACKS, projects = await fetch_repositories())
 
         return send_from_directory(STATIC, "index.html")
 
@@ -124,7 +129,6 @@ def catch_all() -> Response:
 @PageRouter.route("/about", methods=["GET"]) 
 def about() -> Response:
     return render_template("about.html")
-
 
 @PageRouter.route("/welcome", methods=["GET"]) 
 def welcome() -> Response:
