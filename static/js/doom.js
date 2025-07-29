@@ -208,33 +208,39 @@ WebAssembly.instantiateStreaming(fetch("https://grahamthe.dev/demos/doom/doom.wa
     ].forEach(([elementID, keyCode]) => {
       console.log(elementID + " for " + keyCode)
       var button = document.getElementById(elementID)
-      //button.addEventListener("click", () => {keyDown(keyCode); keyUp(keyCode)} );
-      button.addEventListener("touchstart", () => keyDown(keyCode))
-      button.addEventListener("touchend", () => keyUp(keyCode))
-      button.addEventListener("touchcancel", () => keyUp(keyCode))
+      if (button) {
+        // Add both touch and click events for better compatibility
+        button.addEventListener("touchstart", (e) => {
+          e.preventDefault();
+          keyDown(keyCode);
+        });
+        button.addEventListener("touchend", (e) => {
+          e.preventDefault();
+          keyUp(keyCode);
+        });
+        button.addEventListener("touchcancel", (e) => {
+          e.preventDefault();
+          keyUp(keyCode);
+        });
+        
+        // Add click events for desktop testing and fallback
+        button.addEventListener("mousedown", (e) => {
+          e.preventDefault();
+          keyDown(keyCode);
+        });
+        button.addEventListener("mouseup", (e) => {
+          e.preventDefault();
+          keyUp(keyCode);
+        });
+        button.addEventListener("mouseleave", (e) => {
+          e.preventDefault();
+          keyUp(keyCode);
+        });
+      }
     })
 
     /*hint that the canvas should have focus to capute keyboard events*/
     const focushint = document.getElementById("focushint")
-    const printFocusInHint = function (e) {
-      focushint.innerText =
-        "Doom focused, if input stops working focus the game again"
-      focushint.style.fontWeight = "normal"
-    }
-    canvas.addEventListener("focusin", printFocusInHint, false)
-
-    canvas.addEventListener(
-      "focusout",
-      function (e) {
-        focushint.innerText =
-          "Click on the Doom game to capute input and start playing."
-        focushint.style.fontWeight = "bold"
-      },
-      false
-    )
-
-    canvas.focus()
-    printFocusInHint()
 
     /*Main game loop*/
     function step(timestamp) {

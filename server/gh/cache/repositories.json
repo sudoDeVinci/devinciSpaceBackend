@@ -2,6 +2,28 @@
     "count": 10,
     "repos": [
         {
+            "name": "devinciSpaceBackend",
+            "description": "The backend functionality of the devinci.space site. Flask backend w/ async Github API integration. Kept behind Nginx reverse proxy",
+            "html_url": "https://github.com/sudoDeVinci/devinciSpaceBackend",
+            "stars": 1,
+            "topics": [
+                "async",
+                "database",
+                "flask",
+                "github-api",
+                "sqlite",
+                "vite"
+            ],
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devinciSpaceBackend/main/thumbnail.png",
+            "languages": [
+                "Python",
+                "HTML",
+                "CSS",
+                "JavaScript",
+                "Jinja"
+            ]
+        },
+        {
             "name": "NeocitiesWM",
             "description": "A Vanilla JS Window Manager for Single-Page Neocities Applications built w/ Vite",
             "html_url": "https://github.com/sudoDeVinci/NeocitiesWM",
@@ -41,28 +63,6 @@
             "languages": [
                 "C++",
                 "Makefile"
-            ]
-        },
-        {
-            "name": "devinciSpaceBackend",
-            "description": "The backend functionality of the devinci.space site. Flask backend w/ async Github API integration. Kept behind Nginx reverse proxy",
-            "html_url": "https://github.com/sudoDeVinci/devinciSpaceBackend",
-            "stars": 1,
-            "topics": [
-                "async",
-                "database",
-                "flask",
-                "github-api",
-                "sqlite",
-                "vite"
-            ],
-            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devinciSpaceBackend/main/thumbnail.png",
-            "languages": [
-                "Python",
-                "HTML",
-                "CSS",
-                "JavaScript",
-                "Jinja"
             ]
         },
         {
@@ -202,5 +202,5 @@
             ]
         }
     ],
-    "updated": 1753770719
+    "updated": 1753776621
 }

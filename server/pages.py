@@ -141,6 +141,12 @@ def contact() -> Response:
 
 @PageRouter.route("/doom", methods=["GET"])
 def doom() -> Response:
+    user_agent = request.headers.get('User-Agent', '')
+    if is_mobile(user_agent):
+        print("Mobile user detected, rendering mobile DooM page.")
+        return render_template("mobile-doom.html")
+
+    print("Desktop user detected, rendering desktop DooM page.")
     return render_template("doom.html")
 
 @PageRouter.route("/projects", methods=["GET"])
