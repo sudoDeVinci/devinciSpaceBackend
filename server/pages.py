@@ -83,6 +83,7 @@ def is_mobile(user_agent: str) -> bool:
         r'Android', r'webOS', r'iPhone', r'iPad', r'iPod', r'BlackBerry', 
         r'Windows Phone', r'Mobile', r'Opera Mini'
     )
+    print(f"USER IS: {user_agent}")
     return any(re_search(pattern, user_agent) for pattern in mobile_patterns)
 
 

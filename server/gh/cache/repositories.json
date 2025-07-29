@@ -2,25 +2,24 @@
     "count": 10,
     "repos": [
         {
-            "name": "devinciSpaceBackend",
-            "description": "The backend functionality of the devinci.space site. Flask backend w/ async Github API integration. Kept behind Nginx reverse proxy",
-            "html_url": "https://github.com/sudoDeVinci/devinciSpaceBackend",
+            "name": "NeocitiesWM",
+            "description": "A Vanilla JS Window Manager for Single-Page Neocities Applications built w/ Vite",
+            "html_url": "https://github.com/sudoDeVinci/NeocitiesWM",
             "stars": 1,
             "topics": [
-                "async",
-                "database",
-                "flask",
-                "github-api",
-                "sqlite",
-                "vite"
+                "javascript",
+                "neocities",
+                "neocities-client",
+                "single-page-app",
+                "vite",
+                "vitejs",
+                "window-manager"
             ],
-            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devinciSpaceBackend/main/thumbnail.png",
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/NeocitiesWM/main/thumbnail.png",
             "languages": [
-                "Python",
-                "CSS",
                 "JavaScript",
-                "HTML",
-                "Jinja"
+                "CSS",
+                "HTML"
             ]
         },
         {
@@ -38,10 +37,32 @@
                 "sensors",
                 "threading"
             ],
-            "thumbnail": null,
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/ESP-Environment-Drivers/main/thumbnail.png",
             "languages": [
                 "C++",
                 "Makefile"
+            ]
+        },
+        {
+            "name": "devinciSpaceBackend",
+            "description": "The backend functionality of the devinci.space site. Flask backend w/ async Github API integration. Kept behind Nginx reverse proxy",
+            "html_url": "https://github.com/sudoDeVinci/devinciSpaceBackend",
+            "stars": 1,
+            "topics": [
+                "async",
+                "database",
+                "flask",
+                "github-api",
+                "sqlite",
+                "vite"
+            ],
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devinciSpaceBackend/main/thumbnail.png",
+            "languages": [
+                "Python",
+                "HTML",
+                "CSS",
+                "JavaScript",
+                "Jinja"
             ]
         },
         {
@@ -161,43 +182,25 @@
             ]
         },
         {
-            "name": "NeocitiesWM",
-            "description": "A Vanilla JS Window Manager for Single-Page Neocities Applications built w/ Vite",
-            "html_url": "https://github.com/sudoDeVinci/NeocitiesWM",
+            "name": "ESP32Animator",
+            "description": "A small footprint, memory efficient, multicore render system for the ESP32.",
+            "html_url": "https://github.com/sudoDeVinci/ESP32Animator",
             "stars": 1,
             "topics": [
-                "javascript",
-                "neocities",
-                "neocities-client",
-                "single-page-app",
-                "vite",
-                "vitejs",
-                "window-manager"
+                "animation",
+                "esp32",
+                "esp32s3",
+                "led-strips",
+                "matrix",
+                "neopixel",
+                "rendering",
+                "ws1228b"
             ],
-            "thumbnail": null,
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/ESP32Animator/main/thumbnail.png",
             "languages": [
-                "JavaScript",
-                "CSS",
-                "HTML"
-            ]
-        },
-        {
-            "name": "Microcontrollers",
-            "description": "Demonstrations of more hard to find/grasp/lesser talked about concepts in microcontroller development using Arduino. Concepts here work for Pi Pico, Esp32-SX and Arduino Uno unless specified otherwise.",
-            "html_url": "https://github.com/sudoDeVinci/Microcontrollers",
-            "stars": 1,
-            "topics": [
-                "arduino",
-                "esp32-arduino",
-                "esp32-s3",
-                "microcontroller"
-            ],
-            "thumbnail": null,
-            "languages": [
-                "C",
-                "Python"
+                "C++"
             ]
         }
     ],
-    "updated": 1753652212
+    "updated": 1753770719
 }

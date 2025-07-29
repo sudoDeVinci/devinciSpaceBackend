@@ -6,6 +6,8 @@
     <title>Tadj's Personal Site - Mobile</title>
     <link rel="stylesheet" href="https://unpkg.com/98.css" />
     <style>
+        @import url("/css/utility.css");
+
         body {
             margin: 0;
             padding: 20px;
@@ -51,7 +53,7 @@
 
         .mobile-section p {
             margin-bottom: 15px;
-            font-size: 1.25rem !important;
+            font-size: 1.15rem !important;
             font-weight: 500 !important;
         }
 
@@ -218,7 +220,7 @@
             font-size: 1rem;
             cursor: pointer;
             text-decoration: none;
-            color: black;
+            color: black !important;
         }
 
         .mobile-project-button img {
@@ -246,6 +248,32 @@
             object-fit: cover !important;
             display: block !important;
         }
+
+        .title-bar-text {
+            font-size: 1rem;
+        }
+
+        @keyframes rotateScale {
+            0% {
+                transform: rotate(-20deg) scale(1);
+            }
+            50% {
+                transform: rotate(-20deg) scale(1.25);
+            }
+            100% {
+                transform: rotate(-20deg) scale(1);
+            }
+        }
+
+        .latest {
+            display: inline-block;
+            font-size: 1rem !important;
+            animation-name: rotateScale;
+            animation-duration: 2000ms;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+        }
+
     </style>
 </head>
 <body>
@@ -256,6 +284,10 @@
                 <div class="window">
                     <div class="title-bar">
                         <div class="title-bar-text">Welcome!</div>
+                        <div class="title-bar-controls">
+                            <button class='window-minimize-button' aria-label="Minimize"></button>
+                            <button class='window-close-button' aria-label='Close'></button>
+                        </div>
                     </div>
                 <div class="window-body">
                     <h1>Welcome Visitor!</h1>
@@ -270,22 +302,6 @@
                         Take a look around! Maybe you'd like to check out music from my friends and I,
                         see my project portfolio, or even get in touch.
                     </p>
-
-                    <div class="quick-links">
-                        <div class="quick-links-title">Quick Links:</div>
-                        <button class="link-button">
-                            <img src="/icons/music.png" alt="Music icon" />
-                            Music
-                        </button>
-                        <button class="link-button">
-                            <img src="/icons/console.png" alt="Projects icon" />
-                            Projects
-                        </button>
-                        <button class="link-button">
-                            <img src="/icons/support.png" alt="Contact icon" />
-                            Contact
-                        </button>
-                    </div>
 
                     <div class="clippy-container">
                         <img src="/images/clippy.gif" alt="Clippy animation" />
@@ -302,6 +318,10 @@
                 <div class="window">
                     <div class="title-bar">
                         <div class="title-bar-text">About Me</div>
+                        <div class="title-bar-controls">
+                            <button class='window-minimize-button' aria-label="Minimize"></button>
+                            <button class='window-close-button' aria-label='Close'></button>
+                        </div>
                     </div>
                 <div class="window-body">
                     <h1>I'm Tadj.</h1>
@@ -338,6 +358,10 @@
                 <div class="window">
                     <div class="title-bar">
                         <div class="title-bar-text">My Projects</div>
+                        <div class="title-bar-controls">
+                            <button class='window-minimize-button' aria-label="Minimize"></button>
+                            <button class='window-close-button' aria-label='Close'></button>
+                        </div>
                     </div>
                     <div class="window-body">
                         <p class="projects-intro">Here are some of the projects I've been working on. Feel free to check them out!</p>

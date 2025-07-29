@@ -2,6 +2,7 @@
     --off-white: #f2eee6;
     --color-secondary: #00ff00;
     --color-tertiary: #0000ff;
+    --link-blue: var(--color-tertiary);
     --black: #000000;
 }
 
