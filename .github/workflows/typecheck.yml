@@ -2,9 +2,9 @@ name: Backend:Type Check
 
 on:
   push:
-    branches: [ "main default" ]
+    branches: [main, default]
   pull_request:
-    branches: [ "main default" ]
+    branches: [main, default]
 
 permissions:
   contents: read
