@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="/css/doom.css" />
 <title>Welcome!</title>
 <body>
+<<<<<<< Updated upstream
     <div class="container">
         <div class="big-holder">
             <div id="gradientScreen"></div>
@@ -8,5 +9,41 @@
         </div>
     </div>
 </div>
+=======
+    <p id="focushint"></p>
+
+    <p><strong>If you see grey lines across the game window, please adjust the window width </strong></p>
+    <div class="container">
+        <div class="big-holder">
+            <canvas id="screen" tabindex="0">
+                This is where the DooM screen should render.
+            </canvas>
+        </div>
+        <span>&nbsp;</span>
+    </div>
+
+    <h3>Mobile Controls</h3>
+    <div class="controls">
+        <div class="left-controls">
+            <button id="enterButton" aria-label="Enter">&#x23CE;</button>
+            <button id="ctrlButton">Ctrl</button>
+            <button id="spaceButton">Space</button>
+            <button id="altButton">Alt</button>
+        </div>
+
+        <div class="arrow-controls">
+            <div class="arrow-row top">
+            <span class="arrow-spacer"></span>
+            <button id="upButton" aria-label="up">&#x2191;</button>
+            <span class="arrow-spacer"></span>
+        </div>
+        <div class="arrow-row bottom">
+            <button id="leftButton" aria-label="left">&#x2190;</button>
+            <button id="downButton" aria-label="down">&#x2193;</button>
+            <button id="rightButton" aria-label="right">&#x2192;</button>
+        </div>
+    </div>
+
+>>>>>>> Stashed changes
 </body>
 <script type="module" src="/js/doom.js"></script>

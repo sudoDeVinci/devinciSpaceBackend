@@ -27,13 +27,19 @@ body {
 
 .big-holder {
     position: relative;
+<<<<<<< Updated upstream
     height: 100%;
+=======
+    width: 75%;                         /* Allow it to resize based on parent/container */
+    height: calc(75% * 10 / 16);        /* Maintain 16:10 aspect ratio */
+>>>>>>> Stashed changes
 }
 
 #screen {
     position: absolute;
     width: 100%;
     height: 100%;
+<<<<<<< Updated upstream
     opacity: 1; /* Make the canvas visible */
     image-rendering: pixelated; /* Keep pixels sharp when scaled */
     background-color: #000; /* Fallback background */
@@ -41,11 +47,16 @@ body {
 
 #gradientScreen {
     display: none; /* This is no longer used for rendering */
+=======
+    opacity: 1;                         /* Make the canvas visible */
+    image-rendering: pixelated;         /* Keep pixels sharp when scaled */
+>>>>>>> Stashed changes
 }
 
 /* Media query for screen width less than 700px */
 @media (max-width: 1024px) {
     .big-holder {
+<<<<<<< Updated upstream
         width: 94vw; /* 90% of viewport width */
         height: calc(94vw * 10 / 16); /* Maintain 16:10 aspect ratio */
         max-height: 50vh; /* Prevent canvas from taking too much vertical space */
@@ -80,6 +91,10 @@ body {
         width: 95vw !important;
         margin: 0 !important;
         z-index: 9999 !important;
+=======
+        width: 94vw;                    /* 90% of viewport width */
+        height: calc(94vw * 10 / 16);   /* Maintain 16:10 aspect ratio */
+>>>>>>> Stashed changes
     }
 }
 
@@ -124,6 +139,7 @@ body {
 }
 
 .controls button {
+<<<<<<< Updated upstream
     display: inline-block !important;
     position: relative !important;
     min-width: 50px !important;
@@ -145,6 +161,18 @@ body {
     opacity: 1 !important;
     visibility: visible !important;
     flex-shrink: 0 !important;
+=======
+    all:unset !important;
+    min-width: 10vw;
+    min-height: 10vw;
+    font-weight: bold;
+    border: none;
+    border-radius: 3vw;
+    color: #fff;
+    background-color: #550000;      /* close enough to DOOM's red */
+    box-shadow: 0 0 5px #000;
+    transition: background-color 0.2s ease;
+>>>>>>> Stashed changes
 }
 
 .controls button:hover {
