@@ -133,9 +133,7 @@ const importObject = {
 }
 
 document.addEventListener("contextmenu", (e) => {
-  
-    e.preventDefault()
-
+  e.preventDefault()
 })
 
 WebAssembly.instantiateStreaming(fetch("https://grahamthe.dev/demos/doom/doom.wasm"), importObject).then(
