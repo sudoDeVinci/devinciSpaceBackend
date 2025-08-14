@@ -1,16 +1,14 @@
-from flask import (  # type: ignore
+from flask import (
     Blueprint,
     Response,
     request,
     redirect,
-    jsonify,
     render_template,
     send_from_directory
 )
+from werkzeug.wrappers import Response as ResponseWrapper
 from functools import lru_cache  # type: ignore
-from os.path import join
-from typing import Final
-from os import getcwd
+from typing import Final, no_type_check
 from re import search as re_search
 from ._types import (
     Track
@@ -26,7 +24,7 @@ from .utils import (
 )
 
 
-TRACKS: Final[Track] = [
+TRACKS: Final[list[Track]] = [
     Track(
         title="Bill_Nye",
         url="/audio/Bill_Nye.wav",
@@ -70,7 +68,7 @@ TRACKS: Final[Track] = [
 ]
 
 
-PageRouter = Blueprint("pages", __name__, template_folder=VIEWS, static_folder=STATIC)
+PageRouter = Blueprint("pages", __name__, template_folder=str(VIEWS), static_folder=str(STATIC))
 from threading import Thread
 # Start the thread to fetch repositories.
 Thread(target=schedule_refresh, daemon=True).start()
@@ -88,7 +86,7 @@ def is_mobile(user_agent: str) -> bool:
 
 
 @PageRouter.route('/detect')
-def detect_device() -> Response:
+def detect_device() -> ResponseWrapper | Response | str:
     """
     Detect the device type based on the User-Agent header.
     If the device is mobile, render the mobile version.
@@ -102,7 +100,7 @@ def detect_device() -> Response:
 
 
 @PageRouter.route('/mobile')
-def mobile_site() -> Response:
+def mobile_site() -> Response | str:
     """
     Render the mobile site alternative - a long scrolling page with sections.
     """
@@ -110,37 +108,38 @@ def mobile_site() -> Response:
     return render_template('mobile.html', projects=projects, tracks=TRACKS)
 
 
+@no_type_check
 @PageRouter.route("/", methods=["GET"])
-async def catch_all() -> Response:
-        """
-        Catch-all route to serve the main page.
-        This will render the main page with the appropriate content based on the device type.
-        Mobile users are automatically redirected to the mobile version.
-        """
-        user_agent = request.headers.get('User-Agent', '')
-        prefer_mobile = request.cookies.get('preferMobile')
-        
-        # Auto-redirect mobile users to mobile version
-        if is_mobile(user_agent) and prefer_mobile != 'false':
-            return render_template('mobile.html', tracks=TRACKS, projects = await fetch_repositories())
+async def catch_all() -> Response | str:
+    """
+    Catch-all route to serve the main page.
+    This will render the main page with the appropriate content based on the device type.
+    Mobile users are automatically redirected to the mobile version.
+    """
+    user_agent = request.headers.get('User-Agent', '')
+    prefer_mobile = request.cookies.get('preferMobile')
+    
+    # Auto-redirect mobile users to mobile version
+    if is_mobile(user_agent) and prefer_mobile != 'false':
+        return render_template('mobile.html', tracks=TRACKS, projects = await fetch_repositories())
 
-        return send_from_directory(STATIC, "index.html")
+    return send_from_directory(STATIC, "index.html")
 
 
 @PageRouter.route("/about", methods=["GET"]) 
-def about() -> Response:
+def about() -> Response | str:
     return render_template("about.html")
 
 @PageRouter.route("/welcome", methods=["GET"]) 
-def welcome() -> Response:
+def welcome() -> Response | str:
     return render_template("welcome.html")
 
 @PageRouter.route("/contact", methods=["GET"])
-def contact() -> Response:
+def contact() -> Response | str:
     return render_template("contact.html")
 
 @PageRouter.route("/doom", methods=["GET"])
-def doom() -> Response:
+def doom() -> Response | str:
     user_agent = request.headers.get('User-Agent', '')
     if is_mobile(user_agent):
         print("Mobile user detected, rendering mobile DooM page.")
@@ -149,6 +148,7 @@ def doom() -> Response:
     print("Desktop user detected, rendering desktop DooM page.")
     return render_template("doom.html")
 
+@no_type_check
 @PageRouter.route("/projects", methods=["GET"])
-async def projects() -> Response:
+async def projects() -> Response | str:
     return render_template("projects.jinja", projects = await fetch_repositories())

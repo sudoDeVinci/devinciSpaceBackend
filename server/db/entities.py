@@ -1,4 +1,4 @@
-from typing import TypedDict
+from typing import TypedDict, cast
 from datetime import datetime
 from uuid import uuid4
 from abc import ABC
@@ -188,7 +188,7 @@ class Entity(ABC):
         return self._edited != self._created
     
     def json(self) -> EntityJSON:
-        {
+        return {
             "uid": self._uid,
             "created": dt2str(self._created),
             "edited": dt2str(self._edited),
@@ -238,7 +238,7 @@ class Comment(Entity):
         return self._content
 
     def json(self) -> CommentJSON:
-        out = super().json()
+        out = cast(CommentJSON, super().json())
         out.update({
             "author": self._author,
             "title": self._title,
@@ -250,7 +250,7 @@ class Comment(Entity):
 class PostJSON(EntityJSON):
     title: str
     content: str
-    tags: str
+    tags: list[str]
     comments: list[CommentJSON]
 
 class Post(Entity):
@@ -319,7 +319,7 @@ class Post(Entity):
         return "".join(format(byte, "08b") for byte in self._tags)
 
     def json(self) -> PostJSON:
-        out = super().json()
+        out = cast(PostJSON, super().json())
         out.update({
             "title": self._title,
             "content": self._content,
@@ -348,13 +348,15 @@ class GuestMessage(Entity):
         author: str = "",
         content: str = ""
     ) -> None:
-        super.__init__(uid, created, edited)
+        super().__init__(uid, created, edited)
         self._author = author
         self._content = content
 
     def json(self) -> GuestMessageJSON:
-        out = super().json()
+        out = cast(GuestMessageJSON, super().json())
         out.update({
             "author": self._author,
             "content": self._content
         })
+        return out
+

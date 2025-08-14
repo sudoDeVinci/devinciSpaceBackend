@@ -9,3 +9,4 @@ __pycache__
 node_modules
 .env
 server/gh/cache/repositories.json
+server/gh/cache/repositories.json

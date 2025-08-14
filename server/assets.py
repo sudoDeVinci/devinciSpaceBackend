@@ -19,7 +19,7 @@ from .utils import (
 from pathlib import Path
 
 
-AssetRouter = Blueprint("assets", __name__, template_folder=VIEWS, static_folder=STATIC)
+AssetRouter = Blueprint("assets", __name__, template_folder=str(VIEWS), static_folder=str(STATIC))
 
 
 @AssetRouter.route("/favicon.ico", methods=["GET"])

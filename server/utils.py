@@ -3,12 +3,12 @@ from typing import Final
 from os import getcwd
 
 CWD: Final[Path] = Path(getcwd())
-STATIC: Final[str] = CWD / "dist"
-VIEWS: Final[str] = STATIC / "views"
-ICONS: Final[str] = STATIC / "icons"
-ASSETS: Final[str] = STATIC / "assets"
-FONTS: Final[str] = STATIC / "fonts"
-JS: Final[str] = STATIC / "js"
-CSS: Final[str] = STATIC / "css"
-IMAGES: Final[str] = STATIC / "images"
-AUDIO: Final[str] = STATIC / "audio"
+STATIC: Final[Path] = CWD / "dist"
+VIEWS: Final[Path] = STATIC / "views"
+ICONS: Final[Path] = STATIC / "icons"
+ASSETS: Final[Path] = STATIC / "assets"
+FONTS: Final[Path] = STATIC / "fonts"
+JS: Final[Path] = STATIC / "js"
+CSS: Final[Path] = STATIC / "css"
+IMAGES: Final[Path] = STATIC / "images"
+AUDIO: Final[Path] = STATIC / "audio"
