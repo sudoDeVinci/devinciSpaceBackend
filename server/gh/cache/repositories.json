@@ -2,6 +2,67 @@
     "count": 10,
     "repos": [
         {
+            "name": "skyDeVisionImager",
+            "description": "Advanced environmental monitoring platform combining computer vision and geospatial analysis. Low-compute cloud detection, 3D terrain visualization from GeoTIFF data, multi-camera calibration, and statistical validation. scalable architecture with Flask web interface and SQLite backend.",
+            "html_url": "https://github.com/sudoDeVinci/skyDeVisionImager",
+            "stars": 1,
+            "topics": [
+                "flask",
+                "geotiff",
+                "gpu-acceleration",
+                "gpu-programming",
+                "jit",
+                "meteorology",
+                "numba",
+                "numpy",
+                "opencl",
+                "opencl-sdk",
+                "opencv",
+                "opencv-python",
+                "scipy",
+                "sqlite",
+                "weather",
+                "weather-api",
+                "weather-station"
+            ],
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/skyDeVisionImager/main/thumbnail.png",
+            "languages": [
+                "Python"
+            ]
+        },
+        {
+            "name": "ESP-Environment-Drivers",
+            "description": "Centralized repository for i2c drivers for the ESP32 with thread-safety built-in. This would be an alternative to wrapping existing drivers such as BusIO from Adafruit.",
+            "html_url": "https://github.com/sudoDeVinci/ESP-Environment-Drivers",
+            "stars": 1,
+            "topics": [
+                "driver-programming",
+                "drivers",
+                "esp32",
+                "i2c",
+                "i2c-bus",
+                "rtos",
+                "sensors",
+                "threading"
+            ],
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/ESP-Environment-Drivers/main/thumbnail.png",
+            "languages": [
+                "C++",
+                "Makefile"
+            ]
+        },
+        {
+            "name": "GroupGrab",
+            "description": "A simple yet helpful tool to gain info from Roblox Groups all within seconds. ~ By OrangeDev.",
+            "html_url": "https://github.com/sudoDeVinci/GroupGrab",
+            "stars": 1,
+            "topics": [],
+            "thumbnail": null,
+            "languages": [
+                "Python"
+            ]
+        },
+        {
             "name": "devinciSpaceMonolith",
             "description": "The combination of devinci.cloud frontend and backend.",
             "html_url": "https://github.com/sudoDeVinci/devinciSpaceMonolith",
@@ -40,35 +101,6 @@
                 "CSS",
                 "JavaScript",
                 "Jinja"
-            ]
-        },
-        {
-            "name": "skyDeVisionImager",
-            "description": "Advanced environmental monitoring platform combining computer vision and geospatial analysis. Low-compute cloud detection, 3D terrain visualization from GeoTIFF data, multi-camera calibration, and statistical validation. scalable architecture with Flask web interface and SQLite backend.",
-            "html_url": "https://github.com/sudoDeVinci/skyDeVisionImager",
-            "stars": 1,
-            "topics": [
-                "flask",
-                "geotiff",
-                "gpu-acceleration",
-                "gpu-programming",
-                "jit",
-                "meteorology",
-                "numba",
-                "numpy",
-                "opencl",
-                "opencl-sdk",
-                "opencv",
-                "opencv-python",
-                "scipy",
-                "sqlite",
-                "weather",
-                "weather-api",
-                "weather-station"
-            ],
-            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/skyDeVisionImager/main/thumbnail.png",
-            "languages": [
-                "Python"
             ]
         },
         {
@@ -159,27 +191,6 @@
             ]
         },
         {
-            "name": "ESP-Environment-Drivers",
-            "description": "Centralized repository for i2c drivers for the ESP32 with thread-safety built-in. This would be an alternative to wrapping existing drivers such as BusIO from Adafruit.",
-            "html_url": "https://github.com/sudoDeVinci/ESP-Environment-Drivers",
-            "stars": 1,
-            "topics": [
-                "driver-programming",
-                "drivers",
-                "esp32",
-                "i2c",
-                "i2c-bus",
-                "rtos",
-                "sensors",
-                "threading"
-            ],
-            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/ESP-Environment-Drivers/main/thumbnail.png",
-            "languages": [
-                "C++",
-                "Makefile"
-            ]
-        },
-        {
             "name": "ESP-QuadCopter",
             "description": "A completely open source quadcopter drone made on the ESP32 platform with as few dependencies as possible.",
             "html_url": "https://github.com/sudoDeVinci/ESP-QuadCopter",
@@ -196,20 +207,7 @@
             "languages": [
                 "C++"
             ]
-        },
-        {
-            "name": "cryptojacker-writeup",
-            "description": "Simple writeup of cryptojacker malware obfuscation",
-            "html_url": "https://github.com/sudoDeVinci/cryptojacker-writeup",
-            "stars": 1,
-            "topics": [
-                "malware-analysis"
-            ],
-            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/cryptojacker-writeup/main/thumbnail.png",
-            "languages": [
-                "Python"
-            ]
         }
     ],
-    "updated": 1755212178
+    "updated": 1756355715
 }
