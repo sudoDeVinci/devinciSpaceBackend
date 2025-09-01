@@ -136,7 +136,7 @@ document.addEventListener("contextmenu", (e) => {
   e.preventDefault()
 })
 
-WebAssembly.instantiateStreaming(fetch("https://grahamthe.dev/demos/doom/doom.wasm"), importObject).then(
+WebAssembly.instantiateStreaming(fetch("/assets/doom.wasm"), importObject).then(
   (obj) => {
     obj.instance.exports.main();
 

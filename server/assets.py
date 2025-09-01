@@ -84,7 +84,15 @@ def audio(audiopath: str="") -> Response:
 def assets(assetpath: str="") -> Response:
     print(f'>>> ASSET: {assetpath}')
     ext = assetpath.split(".")[-1] if "." in assetpath else ""
-    mime = "text/css" if ext == "css" else "application/javascript"
+    
+    # Set appropriate MIME type based on file extension
+    if ext == "css":
+        mime = "text/css"
+    elif ext == "wasm":
+        mime = "application/wasm"
+    else:
+        mime = "application/javascript"
+    
     return send_from_directory(ASSETS, assetpath, mimetype=mime)
 
 
@@ -102,3 +110,11 @@ def fonts_css(fontfile: str = "") -> Response:
     This is used for CSS font-face declarations.
     """
     return send_from_directory(FONTS, fontfile)
+
+@AssetRouter.route("/doom.wasm", methods=["GET"])
+def doom_wasm() -> Response:
+    """
+    Serve the Doom WebAssembly module.
+    This is used to run the Doom game in the browser.
+    """
+    return send_from_directory(ASSETS, "doom.wasm", mimetype='application/wasm')

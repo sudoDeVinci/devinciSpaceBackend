@@ -1,0 +1,47 @@
+/* Reset for fullscreen loader */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#FullScreenLoading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #00000000;
+  z-index: 9999;
+  opacity: 1;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#FullScreenLoading.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#FullScreenLoading img {
+  max-width: 50vw;
+  max-height: 50vh;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+}
+
+
+
