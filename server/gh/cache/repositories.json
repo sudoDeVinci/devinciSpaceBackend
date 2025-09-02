@@ -2,6 +2,26 @@
     "count": 10,
     "repos": [
         {
+            "name": "devinciSpaceFrontend",
+            "description": "devinci.cloud - Windows 98 themed Single-page personal portfolio website",
+            "html_url": "https://github.com/sudoDeVinci/devinciSpaceFrontend",
+            "stars": 2,
+            "topics": [
+                "es6",
+                "frontend",
+                "javascript",
+                "single-page-applications",
+                "vite",
+                "windows-98"
+            ],
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devinciSpaceFrontend/main/thumbnail.png",
+            "languages": [
+                "JavaScript",
+                "HTML",
+                "CSS"
+            ]
+        },
+        {
             "name": "devinciSpaceBackend",
             "description": "The backend functionality of the devinci.space site. Flask backend w/ async Github API integration. Kept behind Nginx reverse proxy",
             "html_url": "https://github.com/sudoDeVinci/devinciSpaceBackend",
@@ -21,26 +41,6 @@
                 "CSS",
                 "JavaScript",
                 "Jinja"
-            ]
-        },
-        {
-            "name": "devinciSpaceFrontend",
-            "description": "devinci.cloud - Windows 98 themed Single-page personal portfolio website",
-            "html_url": "https://github.com/sudoDeVinci/devinciSpaceFrontend",
-            "stars": 2,
-            "topics": [
-                "es6",
-                "frontend",
-                "javascript",
-                "single-page-applications",
-                "vite",
-                "windows-98"
-            ],
-            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/devinciSpaceFrontend/main/thumbnail.png",
-            "languages": [
-                "JavaScript",
-                "HTML",
-                "CSS"
             ]
         },
         {
@@ -212,5 +212,5 @@
             ]
         }
     ],
-    "updated": 1756777904
+    "updated": 1756778290
 }
