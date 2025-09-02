@@ -138,17 +138,20 @@ def welcome() -> Response | str:
 def contact() -> Response | str:
     return render_template("contact.html")
 
-@PageRouter.route("/doom", methods=["GET"])
-def doom() -> Response | str:
-    user_agent = request.headers.get('User-Agent', '')
-    if is_mobile(user_agent):
-        print("Mobile user detected, rendering mobile DooM page.")
-        return render_template("mobile-doom.html")
+@PageRouter.route("/google5b05a6b637606151.html", methods=["GET"])
+def google_verification() -> Response | str:
+    return render_template("google5b05a6b637606151.html")
 
-    print("Desktop user detected, rendering desktop DooM page.")
-    return render_template("doom.html")
+@PageRouter.route("/sitemap.xml", methods=["GET"])
+def sitemap() -> Response:
+    return send_from_directory(STATIC, "sitemap.xml", mimetype='application/xml')
+
+@PageRouter.route("/robots.txt", methods=["GET"])
+def robots() -> Response:
+    return send_from_directory(STATIC, "robots.txt", mimetype='text/plain')
 
 @no_type_check
 @PageRouter.route("/projects", methods=["GET"])
 async def projects() -> Response | str:
     return render_template("projects.jinja", projects = await fetch_repositories())
+
