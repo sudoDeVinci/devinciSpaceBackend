@@ -20,7 +20,8 @@ from .gh import (
 )
 from .utils import (
     VIEWS,
-    STATIC
+    STATIC,
+    ICONS
 )
 
 
@@ -125,6 +126,21 @@ async def catch_all() -> Response | str:
 
     return send_from_directory(STATIC, "index.html")
 
+@no_type_check
+@PageRouter.route("/doom", methods=["GET"])
+async def doom() -> Response | str:
+    user_agent = request.headers.get('User-Agent', '')
+    prefer_mobile = request.cookies.get('preferMobile')
+
+    if is_mobile(user_agent) and prefer_mobile != 'false':
+        return render_template('mobile-doom.html')
+
+    return render_template("doom.html", )
+
+@no_type_check
+@PageRouter.route("/favicon.ico", methods=["GET"])
+async def favicon() -> Response | str:
+    return send_from_directory(ICONS, "favicon.ico", mimetype='image/vnd.microsoft.icon')
 
 @PageRouter.route("/about", methods=["GET"]) 
 def about() -> Response | str:

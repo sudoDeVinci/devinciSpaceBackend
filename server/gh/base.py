@@ -161,7 +161,7 @@ async def refresh() -> None:
 
             for index, repo in enumerate(repos):
                 repo['languages'] = languages[index]
-                repo['thumbnail'] = thumbnails[index]
+                repo['thumbnail'] = thumbnails[index] if thumbnails[index] else '/images/0.png'
         
 
     except Exception as e:
