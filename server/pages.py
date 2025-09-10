@@ -74,7 +74,7 @@ from threading import Thread
 # Start the thread to fetch repositories.
 Thread(target=schedule_refresh, daemon=True).start()
 
-
+@no_type_check
 @lru_cache(maxsize=128)
 def is_mobile(user_agent: str) -> bool:
     """Detect if user agent is from a mobile device"""
@@ -85,7 +85,7 @@ def is_mobile(user_agent: str) -> bool:
     print(f"USER IS: {user_agent}")
     return any(re_search(pattern, user_agent) for pattern in mobile_patterns)
 
-
+@no_type_check
 @PageRouter.route('/detect')
 def detect_device() -> ResponseWrapper | Response | str:
     """
@@ -99,7 +99,7 @@ def detect_device() -> ResponseWrapper | Response | str:
     else:
         return redirect('/')
 
-
+@no_type_check
 @PageRouter.route('/mobile')
 def mobile_site() -> Response | str:
     """
@@ -142,26 +142,32 @@ async def doom() -> Response | str:
 async def favicon() -> Response | str:
     return send_from_directory(ICONS, "favicon.ico", mimetype='image/vnd.microsoft.icon')
 
+@no_type_check
 @PageRouter.route("/about", methods=["GET"]) 
 def about() -> Response | str:
     return render_template("about.html")
 
+@no_type_check
 @PageRouter.route("/welcome", methods=["GET"]) 
 def welcome() -> Response | str:
     return render_template("welcome.html")
 
+@no_type_check
 @PageRouter.route("/contact", methods=["GET"])
 def contact() -> Response | str:
     return render_template("contact.html")
 
+@no_type_check
 @PageRouter.route("/google5b05a6b637606151.html", methods=["GET"])
 def google_verification() -> Response | str:
     return render_template("google5b05a6b637606151.html")
 
+@no_type_check
 @PageRouter.route("/sitemap.xml", methods=["GET"])
 def sitemap() -> Response:
     return send_from_directory(STATIC, "sitemap.xml", mimetype='application/xml')
 
+@no_type_check
 @PageRouter.route("/robots.txt", methods=["GET"])
 def robots() -> Response:
     return send_from_directory(STATIC, "robots.txt", mimetype='text/plain')
@@ -171,3 +177,7 @@ def robots() -> Response:
 async def projects() -> Response | str:
     return render_template("projects.jinja", projects = await fetch_repositories())
 
+@no_type_check
+@PageRouter.route("/secrets", methods=["GET"])
+def get_secret() -> Response | str:
+    return render_template("secretbase.html")

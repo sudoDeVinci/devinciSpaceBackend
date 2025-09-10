@@ -2,6 +2,27 @@
     "count": 10,
     "repos": [
         {
+            "name": "ESP-Environment-Drivers",
+            "description": "Centralized repository for i2c drivers for the ESP32 with thread-safety built-in. This would be an alternative to wrapping existing drivers such as BusIO from Adafruit.",
+            "html_url": "https://github.com/sudoDeVinci/ESP-Environment-Drivers",
+            "stars": 1,
+            "topics": [
+                "driver-programming",
+                "drivers",
+                "esp32",
+                "i2c",
+                "i2c-bus",
+                "rtos",
+                "sensors",
+                "threading"
+            ],
+            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/ESP-Environment-Drivers/main/thumbnail.png",
+            "languages": [
+                "C++",
+                "Makefile"
+            ]
+        },
+        {
             "name": "devinciSpaceFrontend",
             "description": "devinci.cloud - Windows 98 themed Single-page personal portfolio website",
             "html_url": "https://github.com/sudoDeVinci/devinciSpaceFrontend",
@@ -41,27 +62,6 @@
                 "CSS",
                 "JavaScript",
                 "Jinja"
-            ]
-        },
-        {
-            "name": "ESP-Environment-Drivers",
-            "description": "Centralized repository for i2c drivers for the ESP32 with thread-safety built-in. This would be an alternative to wrapping existing drivers such as BusIO from Adafruit.",
-            "html_url": "https://github.com/sudoDeVinci/ESP-Environment-Drivers",
-            "stars": 1,
-            "topics": [
-                "driver-programming",
-                "drivers",
-                "esp32",
-                "i2c",
-                "i2c-bus",
-                "rtos",
-                "sensors",
-                "threading"
-            ],
-            "thumbnail": "https://raw.githubusercontent.com/sudoDeVinci/ESP-Environment-Drivers/main/thumbnail.png",
-            "languages": [
-                "C++",
-                "Makefile"
             ]
         },
         {
@@ -212,5 +212,5 @@
             ]
         }
     ],
-    "updated": 1756778290
+    "updated": 1757527483
 }
