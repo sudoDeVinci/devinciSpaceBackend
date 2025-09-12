@@ -3,6 +3,7 @@ from flask import (
     Response,
     request,
     redirect,
+    jsonify,
     render_template,
     send_from_directory
 )
@@ -181,3 +182,8 @@ async def projects() -> Response | str:
 @PageRouter.route("/secrets", methods=["GET"])
 def get_secret() -> Response | str:
     return render_template("secretbase.html")
+
+@no_type_check
+@PageRouter.route("/secretcheck", methods=["GET"])
+def secret_check() -> Response | str:
+    return jsonify({"Access Granted": "The secret code is correct!"})
