@@ -1,417 +1,484 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tadj's Personal Site - Mobile</title>
-    <link rel="stylesheet" href="https://unpkg.com/98.css" />
-    <style>
-        @import url("/css/utility.css");
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Tadj's Personal Site - Mobile</title>
+        <link rel="stylesheet" href="https://unpkg.com/98.css" />
+        <style>
+            @import url("/css/utility.css");
 
-        body {
-            margin: 0;
-            padding: 20px;
-            background-color: #008080;
-            font-family: "Pixelated MS Sans Serif", Arial;
-            overflow-x: hidden;
-        }
-
-        .mobile-container {
-            max-width: 100%;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-
-        .mobile-section {
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .window-wrapper {
-            /* Create shadow on wrapper to preserve window border */
-            filter: drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.3));
-            margin-bottom: 20px;
-        }
-
-        .mobile-section .window {
-            width: 100%;
-            /* Remove box-shadow from window to preserve Win98 border */
-        }
-
-        .mobile-section .window-body {
-            padding: 20px;
-            line-height: 1.5;
-        }
-
-        .mobile-section h1 {
-            margin-top: 0;
-            margin-bottom: 15px;
-            font-size: 1.8rem;
-        }
-
-        .mobile-section p {
-            margin-bottom: 15px;
-            font-size: 1.15rem !important;
-            font-weight: 500 !important;
-        }
-
-        .mobile-section a {
-            color: var(--link-blue);
-            text-decoration: underline;
-        }
-
-        .profile-image {
-            max-width: 120px;
-            height: auto;
-            border: 2px solid #000;
-            margin-top: 15px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .quick-links {
-            margin-top: 20px;
-        }
-
-        .quick-links-title {
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .link-button {
-            display: block;
-            width: 100%;
-            margin-bottom: 10px;
-            padding: 10px;
-            font-size: 1.25rem !important;
-            cursor: pointer;
-            font-weight:500;
-            padding: 5px;
-            transition: transform 0.25s ease;
-        }
-
-        .link-button img {
-            width: 16px;
-            height: 16px;
-            margin-right: 8px;
-            vertical-align: middle;
-        }
-
-        .clippy-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .clippy-container img {
-            max-width: 64px;
-            height: auto;
-        }
-
-        /* Ensure mobile-friendly scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Projects Section Styles */
-        .projects-intro {
-            font-size: 1.25rem !important;
-            font-weight: 500 !important;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .mobile-project-card {
-            margin-bottom: 15px;
-            background: #c0c0c0 !important;
-            box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px #808080, inset 2px 2px #ffffff !important;
-            padding: 3px !important;
-            border: none !important;
-        }
-
-        .mobile-project-body {
-            background: #c0c0c0 !important;
-            padding: 15px !important;
-            margin: 8px !important;
-        }
-
-        .mobile-project-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        .mobile-project-header img {
-            width: 16px;
-            height: 16px;
-            margin-right: 8px;
-        }
-
-        .mobile-project-description {
-            font-size: 1rem !important;
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-
-        .mobile-project-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 10px;
-            align-items: center;
-        }
-
-        .mobile-project-stars {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 0.9rem;
-        }
-
-        .mobile-project-stars img {
-            width: 12px;
-            height: 12px;
-        }
-
-        .mobile-project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-bottom: 10px;
-        }
-
-        .mobile-project-tag {
-            background: #e0e0e0;
-            padding: 2px 6px;
-            font-size: 0.8rem;
-            border: 1px solid #999;
-            border-radius: 2px;
-        }
-
-        .mobile-project-languages {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-bottom: 10px;
-        }
-
-        .mobile-project-language {
-            background: #d0d0d0;
-            padding: 2px 6px;
-            font-size: 0.8rem;
-            border: 1px solid #999;
-            border-radius: 2px;
-            font-weight: bold;
-        }
-
-        .mobile-project-actions {
-            text-align: center;
-        }
-
-        .mobile-project-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 8px 12px;
-            font-size: 1rem;
-            cursor: pointer;
-            text-decoration: none;
-            color: black !important;
-        }
-
-        .mobile-project-button img {
-            width: 14px;
-            height: 14px;
-        }
-
-        /* Project Thumbnail Standardization */
-        .project-thumbnail {
-            border: 1px inset #d5d5d5 !important;
-            background: #fff !important;
-            margin-bottom: 8px !important;
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-            max-height: 200px !important;
-            width: 100% !important;
-            overflow: hidden !important;
-            box-sizing: border-box !important;
-        }
-
-        .project-thumbnail img {
-            max-width: 100% !important;
-            max-height: 100% !important;
-            object-fit: cover !important;
-            display: block !important;
-        }
-
-        .title-bar-text {
-            font-size: 1rem;
-        }
-
-        @keyframes rotateScale {
-            0% {
-                transform: rotate(-20deg) scale(1);
+            body {
+                margin: 0;
+                padding: 20px;
+                background-color: #008080;
+                font-family: "Pixelated MS Sans Serif", Arial;
+                overflow-x: hidden;
             }
-            50% {
-                transform: rotate(-20deg) scale(1.25);
+
+            .mobile-container {
+                max-width: 100%;
+                margin: 0 auto;
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
             }
-            100% {
-                transform: rotate(-20deg) scale(1);
+
+            .mobile-section {
+                width: 100%;
+                box-sizing: border-box;
             }
-        }
 
-        .latest {
-            display: inline-block;
-            font-size: 1rem !important;
-            animation-name: rotateScale;
-            animation-duration: 2000ms;
-            animation-iteration-count: infinite;
-            animation-timing-function: ease-in-out;
-        }
+            .window-wrapper {
+                /* Create shadow on wrapper to preserve window border */
+                filter: drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.3));
+                margin-bottom: 20px;
+            }
 
-    </style>
-</head>
-<body>
-    <div class="mobile-container">
-        <!-- Welcome Section -->
-        <div class="mobile-section">
-            <div class="window-wrapper">
-                <div class="window">
-                    <div class="title-bar">
-                        <div class="title-bar-text">Welcome!</div>
-                        <div class="title-bar-controls">
-                            <button class='window-minimize-button' aria-label="Minimize"></button>
-                            <button class='window-close-button' aria-label='Close'></button>
-                        </div>
-                    </div>
-                <div class="window-body">
-                    <h1>Welcome Visitor!</h1>
-                    <p>
-                        Welcome to my personal site!
-                        Here you'll find my collection of projects, and more.
-                    </p>
-                    <p>
-                        This is the mobile version of my site, optimized for scrolling and easy navigation on your device.
-                    </p>
-                    <p>
-                        Take a look around! Maybe you'd like to check out music from my friends and I,
-                        see my project portfolio, or even get in touch.
-                    </p>
+            .mobile-section .window {
+                width: 100%;
+                /* Remove box-shadow from window to preserve Win98 border */
+            }
 
-                    <div class="clippy-container">
-                        <img src="/images/clippy.gif" alt="Clippy animation" />
-                        <p><small>Your helpful assistant, Clippy!</small></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
+            .mobile-section .window-body {
+                padding: 20px;
+                line-height: 1.5;
+            }
 
-        <!-- About Me Section -->
-        <div class="mobile-section">
-            <div class="window-wrapper">
-                <div class="window">
-                    <div class="title-bar">
-                        <div class="title-bar-text">About Me</div>
-                        <div class="title-bar-controls">
-                            <button class='window-minimize-button' aria-label="Minimize"></button>
-                            <button class='window-close-button' aria-label='Close'></button>
-                        </div>
-                    </div>
-                <div class="window-body">
-                    <h1>I'm Tadj.</h1>
-                    
-                    <p>
-                        I like electronics, programming and building things. I love plants and meteorology.
-                    </p>
+            .mobile-section h1 {
+                margin-top: 0;
+                margin-bottom: 15px;
+                font-size: 1.8rem;
+            }
 
-                    <p>
-                        I mostly do embedded and network programming, but nowadays I do more and more
-                        web development. I love automation and primarily image/audio processing.
-                        TLDR; If I think it's useful, I will try to build it.
-                    </p>
+            .mobile-section p {
+                margin-bottom: 15px;
+                font-size: 1.15rem !important;
+                font-weight: 500 !important;
+            }
 
-                    <p>
-                        If you want to see my <a href="https://github.com/sudoDeVinci/LocalCoCaptain" class="latest">Latest</a> project, check out my
-                        <a href="https://github.com/sudoDeVinci/LocalCoCaptain" target="_blank">LocalCoCaptain</a> repo.
-                    </p>
-                    
-                    <p>
-                        I've just finished a BSc in Network Security from Linnaeus University in Sweden.
-                        I'm freelancing as a web developer, which means I get to work on a variety of projects.
-                    </p>
+            .mobile-section a {
+                color: var(--link-blue);
+                text-decoration: underline;
+            }
 
-                    <img src="/images/headshot.jpg" alt="Headshot of Tadj" class="profile-image">
-                </div>
-            </div>
-        </div>
-        </div>
+            .profile-image {
+                max-width: 120px;
+                height: auto;
+                border: 2px solid #000;
+                margin-top: 15px;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
 
-        <!-- Projects Section -->
-        <div class="mobile-section">
-            <div class="window-wrapper">
-                <div class="window">
-                    <div class="title-bar">
-                        <div class="title-bar-text">My Projects</div>
-                        <div class="title-bar-controls">
-                            <button class='window-minimize-button' aria-label="Minimize"></button>
-                            <button class='window-close-button' aria-label='Close'></button>
-                        </div>
-                    </div>
-                    <div class="window-body">
-                        <p class="projects-intro">Here are some of the projects I've been working on. Feel free to check them out!</p>
-                        
-                        {% for project in projects %}
-                        <div class="mobile-project-card">
-                            <div class="project-thumbnail">
-                                <img src="{{ project.thumbnail }}" alt="{{ project.name }} thumbnail" />
+            .quick-links {
+                margin-top: 20px;
+            }
+
+            .quick-links-title {
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            .link-button {
+                display: block;
+                width: 100%;
+                margin-bottom: 10px;
+                padding: 10px;
+                font-size: 1.25rem !important;
+                cursor: pointer;
+                font-weight: 500;
+                padding: 5px;
+                transition: transform 0.25s ease;
+            }
+
+            .link-button img {
+                width: 2rem;
+                height: 2rem;
+                margin-right: 0.3rem;
+                vertical-align: text-top;
+            }
+
+            .clippy-container {
+                text-align: center;
+                margin-top: 20px;
+            }
+
+            .clippy-container img {
+                max-width: 64px;
+                height: auto;
+            }
+
+            /* Ensure mobile-friendly scrolling */
+            html {
+                scroll-behavior: smooth;
+            }
+
+            /* Projects Section Styles */
+            .projects-intro {
+                font-size: 1.25rem !important;
+                font-weight: 500 !important;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+
+            .mobile-project-card {
+                margin-bottom: 15px;
+                background: #c0c0c0 !important;
+                box-shadow:
+                    inset -1px -1px #0a0a0a,
+                    inset 1px 1px #dfdfdf,
+                    inset -2px -2px #808080,
+                    inset 2px 2px #ffffff !important;
+                padding: 3px !important;
+                border: none !important;
+            }
+
+            .mobile-project-body {
+                background: #c0c0c0 !important;
+                padding: 15px !important;
+                margin: 8px !important;
+            }
+
+            .mobile-project-header {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+                font-weight: bold;
+                font-size: 1.1rem;
+            }
+
+            .mobile-project-header img {
+                width: 16px;
+                height: 16px;
+                margin-right: 8px;
+            }
+
+            .mobile-project-description {
+                font-size: 1rem !important;
+                margin-bottom: 10px;
+                line-height: 1.4;
+            }
+
+            .mobile-project-meta {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-bottom: 10px;
+                align-items: center;
+            }
+
+            .mobile-project-stars {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                font-size: 0.9rem;
+            }
+
+            .mobile-project-stars img {
+                width: 12px;
+                height: 12px;
+            }
+
+            .mobile-project-tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 5px;
+                margin-bottom: 10px;
+            }
+
+            .mobile-project-tag {
+                background: #e0e0e0;
+                padding: 2px 6px;
+                font-size: 0.8rem;
+                border: 1px solid #999;
+                border-radius: 2px;
+            }
+
+            .mobile-project-languages {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 5px;
+                margin-bottom: 10px;
+            }
+
+            .mobile-project-language {
+                background: #d0d0d0;
+                padding: 2px 6px;
+                font-size: 0.8rem;
+                border: 1px solid #999;
+                border-radius: 2px;
+                font-weight: bold;
+            }
+
+            .mobile-project-actions {
+                text-align: center;
+            }
+
+            .mobile-project-button {
+                font-size: 1rem;
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Project Thumbnail Standardization */
+            .project-thumbnail {
+                border: 1px inset #d5d5d5 !important;
+                background: #fff !important;
+                margin-bottom: 8px !important;
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                max-height: 200px !important;
+                width: 100% !important;
+                overflow: hidden !important;
+                box-sizing: border-box !important;
+            }
+
+            .project-thumbnail img {
+                max-width: 100% !important;
+                max-height: 100% !important;
+                object-fit: cover !important;
+                display: block !important;
+            }
+
+            .title-bar-text {
+                font-size: 1rem;
+            }
+
+            @keyframes rotateScale {
+                0% {
+                    transform: rotate(-20deg) scale(1);
+                }
+                50% {
+                    transform: rotate(-20deg) scale(1.25);
+                }
+                100% {
+                    transform: rotate(-20deg) scale(1);
+                }
+            }
+
+            .latest {
+                display: inline-block;
+                font-size: 1rem !important;
+                animation-name: rotateScale;
+                animation-duration: 2000ms;
+                animation-iteration-count: infinite;
+                animation-timing-function: ease-in-out;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="mobile-container">
+            <!-- Welcome Section -->
+            <div class="mobile-section">
+                <div class="window-wrapper">
+                    <div class="window">
+                        <div class="title-bar">
+                            <div class="title-bar-text">Welcome!</div>
+                            <div class="title-bar-controls">
+                                <button
+                                    class="window-minimize-button"
+                                    aria-label="Minimize"
+                                ></button>
+                                <button
+                                    class="window-close-button"
+                                    aria-label="Close"
+                                ></button>
                             </div>
-                            <div class="mobile-project-body">
-                                <div class="mobile-project-header">
-                                    <img src="/icons/console.png" alt="Project" />
-                                    {{ project.name }}
+                        </div>
+                        <div class="window-body">
+                            <h1>Welcome Visitor!</h1>
+                            <p>
+                                Welcome to my personal site! Here you'll find my
+                                collection of projects, and more.
+                            </p>
+                            <p>
+                                This is the mobile version of my site, optimized
+                                for scrolling and easy navigation on your
+                                device.
+                            </p>
+                            <p>
+                                Take a look around! Maybe you'd like to check
+                                out music from my friends and I, see my project
+                                portfolio, or even get in touch.
+                            </p>
+
+                            <div class="clippy-container">
+                                <img
+                                    src="/images/clippy.gif"
+                                    alt="Clippy animation"
+                                />
+                                <p>
+                                    <small
+                                        >Your helpful assistant, Clippy!</small
+                                    >
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Me Section -->
+            <div class="mobile-section">
+                <div class="window-wrapper">
+                    <div class="window">
+                        <div class="title-bar">
+                            <div class="title-bar-text">About Me</div>
+                            <div class="title-bar-controls">
+                                <button
+                                    class="window-minimize-button"
+                                    aria-label="Minimize"
+                                ></button>
+                                <button
+                                    class="window-close-button"
+                                    aria-label="Close"
+                                ></button>
+                            </div>
+                        </div>
+                        <div class="window-body">
+                            <h1>I'm Tadj.</h1>
+
+                            <p>
+                                I like electronics, programming and building
+                                things. I love plants and meteorology.
+                            </p>
+
+                            <p>
+                                I mostly do embedded and network programming,
+                                but nowadays I do more and more web development.
+                                I love automation and primarily image/audio
+                                processing. TLDR; If I think it's useful, I will
+                                try to build it.
+                            </p>
+
+                            <p>
+                                If you want to see my
+                                <a
+                                    href="https://github.com/sudoDeVinci/LocalCoCaptain"
+                                    class="latest"
+                                    >Latest</a
+                                >
+                                project, check out my
+                                <a
+                                    href="https://github.com/sudoDeVinci/LocalCoCaptain"
+                                    target="_blank"
+                                    >LocalCoCaptain</a
+                                >
+                                repo.
+                            </p>
+
+                            <p>
+                                I've just finished a BSc in Network Security
+                                from Linnaeus University in Sweden. I'm
+                                freelancing as a web developer, which means I
+                                get to work on a variety of projects.
+                            </p>
+
+                            <img
+                                src="/images/headshot.jpg"
+                                alt="Headshot of Tadj"
+                                class="profile-image"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projects Section -->
+            <div class="mobile-section">
+                <div class="window-wrapper">
+                    <div class="window">
+                        <div class="title-bar">
+                            <div class="title-bar-text">My Projects</div>
+                            <div class="title-bar-controls">
+                                <button
+                                    class="window-minimize-button"
+                                    aria-label="Minimize"
+                                ></button>
+                                <button
+                                    class="window-close-button"
+                                    aria-label="Close"
+                                ></button>
+                            </div>
+                        </div>
+                        <div class="window-body">
+                            <p class="projects-intro">
+                                Here are some of the projects I've been working
+                                on. Feel free to check them out!
+                            </p>
+
+                            {% for project in projects %}
+                            <div class="mobile-project-card">
+                                <div class="project-thumbnail">
+                                    <img
+                                        src="{{ project.thumbnail_url }}"
+                                        alt="{{ project.name }} thumbnail"
+                                    />
                                 </div>
-                                <p class="mobile-project-description">{{ project.description }}</p>
-                                <div class="mobile-project-meta">
-                                    <div class="mobile-project-stars">
-                                        <span>{{ project.stars }}</span>
-                                        <img src="/icons/star.png" alt="Stars">
+                                <div class="mobile-project-body">
+                                    <div class="mobile-project-header">
+                                        <img
+                                            src="/icons/console.png"
+                                            alt="Project"
+                                        />
+                                        {{ project.name }}
+                                    </div>
+                                    <p class="mobile-project-description">
+                                        {{ project.description }}
+                                    </p>
+                                    <div class="mobile-project-meta">
+                                        <div class="mobile-project-stars">
+                                            <span>{{ project.stars }}</span>
+                                            <img
+                                                src="/icons/star.png"
+                                                alt="Stars"
+                                            />
+                                        </div>
+                                    </div>
+                                    {% if project.topics is not none%}
+                                    <div class="mobile-project-tags">
+                                        {% for tag in project.topics %}
+                                        <span class="mobile-project-tag"
+                                            >{{ tag }}</span
+                                        >
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %} {% if project.languages is not
+                                    none%}
+                                    <div class="mobile-project-languages">
+                                        {% for language in project.languages %}
+                                        <span class="mobile-project-language"
+                                            >{{ language }}</span
+                                        >
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+
+                                    <div class="mobile-project-actions">
+                                        <button
+                                            onclick="window.open('{{ project.html_url }}')"
+                                            class="mobile-project-button link-button"
+                                        >
+                                            <img
+                                                src="/icons/directory_open.png"
+                                                alt="Source"
+                                                class="mobile-button-icon"
+                                            />
+                                            Source
+                                        </button>
                                     </div>
                                 </div>
-                                {% if project.topics %}
-                                <div class="mobile-project-tags">
-                                    {% for tag in project.topics %}
-                                    <span class="mobile-project-tag">{{ tag }}</span>
-                                    {% endfor %}
-                                </div>
-                                {% endif %}
-                                {% if project.languages %}
-                                <div class="mobile-project-languages">
-                                    {% for language in project.languages %}
-                                    <span class="mobile-project-language">{{ language }}</span>
-                                    {% endfor %}
-                                </div>
-                                {% endif %}
-                                {% if project.html_url %}
-                                <div class="mobile-project-actions">
-                                    <a href="{{ project.html_url }}" target="_blank" class="mobile-project-button link-button">
-                                        <img src="/icons/directory_open.png" alt="Source" />
-                                        View Source
-                                    </a>
-                                </div>
-                                {% endif %}
                             </div>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
