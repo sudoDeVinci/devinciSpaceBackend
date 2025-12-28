@@ -1,44 +1,28 @@
-from ._types import (
-    User,
-    Repository,
-    RepoGist,
-    RepoSlice
-)
-
+from ._types import RepoGist, Repository, RepoSlice, User
 from .base import (
-    REPOSITORY_JSON,
-    USER_JSON,
-    REPO_CACHE,
-    USER_CACHE,
     CACHE_LOCK,
-    TOKEN,
-    API_VERSION,
-    API_ENDPOINT,
     LOGGER,
-    write_json,
+    REPO_CACHE,
+    REPO_JSON,
+    TOKEN,
+    fetch_repositories,
     read_json,
-    req,
     schedule_refresh,
-    fetch_repositories
+    write_json,
 )
 
 __all__ = (
-    'User',
-    'Repository',
-    'RepoGist',
-    'RepoSlice',
-    'REPOSITORY_JSON',
-    'USER_JSON',
-    'REPO_CACHE',
-    'USER_CACHE',
-    'CACHE_LOCK',
-    'TOKEN',
-    'API_VERSION',
-    'API_ENDPOINT',
-    'LOGGER',
-    'write_json',
-    'read_json',
-    'req',
-    'schedule_refresh',
-    'fetch_repositories',
+    "User",
+    "Repository",
+    "RepoGist",
+    "RepoSlice",
+    "REPO_JSON",
+    "REPO_CACHE",
+    "CACHE_LOCK",
+    "TOKEN",
+    "LOGGER",
+    "write_json",
+    "read_json",
+    "schedule_refresh",
+    "fetch_repositories",
 )

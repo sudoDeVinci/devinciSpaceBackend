@@ -7,17 +7,17 @@
   </div>
   <div class="window-body project-window-body">
     <div class="project-thumbnail">
-      <img src="{{ project.thumbnail }}" alt="{{ project.name }}" />
+      <img src="{{ project.thumbnail_url }}" alt="{{ project.name }}" />
     </div>
 
     <div class="project-stars">
       <span class="project-star">{{project.stars}}</span>
       <img src="/icons/star.png">
     </div>
-    
+
     <div class="project-content">
       <p class="project-description">{{ project.description }}</p>
-      
+
       <div class="project-tags">
         {% for tag in project.topics %}
           <span class="project-tag">{{ tag }}</span>
