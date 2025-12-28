@@ -1,1 +1,160 @@
-{}
+{
+    "count": 10,
+    "updated": 1766900510,
+    "repos": [
+        {
+            "name": "asyncPyGithub",
+            "html_url": "https://github.com/sudoDeVinci/asyncPyGithub",
+            "description": "Async python wrapper over Github API. Type validation with PydanticV2. Simple request caching and minimal object interfaces.",
+            "stars": 1,
+            "topics": [
+                "asyncio",
+                "caching",
+                "github-api",
+                "pydantic",
+                "pydantic-models",
+                "pydantic-v2",
+                "python3",
+                "requests",
+                "type-checking"
+            ],
+            "languages": [
+                "Python"
+            ],
+            "thumbnail_url": "https://raw.githubusercontent.com/sudoDeVinci/asyncPyGithub/main/thumbnail.png"
+        },
+        {
+            "name": "Rclone-Configs",
+            "html_url": "https://github.com/sudoDeVinci/Rclone-Configs",
+            "description": "rclone configs & scripts for use with a UGREEN DXP4800 NAS",
+            "stars": 1,
+            "topics": [],
+            "languages": [
+                "Shell"
+            ],
+            "thumbnail_url": "/images/0.png"
+        },
+        {
+            "name": "AsyncShipStation",
+            "html_url": "https://github.com/sudoDeVinci/AsyncShipStation",
+            "description": "Simple wrapper for ShipStation API",
+            "stars": 1,
+            "topics": [],
+            "languages": [
+                "Python"
+            ],
+            "thumbnail_url": "/images/0.png"
+        },
+        {
+            "name": "Services",
+            "html_url": "https://github.com/sudoDeVinci/Services",
+            "description": "Configs for services I run on my homelab",
+            "stars": 0,
+            "topics": [],
+            "languages": [],
+            "thumbnail_url": "/images/0.png"
+        },
+        {
+            "name": "nginx-configs",
+            "html_url": "https://github.com/sudoDeVinci/nginx-configs",
+            "description": "Nginx configs for my growing number of self-hosted services",
+            "stars": 1,
+            "topics": [
+                "nginx",
+                "nginx-proxy",
+                "self-hosted"
+            ],
+            "languages": [],
+            "thumbnail_url": "/images/0.png"
+        },
+        {
+            "name": "skyDeVisionImager",
+            "html_url": "https://github.com/sudoDeVinci/skyDeVisionImager",
+            "description": "Advanced environmental monitoring platform combining computer vision and geospatial analysis. Low-compute cloud detection, 3D terrain visualization from GeoTIFF data, multi-camera calibration, and statistical validation. scalable architecture with Flask web interface and SQLite backend.",
+            "stars": 1,
+            "topics": [
+                "flask",
+                "geotiff",
+                "gpu-acceleration",
+                "gpu-programming",
+                "jit",
+                "meteorology",
+                "numba",
+                "numpy",
+                "opencl",
+                "opencl-sdk",
+                "opencv",
+                "opencv-python",
+                "scipy",
+                "sqlite",
+                "weather",
+                "weather-api",
+                "weather-station"
+            ],
+            "languages": [
+                "Python"
+            ],
+            "thumbnail_url": "https://raw.githubusercontent.com/sudoDeVinci/skyDeVisionImager/main/thumbnail.png"
+        },
+        {
+            "name": "ArchConfigs",
+            "html_url": "https://github.com/sudoDeVinci/ArchConfigs",
+            "description": null,
+            "stars": 0,
+            "topics": [],
+            "languages": [
+                "Shell"
+            ],
+            "thumbnail_url": "/images/0.png"
+        },
+        {
+            "name": "windowsUtilities",
+            "html_url": "https://github.com/sudoDeVinci/windowsUtilities",
+            "description": "Misc. windows utilities I find myself reusing/rewriting alot",
+            "stars": 0,
+            "topics": [
+                "pywin32",
+                "win32",
+                "win32-api",
+                "win32api"
+            ],
+            "languages": [
+                "Python"
+            ],
+            "thumbnail_url": "/images/0.png"
+        },
+        {
+            "name": "devinciSpaceMonolith",
+            "html_url": "https://github.com/sudoDeVinci/devinciSpaceMonolith",
+            "description": "The combination of devinci.cloud frontend and backend.",
+            "stars": 1,
+            "topics": [
+                "flask",
+                "javascript",
+                "python",
+                "sqlite3",
+                "submodules",
+                "vite"
+            ],
+            "languages": [
+                "Python",
+                "Shell",
+                "JavaScript"
+            ],
+            "thumbnail_url": "https://raw.githubusercontent.com/sudoDeVinci/devinciSpaceMonolith/default/thumbnail.png"
+        },
+        {
+            "name": "cryptojacker-writeup",
+            "html_url": "https://github.com/sudoDeVinci/cryptojacker-writeup",
+            "description": "Simple writeup of cryptojacker malware obfuscation",
+            "stars": 2,
+            "topics": [
+                "malware-analysis"
+            ],
+            "languages": [
+                "Python"
+            ],
+            "thumbnail_url": "https://raw.githubusercontent.com/sudoDeVinci/cryptojacker-writeup/main/thumbnail.png"
+        }
+    ]
+}

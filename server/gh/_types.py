@@ -1,5 +1,6 @@
 from typing import TypedDict
 
+
 class User(TypedDict, total=False):
     """
     A GitHub authenticated User.
@@ -45,6 +46,7 @@ class User(TypedDict, total=False):
         two_factor_authentication (bool): Whether the user has two-factor authentication enabled.
         plan (dict[str, str | int | bool] | None): Information about the user's plan, if available.
     """
+
     login: str
     id: int
     node_id: str
@@ -84,7 +86,6 @@ class User(TypedDict, total=False):
     collaborators: int | None
     two_factor_authentication: bool
     plan: dict[str, str | int | bool] | None
-
 
 
 class Repository(TypedDict, total=False):
@@ -173,6 +174,7 @@ class Repository(TypedDict, total=False):
         default_branch (str): The default branch of the repository.
         permissions (dict[str, bool] | None): Permissions for the authenticated user on this repository.
     """
+
     id: int
     node_id: str
     name: str
@@ -253,7 +255,7 @@ class Repository(TypedDict, total=False):
     watchers: int
     default_branch: str
     permissions: dict[str, bool] | None
-    
+
 
 class ContentFile(TypedDict, total=False):
     """
@@ -272,6 +274,7 @@ class ContentFile(TypedDict, total=False):
         download_url (str | None): The URL to download the file, if available.
         _links (dict[str, str]): Links related to the file, such as self, git, and html URLs.
     """
+
     name: str
     type: str
     size: int
@@ -283,6 +286,7 @@ class ContentFile(TypedDict, total=False):
     git_url: str
     download_url: str | None
     _links: dict[str, str]
+
 
 class RepoGist(TypedDict, total=False):
     """
@@ -298,6 +302,7 @@ class RepoGist(TypedDict, total=False):
         languages (list[str]): A list of programming languages used in the repository.
         thumbnail (str | None): The URL to a thumbnail image for the repository, if available.
     """
+
     name: str
     html_url: str
     description: str
@@ -306,15 +311,17 @@ class RepoGist(TypedDict, total=False):
     languages: list[str]
     thumbnail: str | None
 
-class RepoSlice(TypedDict, total=False):
+
+class RepoSlice(TypedDict):
     """
     Represents a slice of GitHub repositories with metadata.
-    
+
     Attributes:
         count (int): The total number of repositories in this slice.
         updated (int): The timestamp when this slice was last updated.
         repos (list[RepoGist]): A list of repositories represented as RepoGist objects.
     """
+
     count: int
     updated: int
     repos: list[RepoGist]

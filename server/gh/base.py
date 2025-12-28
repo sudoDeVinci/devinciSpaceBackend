@@ -1,228 +1,177 @@
-from typing import Final, Callable, cast
+from asyncio import Lock, gather, new_event_loop, set_event_loop
+from logging import INFO
 from os import environ, makedirs
-from os.path import join
-from dotenv import load_dotenv  # type: ignore
-from logging import getLogger, Logger
-from requests import Response, get
-import pathlib
-import asyncio
-from time import time, sleep
-from threading import Lock, Thread
-import json
+from pathlib import Path
+from threading import Thread
+from time import sleep, time
+from typing import cast
 
-from ._types import (
-    User,
-    Repository,
-    RepoGist,
-    RepoSlice
+from asyncPyGithub import (
+    GitHubPortal,
+    GitHubRepositoryPortal,
+    GitHubUserPortal,
+    PrivateUser,
+    read_json,
+    write_json,
 )
+from asyncPyGithub._types import FullRepository
+from asyncPyGithub.base import LOGGER
+from dotenv import load_dotenv  # type: ignore
 
-load_dotenv()
+from ._types import RepoGist, RepoSlice
 
-currentdir = pathlib.Path(__file__).parent.resolve()
-CACHE_DIR: str = join(currentdir, "cache")
-makedirs(CACHE_DIR, exist_ok=True)
-
-REPOSITORY_JSON: str = join(CACHE_DIR, "repositories.json")
-USER_JSON: str = join(CACHE_DIR, "user.json")
-REPO_CACHE: RepoSlice = {}
-USER_CACHE: User = {}
 CACHE_LOCK: Lock = Lock()
+BASE_DIR: Path = Path(__file__).parent.resolve()
+CACHE_DIR: Path = BASE_DIR / "cache"
+makedirs(CACHE_DIR, exist_ok=True)
+REPO_JSON: Path = CACHE_DIR / "repositories.json"
+REPO_CACHE: RepoSlice | None = None
+LOGGER.setLevel(INFO)
 
-TOKEN: Final[str] = environ.get("GITHUB_TOKEN", "")
-API_VERSION: Final[str] = '2022-11-28'
-API_ENDPOINT: Final[str] = 'https://api.github.com' 
-LOGGER: Logger = getLogger(__name__)
-LOGGER.setLevel('INFO')
-
-
-def write_json(file_path: str, data: dict):
-    try:
-        with open(file_path, 'w') as f:
-            json.dump(data, f, indent=4)
-    except (IOError, OSError) as e:
-        print(f"WRITE JSON ::: Error writing cache: {e}")
-
-
-def read_json(file_path: str) -> dict:
-    try:
-        with open(file_path, 'r') as f:
-            return json.load(f)
-    except (IOError, json.JSONDecodeError) as e:
-        print(f"Error reading cache: {e}")
-
-    return {}
-
-
-async def req(fn: Callable, url: str, **kwargs) -> Response:
-    kwargs['timeout'] = 30
-    kwargs.setdefault('headers', {}).update(
-        {
-            'Authorization': f'Bearer {TOKEN}',
-            'X-GitHub-Api-Version': API_VERSION,
-            'User-Agent': 'devinci.space/1.0',
-            'Accept': 'application/vnd.github.v3+json',
-        })
-    r = await asyncio.to_thread(fn, f'{API_ENDPOINT}{url}', **kwargs)
-    await asyncio.sleep(0.1)
-    return r
-
-
-async def get_user() -> tuple[int, User]:
-    res = await req(fn = get,
-              url='/user',)
-    return (res.status_code, res.json())
-
-
-async def get_repos() -> tuple[int, list[Repository]]:
-    res = await req(fn=get,
-              url='/user/repos',
-              params={
-                'visibility': 'public',
-                'sort': 'updated',
-                'direction': 'desc',
-                'per_page': 10,
-              })
-    return (res.status_code, res.json())
-
-
-async def get_repo_languages(repo: str) -> tuple[int, dict[str, int]]:
-    res = await req(
-        fn=get,
-        url=f'/repos/sudoDeVinci/{repo}/languages',
+try:
+    assert load_dotenv(verbose=True), (
+        "Failed to load environment variables from .env file."
     )
-    return (res.status_code, res.json())
+    TOKEN = environ.get("GITHUB_TOKEN", environ.get("TOKEN", None))
+
+    assert TOKEN is not None, "GITHUB_TOKEN must be set in environment variables."
+except (AssertionError, AttributeError, OSError) as err:
+    LOGGER.error(f"Error during global configuration:::{err}")
 
 
-async def get_repo_thumbnail(repo:str,
-                     owner:str = "sudoDeVinci"
-                    ) -> tuple[int, dict]:
-    res = await req(
-        fn=get,
-        url=f'/repos/{owner}/{repo}/contents/thumbnail.png',
-    )
-    return (res.status_code, res.json())
+async def refresh_cache() -> RepoSlice | None:
+    global CACHE_LOCK, REPO_CACHE
 
-
-async def refresh() -> None:
-    """
-    Refresh our user and repositories cache w/ the latest data from GitHub.
-    """
-    global USER_CACHE, REPO_CACHE
     try:
-
-        with CACHE_LOCK:
-            if not USER_CACHE:
-                print("REFRESH ::: No in-memory user cache found, fetching disk cache ...")
-                USER_CACHE = cast(User, read_json(USER_JSON))
-
-            if not USER_CACHE:
-                print("REFRESH ::: No user cache found, fetching user data from GitHub ...")
-                stat, user = await get_user()
-                if stat != 200:
-                    raise ValueError(f"Failed to fetch user data: {stat} :: {user}")
-
-                USER_CACHE.update(user)
-
-        
-        # Get the repos we wanna show - 10 of the most recently updated.
-        print("REFRESH ::: Fetching repositories from GitHub ...")
-        stat, fullrepos = await get_repos()
-        if stat != 200:
-            raise ValueError(f"Failed to fetch repositories: {stat} :: {fullrepos}")
-        
-        # Format repos into a list of RepoGist
-        repos: list[RepoGist] = [RepoGist(
-            name=repo['name'],
-            description=cast(str, repo.get('description', '')),
-            html_url=repo['html_url'],
-            stars=cast(int, repo.get('stargazers_count', 0)),
-            topics=cast(list[str], repo.get('topics', [])),
-            thumbnail=''
-        ) for repo in fullrepos]
-    
-        with CACHE_LOCK:
-            REPO_CACHE.update(
-                {
-                    'count': len(repos),
-                    'repos': repos,
-                    'updated': int(time())
-                }
+        # On auth, the User is stored in GitHubPortal.user on a class level
+        status, user = await GitHubPortal.authenticate(TOKEN)  # type: ignore
+        if status != 200:
+            raise Exception(
+                f"Authentication failed with status code: {status} :: {user}"
             )
 
-            langcoroutines = [get_repo_languages(repo['name']) for repo in repos]
-            thumbnailcoroutines = [get_repo_thumbnail(repo['name']) for repo in repos]
+        user = cast(PrivateUser, user)
 
-            awaitables = [asyncio.gather(*langcoroutines), asyncio.gather(*thumbnailcoroutines)]
-            langresponses, thumbnailresponses  = await asyncio.gather(*awaitables)
+        # Get the 10 most recently updated repositories
+        status, repos = await GitHubUserPortal.repositories(
+            visibility="public", sort="updated", direction="desc", per_page=10, page=1
+        )
+        if status != 200:
+            raise Exception(
+                f"Failed to fetch repositories with status code: {status} :: {repos}"
+            )
 
-            languages = [list(langs.keys()) for _, langs in langresponses]
-            thumbnails = [thumbnail.get('download_url', None) for _, thumbnail in thumbnailresponses]
+        repos = cast(list[FullRepository], repos)
 
-            for index, repo in enumerate(repos):
-                repo['languages'] = languages[index]
-                repo['thumbnail'] = thumbnails[index] if thumbnails[index] else '/images/0.png'
-        
+        langroutines = [
+            GitHubRepositoryPortal.list_repository_languages(
+                user.login,
+                repo.name,
+            )
+            for repo in repos
+        ]
+
+        thumbnailroutines = [
+            GitHubRepositoryPortal.get_repo_content(
+                user.login,
+                repo.name,
+                "thumbnail.png",
+            )
+            for repo in repos
+        ]
+
+        await GitHubPortal.close()
+
+        langresults, thumbnailresults = await gather(
+            *[
+                gather(*langroutines),
+                gather(*thumbnailroutines),
+            ]
+        )
+
+        languages = [
+            list(langs.keys()) if stat == 200 else None for stat, langs in langresults
+        ]
+
+        thumbnails = [
+            thumbnail.download_url
+            if stat == 200 and thumbnail is not None
+            else "/images/0.png"
+            for stat, thumbnail in thumbnailresults
+        ]
+
+        async with CACHE_LOCK:
+            REPO_CACHE = {
+                "count": len(repos),
+                "updated": int(time()),
+                "repos": [
+                    RepoGist(  # type: ignore
+                        name=repo.name,
+                        html_url=str(repo.html_url),
+                        description=repo.description,
+                        stars=repo.stargazers_count,
+                        topics=repo.topics,
+                        languages=languages[i],
+                        thumbnail_url=str(thumbnails[i]),
+                    )
+                    for i, repo in enumerate(repos)
+                ],
+            }
+
+        return REPO_CACHE
 
     except Exception as e:
         LOGGER.error(f"An error occurred: {e}")
 
 
-
-async def fetch_repositories() -> list[RepoGist]:
+async def fetch_repositories() -> list[RepoGist] | None:
     global REPO_CACHE, CACHE_LOCK
 
     repocopy: RepoSlice | None = None
 
-    print("FETCH REPOSITORIES ::: Checking in-memory cache ...")
-    with CACHE_LOCK:
+    async with CACHE_LOCK:
         if not REPO_CACHE:
-            print("FETCH REPOSITORIES ::: No in-memory cache found, fetching disk cache ...")
-            REPO_CACHE = cast(RepoSlice, read_json(REPOSITORY_JSON))
+            LOGGER.info(
+                "fetch_repositories :: No in-memory cache, fetching cache on disk."
+            )
+            REPO_CACHE = cast(RepoSlice | None, read_json(REPO_JSON))
 
         repocopy = REPO_CACHE.copy() if REPO_CACHE else None
 
-
     if repocopy and "updated" in repocopy:
-        print("FETCH REPOSITORIES ::: Cache exists, validating ...")
+        LOGGER.info("fetch_repositories :: In-memory cache found - validating")
         diff = int(time()) - repocopy["updated"]
         if diff < 7200:
-            print("FETCH REPOSITORIES ::: Cache valid, returning cached repositories ...")
-            return repocopy.get("repos", [])
-        
+            LOGGER.info("fetch_repositories :: Cache is valid, returning cached data.")
+            return REPO_CACHE["repos"] if REPO_CACHE else None
 
-    print("FETCH REPOSITORIES ::: Cache Invalid / not found, refreshing ...")
-    await refresh()
+    LOGGER.info("fetch_repositories :: Cache is invalid, refreshing cache.")
+    _ = await refresh_cache()
 
-    with CACHE_LOCK:
-        write_json(REPOSITORY_JSON, REPO_CACHE)  # type: ignore
-        write_json(USER_JSON, USER_CACHE)        # type: ignore
-        return REPO_CACHE.get("repos", []) if REPO_CACHE else []
-    
+    LOGGER.info("fetch_repositories :: Writing refreshed cache to disk.")
+    _ = write_json(REPO_JSON, REPO_CACHE)  # type: ignore
+    LOGGER.info("fetch_repositories :: Cache written to disk.")
+    return REPO_CACHE["repos"] if REPO_CACHE else None
+
 
 def schedule_refresh() -> None:
-    global CACHE_LOCK
+    global LOGGER
+    ttl = 3600  # 1 hour
+    LOGGER.info("schedule_refresh :: Starting cache refresh scheduler.")
+    loop = new_event_loop()
+    set_event_loop(loop)
 
-    ttl = 3600  # 1 hour in seconds
-    print("SCHEDULE REFRESH ::: Starting background refresh every hour ...")
-
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
     try:
         while True:
-            loop.run_until_complete(refresh())
-            with CACHE_LOCK:
-                write_json(REPOSITORY_JSON, REPO_CACHE)  # type: ignore
-                write_json(USER_JSON, USER_CACHE)        # type: ignore
+            loop.run_until_complete(fetch_repositories())
             sleep(ttl)
     except Exception as e:
-        LOGGER.error(f"Background refresh error: {e}")
+        LOGGER.error(f"An error occurred in the scheduler: {e}")
     finally:
         loop.close()
-    
-    print("")
 
-if __name__ == "__main__": 
+
+if __name__ == "__main__":
     Thread(target=schedule_refresh, daemon=True).start()
     while True:
         pass
