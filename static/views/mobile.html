@@ -249,6 +249,138 @@
                 font-size: 1rem;
             }
 
+            /* Mobile Music Player Styles */
+            .music-player-container {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .now-playing {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 10px;
+            }
+
+            .now-playing-label {
+                font-weight: bold;
+                font-size: 1rem;
+            }
+
+            .now-playing-text {
+                flex: 1;
+                padding: 5px 10px;
+                border: inset 2px;
+                background: white;
+                font-size: 0.9rem;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .music-controls {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin-bottom: 10px;
+            }
+
+            .music-controls button {
+                min-width: 50px;
+                min-height: 40px;
+                font-size: 1.2rem;
+                cursor: pointer;
+            }
+
+            .music-progress-container {
+                margin-bottom: 10px;
+            }
+
+            .music-progress {
+                width: 100%;
+                height: 20px;
+                background: white;
+                border: inset 2px;
+                cursor: pointer;
+                position: relative;
+            }
+
+            .music-progress-bar {
+                height: 100%;
+                background: #0a22aa;
+                width: 0%;
+                transition: width 0.1s linear;
+            }
+
+            .music-volume-container {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+
+            .music-volume-container button {
+                min-width: 35px;
+                min-height: 35px;
+                padding: 5px;
+            }
+
+            .music-volume-container button img {
+                width: 20px;
+                height: 20px;
+                object-fit: contain;
+            }
+
+            .music-volume-container input[type="range"] {
+                flex: 1;
+            }
+
+            .music-playlist {
+                border: inset 2px;
+                background: white;
+                padding: 5px;
+                max-height: 200px;
+                overflow-y: auto;
+            }
+
+            .music-playlist ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .music-playlist li {
+                padding: 8px 10px;
+                cursor: pointer;
+                font-size: 0.9rem;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .music-playlist li:last-child {
+                border-bottom: none;
+            }
+
+            .music-playlist li:hover {
+                background: #e0e0e0;
+            }
+
+            .music-playlist li.active {
+                background: #0000aa;
+                color: white;
+            }
+
+            .music-playlist li .track-artist {
+                font-size: 0.8rem;
+                color: #666;
+                display: block;
+                margin-top: 2px;
+            }
+
+            .music-playlist li.active .track-artist {
+                color: #ccc;
+            }
+
             @keyframes rotateScale {
                 0% {
                     transform: rotate(-20deg) scale(1);
@@ -389,6 +521,105 @@
                 </div>
             </div>
 
+            <!-- Music Player Section -->
+            <div class="mobile-section">
+                <div class="window-wrapper">
+                    <div class="window">
+                        <div class="title-bar">
+                            <div class="title-bar-text">Music Player</div>
+                            <div class="title-bar-controls">
+                                <button
+                                    class="window-minimize-button"
+                                    aria-label="Minimize"
+                                ></button>
+                                <button
+                                    class="window-close-button"
+                                    aria-label="Close"
+                                ></button>
+                            </div>
+                        </div>
+                        <div class="window-body">
+                            <div class="music-player-container">
+                                <!-- Now Playing -->
+                                <div class="now-playing">
+                                    <span class="now-playing-label"
+                                        >Playing:</span
+                                    >
+                                    <div
+                                        id="now-playing-text"
+                                        class="now-playing-text"
+                                    >
+                                        No track selected
+                                    </div>
+                                </div>
+
+                                <!-- Volume Control -->
+                                <div class="music-volume-container">
+                                    <button id="volume-btn">
+                                        <img
+                                            src="/icons/speaker.png"
+                                            alt="Volume"
+                                        />
+                                    </button>
+                                    <input
+                                        type="range"
+                                        id="volume-slider"
+                                        min="0"
+                                        max="100"
+                                        value="80"
+                                    />
+                                </div>
+
+                                <!-- Playback Controls -->
+                                <div class="music-controls">
+                                    <button id="prev-btn">
+                                        &#9668;&#9668;
+                                    </button>
+                                    <button id="play-btn">&#9658;</button>
+                                    <button id="stop-btn">&#9632;</button>
+                                    <button id="next-btn">
+                                        &#9658;&#9658;
+                                    </button>
+                                </div>
+
+                                <!-- Progress Bar -->
+                                <div class="music-progress-container">
+                                    <div
+                                        id="music-progress"
+                                        class="music-progress"
+                                    >
+                                        <div
+                                            id="music-progress-bar"
+                                            class="music-progress-bar"
+                                        ></div>
+                                    </div>
+                                </div>
+
+                                <!-- Playlist -->
+                                <div class="music-playlist">
+                                    <ul id="playlist">
+                                        {% for track in tracks %}
+                                        <li
+                                            data-url="{{ track.url }}"
+                                            data-title="{{ track.title }}"
+                                            data-artist="{{ track.artist }}"
+                                        >
+                                            {{ track.title }} {% if track.artist
+                                            %}
+                                            <span class="track-artist"
+                                                >{{ track.artist }}</span
+                                            >
+                                            {% endif %}
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Projects Section -->
             <div class="mobile-section">
                 <div class="window-wrapper">
@@ -480,5 +711,157 @@
                 </div>
             </div>
         </div>
+
+        <!-- Mobile Music Player JavaScript -->
+        <script>
+            (function () {
+                const audio = new Audio();
+                let currentTrackIndex = 0;
+                let isPlaying = false;
+                const tracks = [];
+
+                // DOM elements
+                const nowPlayingText =
+                    document.getElementById("now-playing-text");
+                const playBtn = document.getElementById("play-btn");
+                const stopBtn = document.getElementById("stop-btn");
+                const prevBtn = document.getElementById("prev-btn");
+                const nextBtn = document.getElementById("next-btn");
+                const volumeSlider = document.getElementById("volume-slider");
+                const progressBar =
+                    document.getElementById("music-progress-bar");
+                const progressContainer =
+                    document.getElementById("music-progress");
+                const playlist = document.getElementById("playlist");
+
+                // Initialize tracks from playlist items
+                const playlistItems = playlist.querySelectorAll("li");
+                playlistItems.forEach((item, index) => {
+                    tracks.push({
+                        url: item.dataset.url,
+                        title: item.dataset.title,
+                        artist: item.dataset.artist || "",
+                    });
+
+                    item.addEventListener("click", () => {
+                        currentTrackIndex = index;
+                        loadTrack();
+                        play();
+                    });
+                });
+
+                // Set initial volume
+                audio.volume = 0.8;
+
+                // Audio event listeners
+                audio.addEventListener("ended", () => next());
+                audio.addEventListener("timeupdate", () => {
+                    if (audio.duration) {
+                        const percentage =
+                            (audio.currentTime / audio.duration) * 100;
+                        progressBar.style.width = percentage + "%";
+                    }
+                });
+
+                // Control buttons
+                playBtn.addEventListener("click", togglePlay);
+                stopBtn.addEventListener("click", stop);
+                prevBtn.addEventListener("click", previous);
+                nextBtn.addEventListener("click", next);
+
+                // Volume control
+                volumeSlider.addEventListener("input", () => {
+                    audio.volume = volumeSlider.value / 100;
+                });
+
+                // Progress bar seek
+                progressContainer.addEventListener("click", (e) => {
+                    if (audio.duration) {
+                        const rect = progressContainer.getBoundingClientRect();
+                        const percent = (e.clientX - rect.left) / rect.width;
+                        audio.currentTime = audio.duration * percent;
+                    }
+                });
+
+                function loadTrack() {
+                    if (tracks.length === 0) return;
+                    const track = tracks[currentTrackIndex];
+                    audio.src = track.url;
+                    audio.load();
+                    updateNowPlaying();
+                    updatePlaylist();
+                }
+
+                function updateNowPlaying() {
+                    if (tracks.length === 0) {
+                        nowPlayingText.textContent = "No track selected";
+                        return;
+                    }
+                    const track = tracks[currentTrackIndex];
+                    nowPlayingText.textContent = track.artist
+                        ? track.title + " - " + track.artist
+                        : track.title;
+                }
+
+                function updatePlaylist() {
+                    playlistItems.forEach((item, index) => {
+                        if (index === currentTrackIndex) {
+                            item.classList.add("active");
+                        } else {
+                            item.classList.remove("active");
+                        }
+                    });
+                }
+
+                function play() {
+                    if (!audio.src && tracks.length > 0) loadTrack();
+                    audio.play();
+                    isPlaying = true;
+                    playBtn.innerHTML = "&#10074;&#10074;";
+                }
+
+                function pause() {
+                    audio.pause();
+                    isPlaying = false;
+                    playBtn.innerHTML = "&#9658;";
+                }
+
+                function togglePlay() {
+                    if (isPlaying) {
+                        pause();
+                    } else {
+                        play();
+                    }
+                }
+
+                function stop() {
+                    audio.pause();
+                    audio.currentTime = 0;
+                    isPlaying = false;
+                    playBtn.innerHTML = "&#9658;";
+                    progressBar.style.width = "0%";
+                }
+
+                function next() {
+                    if (tracks.length === 0) return;
+                    currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+                    loadTrack();
+                    if (isPlaying) play();
+                }
+
+                function previous() {
+                    if (tracks.length === 0) return;
+                    currentTrackIndex =
+                        (currentTrackIndex - 1 + tracks.length) % tracks.length;
+                    loadTrack();
+                    if (isPlaying) play();
+                }
+
+                // Load first track on init
+                if (tracks.length > 0) {
+                    loadTrack();
+                }
+            })();
+        </script>
     </body>
 </html>
