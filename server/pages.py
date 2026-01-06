@@ -25,23 +25,23 @@ TRACKS: Final[list[Track]] = [
         artist="Tadj Cazaubon & Violet Mirrors",
     ),
     Track(title="Cheesed", url="/audio/Cheesed.wav", artist="Violet Mirrors"),
-    Track(title="Grey Skies", url="/audio/grey_skies.wav", artist="Molly"),
     Track(title="Jello", url="/audio/jello.mp3", artist="Waykool"),
-    Track(
-        title="Discotheque Diner", url="/audio/discotheque_diner.wav", artist="Molly"
-    ),
     Track(
         title="Weather",
         url="/audio/Weather.wav",
         artist="Tadj Cazaubon & Violet Mirrors",
     ),
-    Track(title="Jonathan Seagull", url="/audio/jonathan_seagull.wav", artist="Molly"),
-    Track(title="Boomer", url="/audio/boomer.wav", artist="Violet Mirrors"),
     Track(
         title="In Awe of The Machine",
         url="/audio/machine.wav",
         artist="Tadj Cazaubon & Violet Mirrors",
     ),
+    Track(title="Grey Skies", url="/audio/grey_skies.wav", artist="Molly"),
+    Track(
+        title="Discotheque Diner", url="/audio/discotheque_diner.wav", artist="Molly"
+    ),
+    Track(title="Jonathan Seagull", url="/audio/jonathan_seagull.wav", artist="Molly"),
+    Track(title="Boomer", url="/audio/boomer.wav", artist="Violet Mirrors"),
 ]
 
 
