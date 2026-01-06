@@ -19,6 +19,7 @@ from .gh import fetch_repositories, schedule_refresh
 from .utils import ICONS, STATIC, VIEWS
 
 TRACKS: Final[list[Track]] = [
+    Track(title="Cheesed", url="/audio/Cheesed.wav", artist="Violet Mirrors"),
     Track(
         title="Bill_Nye",
         url="/audio/Bill_Nye.wav",

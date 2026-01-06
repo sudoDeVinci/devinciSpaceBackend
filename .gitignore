@@ -8,5 +8,4 @@ logs
 __pycache__
 node_modules
 .env
-server/gh/cache/repositories.json
 *respositories.json
